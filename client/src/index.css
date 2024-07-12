@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html {
+  font-family: "Saira", sans-serif;
+  background-color: #fafaf9;
+}
+
+@layer base {
+  h1 {
+    @apply text-xl text-stone-700 font-semibold;
+  }
+  h2 {
+    @apply text-lg text-stone-700 font-semibold;
+  }
+  h3 {
+    @apply text-stone-700;
+  }
+  a {
+    @apply text-stone-700 font-medium hover:underline;
+  }
+}
+
+@layer components {
+  .aside {
+    @apply fixed flex flex-col justify-between font-semibold h-[calc(100%-2rem)] top-0 left-0 z-40 w-56 pt-8 rounded m-4 transition-transform border border-amber-500 shadow shadow-stone-700 bg-stone-700;
+  }
+  .grid-box-text {
+    @apply grid p-6 mt-10 border rounded md:grid-cols-3 md:gap-x-12 md:gap-y-4 lg:grid-cols-4 xl:grid-cols-5 border-stone-300 bg-white;
+  }
+  .grid-box {
+    @apply grid p-6 mt-10 border rounded md:grid-cols-2 md:gap-x-12 md:gap-y-4 lg:grid-cols-3 xl:grid-cols-4 border-stone-300 bg-white;
+  }
+}
+
+.react-datepicker-wrapper {
+  width: 70%;
+}
+
+.react-datepicker__input-container input:focus {
+  outline: none;
+  border: 2px solid #f59e0b;
+}
+
+.react-datepicker__input-container input {
+  padding-left: 30px !important;
+  height: 34px;
+  background-color: #44403c;
+}
+
+.react-datepicker__input-container input::placeholder {
+  color: white;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 5px 10px 7px 30px !important;
+}
