@@ -8,7 +8,7 @@ import router from "./Router.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider isSignedIn={true}>
+    <AuthProvider isSignedIn={false}>
       <RouterProvider router={router} />
     </AuthProvider>
   </React.StrictMode>
