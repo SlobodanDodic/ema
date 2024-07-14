@@ -3,7 +3,10 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 
 import Root from "./pages/Root";
 import NotFoundPage from "./pages/NotFoundPage";
+
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import HealthCare from "./pages/HealthCare";
@@ -13,6 +16,7 @@ import Form from "./pages/Form";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage />, errorElement: <NotFoundPage /> },
+  { path: "/register", element: <RegisterPage />, errorElement: <NotFoundPage /> },
   {
     element: <Root />,
     errorElement: <NotFoundPage />,

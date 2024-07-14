@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Auth {
+  id: String!
+  username: String!
+  email: String!
+  hashedPassword: String!
+  token: String!
+  isActivated: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  auths: [Auth!]!
+  auth(id: String!): Auth!
+}
+
+type Mutation {
+  createAuth(createAuthInput: CreateAuthInput!): Auth!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  removeAuth(id: String!): Auth!
+}
+
+input CreateAuthInput {
+  username: String!
+  email: String!
+  hashedPassword: String!
+  token: String!
+  isActivated: Boolean!
+  createdAt: DateTime!
+}
+
+input UpdateAuthInput {
+  username: String!
+  email: String!
+  hashedPassword: String!
+  token: String!
+  isActivated: Boolean!
+  createdAt: DateTime
+  id: String!
+  updatedAt: DateTime!
+}
