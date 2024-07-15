@@ -8,7 +8,7 @@ export default function Inputs({ inputName, value, onChange }: Props) {
   return (
     <div className="relative">
       <input
-        id={inputName}
+        // id={inputName}
         name={inputName}
         type={inputName === "password" ? "password" : "text"}
         className="w-full h-8 mt-1 placeholder-transparent border-b text-stone-700 border-stone-300 peer focus:outline-none focus:border-amber-600"
