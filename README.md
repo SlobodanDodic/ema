@@ -13,5 +13,6 @@
 
 - email, password & forgot password
 
-> After signup form, the user waits for approval from the admin.
-> Admin approves the user and activates the account.
+> After submitting a sign-up form, the user waits for approval from the admin.
+> The administrator approves the user by activating the account and sending a notification to the user.
+> The user is then able to login.
