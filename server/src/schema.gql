@@ -23,7 +23,7 @@ type User {
   username: String!
   email: String!
   hashedPassword: String!
-  token: String!
+  hashedToken: String!
   isActivated: Boolean!
 }
 
@@ -34,19 +34,25 @@ type SignResponse {
 }
 
 type Query {
-  auths: [Auth!]!
-  auth(id: String!): Auth!
+  users: [Auth!]!
+  user(id: String!): Auth!
 }
 
 type Mutation {
   signup(signUpInput: SignUpInput!): SignResponse!
-  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
-  removeAuth(id: String!): Auth!
+  signin(signInInput: SignInInput!): SignResponse!
+  updateUser(updateAuthInput: UpdateAuthInput!): Auth!
+  removeUser(id: String!): Auth!
 }
 
 input SignUpInput {
   username: String!
   email: String!
+  password: String!
+}
+
+input SignInInput {
+  username: String!
   password: String!
 }
 

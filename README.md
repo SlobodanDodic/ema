@@ -9,10 +9,9 @@
 - GraphQL
 - PostgreSQL 16 DB
 
-## Login Page
+## Signup $ Signin Page
 
 - email, password & forgot password
 
-> Admin approves the user and sends an email of authorization.
-> After initial login, the user can change their password.
-> If user forgot their password, they can reset it. Link will be sent to the user's email.
+> After signup form, the user waits for approval from the admin.
+> Admin approves the user and activates the account.

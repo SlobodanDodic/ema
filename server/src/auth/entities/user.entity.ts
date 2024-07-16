@@ -15,7 +15,7 @@ export class User {
   hashedPassword: string;
 
   @Field()
-  token: string;
+  hashedToken: string;
 
   @Field()
   isActivated: boolean;
