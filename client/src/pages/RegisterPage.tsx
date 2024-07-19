@@ -4,6 +4,8 @@ import InputField from "../components/auth/InputField";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../components/graphql";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loading from "./Loading";
 
 type FormDataKey = "username" | "email" | "password" | "confirmPassword";
 
@@ -30,7 +32,7 @@ export default function RegisterPage() {
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
+  const [registerUser, { loading }] = useMutation(REGISTER_USER);
   const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +58,8 @@ export default function RegisterPage() {
 
     if (!data.password) {
       errors.password = "Password is required";
-    } else if (data.password.length < 6) {
-      errors.password = "Password must be at least 8 characters long";
+    } else if (data.password.length < 7 || data.password.length > 14) {
+      errors.password = "Password has to be between 7 and 14 chars";
     }
 
     if (data.confirmPassword !== data.password) {
@@ -83,17 +85,18 @@ export default function RegisterPage() {
             },
           },
         });
-        console.log("User registered:", response.data.signup);
 
+        console.log("User registered:", response.data.signup);
+        toast.success("Successfully registered! Please wait for activation and then log in... 👀", { autoClose: 5000 });
         navigate("/login");
       } catch (err) {
         console.error("Error registering user:", err);
+        toast.error("Registration failed. Please try again with a different username or email.", { autoClose: 5000 });
       }
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Loading />;
 
   return (
     <AuthFormLayout

@@ -36,7 +36,6 @@ export default function LoginPage() {
       if (response && response.data && response.data.signin) {
         setLoggedUser(response.data.signin.user.username);
         setToken(response.data.signin.accessToken);
-        console.log("Login successful, setting user and token");
       } else {
         console.error("Login response is invalid:", response.data.signup);
       }
@@ -47,7 +46,6 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (loggedUser) {
-      console.log("Navigating to home page");
       navigate("/", { replace: true });
     }
   }, [loggedUser, navigate]);

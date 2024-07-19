@@ -12,6 +12,7 @@ import { SignUpInput } from './dto/signup.input';
 import { SignInInput } from './dto/signin.input';
 import { SignResponse } from './dto/sign-response';
 import * as argon2 from 'argon2';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class AuthService {
@@ -23,24 +24,33 @@ export class AuthService {
 
   async signup(signUpInput: SignUpInput) {
     const hashedPassword = await argon2.hash(signUpInput.password);
-    const user = await this.prisma.user.create({
-      data: {
-        email: signUpInput.email,
-        hashedPassword,
-        username: signUpInput.username,
-      },
-    });
 
-    const tokens = await this.getTokens(user.id, user.email);
-    await this.updateRefreshToken(user.id, tokens.refresh_token);
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          email: signUpInput.email,
+          hashedPassword,
+          username: signUpInput.username,
+        },
+      });
+      const tokens = await this.getTokens(user.id, user.email);
+      await this.updateRefreshToken(user.id, tokens.refresh_token);
 
-    console.log('Tokens in signup:', tokens);
-
-    return {
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token,
-      user,
-    };
+      return {
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+        user,
+      };
+    } catch (error) {
+      console.error('Error during signup:', error);
+      if (
+        error instanceof PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new Error('Username or email already taken.');
+      }
+      throw new Error('An unexpected error occurred. Please try again.');
+    }
   }
 
   async signin(signInInput: SignInInput): Promise<SignResponse> {

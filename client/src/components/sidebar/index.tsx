@@ -5,10 +5,10 @@ import UserInfo from "./UserInfo";
 export default function Menu({ openMenu }: { openMenu: boolean }) {
   return (
     <aside className={openMenu ? `aside translate-x-0` : `aside -translate-x-72`}>
-      <ul className="space-y-2 ps-3">
-        <div className="flex items-center pb-4">
+      <ul className="space-y-2">
+        <div className="flex items-center pb-4 ps-1">
           <img src="/logo.png" className="mx-2 h-7" alt="Logo" />
-          <span className="self-center text-xl text-stone-50 whitespace-nowrap">Employee App</span>
+          <span className="self-center text-2xl text-stone-50 whitespace-nowrap">Employee App</span>
         </div>
 
         <MenuItem icon={<SvgDashboard />} path="/" title="Dashboard" />
@@ -18,11 +18,8 @@ export default function Menu({ openMenu }: { openMenu: boolean }) {
         <MenuItem icon={<SvgEvents />} path="/events" title="Events" />
         <MenuItem icon={<SvgPayment />} path="/form" title="Payments" />
 
-        <div className="pb-4" />
-
         <hr className="w-4/5 ms-[10%]" />
         <MenuItem icon={<SvgForm />} path="/form" title="Form" />
-        <hr className="w-4/5 ms-[10%]" />
       </ul>
 
       <UserInfo />
