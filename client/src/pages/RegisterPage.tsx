@@ -1,6 +1,9 @@
 import { useState } from "react";
 import AuthFormLayout from "../components/auth/AuthFormLayout";
 import InputField from "../components/auth/InputField";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../components/graphql";
+import { useNavigate } from "react-router-dom";
 
 type FormDataKey = "username" | "email" | "password" | "confirmPassword";
 
@@ -26,6 +29,10 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
 
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
+  const navigate = useNavigate();
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setFormData((prevFormData) => ({
@@ -34,10 +41,59 @@ export default function RegisterPage() {
     }));
   };
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const validateForm = (data: FormData) => {
+    const errors: Partial<FormData> = {};
+
+    if (!data.username.trim()) {
+      errors.username = "Username is required";
+    }
+
+    if (!data.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      errors.email = "Email is invalid";
+    }
+
+    if (!data.password) {
+      errors.password = "Password is required";
+    } else if (data.password.length < 6) {
+      errors.password = "Password must be at least 8 characters long";
+    }
+
+    if (data.confirmPassword !== data.password) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-  }
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        const response = await registerUser({
+          variables: {
+            input: {
+              username: formData.username,
+              email: formData.email,
+              password: formData.password,
+            },
+          },
+        });
+        console.log("User registered:", response.data.signup);
+
+        navigate("/login");
+      } catch (err) {
+        console.error("Error registering user:", err);
+      }
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <AuthFormLayout
@@ -47,13 +103,10 @@ export default function RegisterPage() {
       linkDescription="Already have an account?"
     >
       {inputFields.map((field) => (
-        <InputField
-          key={field.id}
-          id={field.id}
-          placeholder={field.placeholder}
-          value={formData[field.id]}
-          onChange={handleChange}
-        />
+        <div key={field.id}>
+          <InputField id={field.id} placeholder={field.placeholder} value={formData[field.id]} onChange={handleChange} />
+          {errors[field.id] && <span className="text-xs font-semibold text-red-500">{errors[field.id]}</span>}
+        </div>
       ))}
     </AuthFormLayout>
   );

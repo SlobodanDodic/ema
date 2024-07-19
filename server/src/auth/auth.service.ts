@@ -77,8 +77,8 @@ export class AuthService {
     return this.prisma.user.findMany();
   }
 
-  async findOne(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
+  async findOne(username: string) {
+    return this.prisma.user.findUnique({ where: { username } });
   }
 
   async update(id: string, updateAuthInput: UpdateAuthInput) {

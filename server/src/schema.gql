@@ -35,7 +35,7 @@ type SignResponse {
 
 type Query {
   users: [Auth!]!
-  user(id: String!): Auth!
+  user(username: String!): Auth!
 }
 
 type Mutation {

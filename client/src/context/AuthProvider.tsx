@@ -1,19 +1,36 @@
-import { createContext, PropsWithChildren, useState } from "react";
+import { useState, useEffect, PropsWithChildren } from "react";
+import { useQuery } from "@apollo/client";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { GET_USER } from "../components/graphql";
+import AuthContext from "./AuthContext";
 
 type User = {
-  id: number;
+  id: string;
+  username: string;
+  email: string;
+  isActivated: boolean;
 };
 
-const AuthContext = createContext<User | null>(null);
+export const AuthProvider = ({ children }: PropsWithChildren<object>) => {
+  const [loggedUser, setLoggedUser] = useLocalStorage("user", null);
+  const [token, setToken] = useLocalStorage("token", null);
+  const [user, setUser] = useState<User | null>(null);
 
-type AuthProviderProps = PropsWithChildren & {
-  isSignedIn?: boolean;
+  const { data } = useQuery(GET_USER, {
+    variables: { username: loggedUser },
+    skip: !token,
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+
+  useEffect(() => {
+    if (data && data.user) {
+      setUser(data.user);
+    }
+  }, [data]);
+
+  return <AuthContext.Provider value={{ loggedUser, setLoggedUser, setToken, user }}>{children}</AuthContext.Provider>;
 };
-
-export default function AuthProvider({ children, isSignedIn }: AuthProviderProps) {
-  const [user] = useState<User | null>(isSignedIn ? { id: 1 } : null);
-
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
-}
-
-export { AuthContext };

@@ -1,18 +1,22 @@
 import { PropsWithChildren, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 type ProtectedRouteProps = PropsWithChildren;
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const user = useAuth();
+  const authContext = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user === null) {
+    if (authContext === undefined) {
+      throw new Error("Protected component must be used within an AuthProvider");
+    }
+
+    if (!authContext?.loggedUser) {
       navigate("/login", { replace: true });
     }
-  }, [navigate, user]);
+  }, [authContext, navigate]);
 
-  return user ? <>{children}</> : null;
+  return authContext?.loggedUser && authContext?.user?.isActivated ? <>{children}</> : null;
 }

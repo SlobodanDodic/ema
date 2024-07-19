@@ -26,8 +26,8 @@ export class AuthResolver {
   }
 
   @Query(() => Auth, { name: 'user' })
-  findOne(@Args('id', { type: () => String }) id: string) {
-    return this.authService.findOne(id);
+  findOne(@Args('username', { type: () => String }) username: string) {
+    return this.authService.findOne(username);
   }
 
   @Mutation(() => Auth)
