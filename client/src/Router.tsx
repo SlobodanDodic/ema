@@ -13,6 +13,7 @@ import HealthCare from "./pages/HealthCare";
 import Fitpass from "./pages/Fitpass";
 import Events from "./pages/Events";
 import Form from "./pages/Form";
+import Payments from "./pages/Payments";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage />, errorElement: <NotFoundPage /> },
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Events />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/payments",
+        element: (
+          <ProtectedRoute>
+            <Payments />
           </ProtectedRoute>
         ),
       },

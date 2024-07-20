@@ -1,7 +1,5 @@
+import PageHeading from "../components/common/PageHeading";
+
 export default function Fipass() {
-  return (
-    <div className="p-4 bg-white border rounded border-stone-300">
-      <div>Fipass</div>
-    </div>
-  );
+  return <PageHeading title="Fitpass" />;
 }

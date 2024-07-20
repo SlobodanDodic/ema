@@ -1,11 +1,6 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-type InputDateProps = {
-  selected: Date | null;
-  setSelected: (date: Date | null) => void;
-  name: string;
-};
+import { InputDateProps } from "../../types/formTypes";
 
 export default function InputDate({ selected, setSelected, name }: InputDateProps) {
   return (

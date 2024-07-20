@@ -1,10 +1,6 @@
+import { IMenu } from "../../types/navbarsTypes";
 import { SvgBell, SvgMenuClose, SvgMenuOpen } from "../svg/SvgTopbar";
 import SearchBox from "./SearchBox";
-
-type IMenu = {
-  openMenu: boolean;
-  toggleMenu: () => void;
-};
 
 export default function Topbar({ toggleMenu, openMenu }: IMenu) {
   return (

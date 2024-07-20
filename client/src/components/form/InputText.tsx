@@ -1,9 +1,4 @@
-type InputTextProps = {
-  name: string;
-  label: string;
-  type?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+import { InputTextProps } from "../../types/formTypes";
 
 export default function InputText({ name, label, onChange, type = "text" }: InputTextProps) {
   return (

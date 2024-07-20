@@ -1,19 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import InputDate from "./InputDate";
-
-interface Member {
-  name: string;
-  category: string;
-  start: Date | null;
-  end: Date | null;
-}
-
-interface InputMembersProps {
-  title: string;
-  members: Member[];
-  setMembers: (members: Member[]) => void;
-  icon: JSX.Element;
-}
+import { InputMembersProps, Member } from "../../types/formTypes";
 
 export default function InputMembers({ title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

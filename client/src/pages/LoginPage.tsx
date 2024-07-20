@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import AuthFormLayout from "../components/auth/AuthFormLayout";
 import InputField from "../components/auth/InputField";
 import { LOGIN_USER } from "../components/graphql";
 import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
+import Loading from "./Loading";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -12,7 +14,7 @@ export default function LoginPage() {
   const authContext = useAuth();
 
   const { setLoggedUser, setToken, loggedUser } = authContext;
-  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
+  const [loginUser, { loading }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -33,14 +35,17 @@ export default function LoginPage() {
         },
       });
 
-      if (response && response.data && response.data.signin) {
-        setLoggedUser(response.data.signin.user.username);
-        setToken(response.data.signin.accessToken);
-      } else {
-        console.error("Login response is invalid:", response.data.signup);
-      }
-    } catch (error) {
+      setLoggedUser(response?.data?.signin.user.username);
+      setToken(response?.data?.signin.accessToken);
+      toast.success("Welcome!");
+    } catch (err) {
+      const error = err as ApolloError;
       console.error("Error logging in:", error);
+      const errorMessage =
+        error.graphQLErrors[0]?.message === "Bad Request Exception"
+          ? "Login failed! Check your password"
+          : error.graphQLErrors[0]?.message;
+      toast.error(errorMessage);
     }
   }
 
@@ -55,6 +60,8 @@ export default function LoginPage() {
     { id: "password", placeholder: "password", name: "password", value: formData.password },
   ];
 
+  if (loading) return <Loading />;
+
   return (
     <AuthFormLayout
       handleSubmit={handleSubmit}
@@ -66,7 +73,6 @@ export default function LoginPage() {
         <InputField key={field.id} id={field.id} placeholder={field.placeholder} value={field.value} onChange={handleChange} />
       ))}
       {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
     </AuthFormLayout>
   );
 }

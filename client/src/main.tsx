@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <AuthProvider>
-        <ToastContainer autoClose={1500} pauseOnFocusLoss={false} pauseOnHover={false} theme="dark" />
+        <ToastContainer autoClose={3000} pauseOnFocusLoss={false} pauseOnHover={false} theme="dark" />
         <RouterProvider router={router} />
       </AuthProvider>
     </ApolloProvider>

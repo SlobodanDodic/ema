@@ -87,11 +87,11 @@ export default function RegisterPage() {
         });
 
         console.log("User registered:", response.data.signup);
-        toast.success("Successfully registered! Please wait for activation and then log in... 👀", { autoClose: 5000 });
+        toast.success("Successfully registered! Please wait for activation and then log in... 👀");
         navigate("/login");
       } catch (err) {
         console.error("Error registering user:", err);
-        toast.error("Registration failed. Please try again with a different username or email.", { autoClose: 5000 });
+        toast.error("Registration failed. Please try again with a different username or email.");
       }
     }
   };

@@ -4,28 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, ChangeEvent } from "react";
 import InputWellness from "../components/form/InputWellness";
 import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
-import SvgLogo from "../components/svg/SvgLogo";
-
-type FormData = {
-  birthday: Date | null;
-  contract: Date | null;
-  phoneNumber: string;
-  eyes: Date | null;
-  safety: Date | null;
-  fire: Date | null;
-  firstAid: Date | null;
-  fullName: string;
-  jobTitle: string;
-  healthCareMembers: Member[];
-  fitpassMembers: Member[];
-};
-
-interface Member {
-  name: string;
-  category: string;
-  start: Date | null;
-  end: Date | null;
-}
+import PageHeading from "../components/common/PageHeading";
+import { FormData, Member } from "../types/formTypes";
 
 export default function Form() {
   const [formData, setFormData] = useState<FormData>({
@@ -58,14 +38,9 @@ export default function Form() {
     }));
   };
 
-  console.log(formData);
-
   return (
     <div>
-      <div className="flex items-center justify-between p-4 rounded text-stone-50 bg-stone-700">
-        <p>Employee Data Form</p>
-        <SvgLogo addClass="w-7 h-7" color="#fafaf9" />
-      </div>
+      <PageHeading title="Employee Data Form" />
 
       <div className="pb-2 grid-box-text">
         <InputText name="fullName" label="Full name" onChange={handleInputChange} />

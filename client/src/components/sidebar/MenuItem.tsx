@@ -1,10 +1,5 @@
 import { Link } from "react-router-dom";
-
-type IMenuItem = {
-  icon: JSX.Element;
-  path: string;
-  title: string;
-};
+import { IMenuItem } from "../../types/navbarsTypes";
 
 export default function MenuItem({ icon, path, title }: IMenuItem) {
   return (

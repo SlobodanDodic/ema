@@ -16,7 +16,7 @@ export default function Menu({ openMenu }: { openMenu: boolean }) {
         <MenuItem icon={<SvgHealth />} path="/health_care" title="Health Care" />
         <MenuItem icon={<SvgFitpass />} path="/fitpass" title="Fitpass" />
         <MenuItem icon={<SvgEvents />} path="/events" title="Events" />
-        <MenuItem icon={<SvgPayment />} path="/form" title="Payments" />
+        <MenuItem icon={<SvgPayment />} path="/payments" title="Payments" />
 
         <hr className="w-4/5 ms-[10%]" />
         <MenuItem icon={<SvgForm />} path="/form" title="Form" />

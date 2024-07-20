@@ -58,14 +58,22 @@ export class AuthService {
       where: { username: signInInput.username },
     });
 
-    if (!user) throw new ForbiddenException('Access Denied');
-    if (!user.isActivated) throw new BadRequestException('Not activated yet');
+    if (!user) {
+      throw new ForbiddenException('The user does not exist');
+    }
 
     const passwordMatches = await argon2.verify(
       user.hashedPassword,
       signInInput.password,
     );
-    if (!passwordMatches) throw new ForbiddenException('Access Denied');
+
+    if (!passwordMatches) {
+      throw new ForbiddenException('Wrong password');
+    }
+
+    if (!user.isActivated) {
+      throw new BadRequestException('The user is not activated yet');
+    }
 
     const tokens = await this.getTokens(user.id, user.email);
 
