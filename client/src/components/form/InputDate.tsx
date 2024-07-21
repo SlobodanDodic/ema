@@ -5,14 +5,14 @@ import { InputDateProps } from "../../types/formTypes";
 export default function InputDate({ selected, setSelected, name }: InputDateProps) {
   return (
     <div className="flex items-center mb-5">
-      <label className="w-1/4 text-sm me-4 text-stone-600">{name}</label>
+      <label className="w-1/4 text-sm me-4 text-marine">{name}</label>
       <DatePicker
         selected={selected}
         onChange={(date: Date | null) => setSelected(date)}
         dateFormat="dd. MMM yyyy"
         enableTabLoop={false}
         placeholderText={name}
-        className="block w-full p-2 text-sm text-white border rounded border-stone-300"
+        className="block w-full p-2 text-sm text-white border rounded border-silver"
         showIcon
         icon={
           <svg width="1em" height="1em" viewBox="0 0 48 48">

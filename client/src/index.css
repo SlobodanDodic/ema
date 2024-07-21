@@ -10,36 +10,50 @@
   scrollbar-width: none;
 }
 
+:root {
+  --midnight: #212a31;
+  --steel: #2e3944;
+  --marine: #124e66;
+  --ash: #748d92;
+  --silver: #d3d9d4;
+  --oranje: #ffaf1c;
+}
+
 html {
   font-family: "Saira", sans-serif;
-  background-color: #fafaf9;
+  background-color: var(--silver);
+  background-color: #d3d9d4;
 }
 
 @layer base {
   h1 {
-    @apply text-xl text-stone-700 font-semibold;
+    @apply text-xl text-steel font-semibold;
   }
   h2 {
-    @apply text-lg text-stone-700 font-semibold;
+    @apply text-lg text-steel font-semibold;
   }
   h3 {
-    @apply text-stone-700;
+    @apply text-steel;
   }
   a {
-    @apply text-stone-700 font-medium hover:underline;
+    @apply text-steel font-medium hover:underline;
   }
 }
 
 @layer components {
   .aside {
-    @apply fixed flex flex-col justify-between font-semibold h-[calc(100%-2rem)] top-0 left-0 z-40 w-56 pt-8 rounded m-4 transition-transform border border-amber-500 shadow shadow-stone-700 bg-stone-700;
+    @apply fixed flex flex-col justify-between font-semibold h-[calc(100%-2rem)] top-0 left-0 z-40 w-56 pt-8 rounded m-4 transition-transform shadow shadow-midnight bg-midnight;
   }
   .grid-box-text {
-    @apply grid p-6 mt-10 border rounded md:grid-cols-3 md:gap-x-12 md:gap-y-4 lg:grid-cols-4 xl:grid-cols-5 border-stone-300 bg-white;
+    @apply grid p-6 mt-10 border rounded md:grid-cols-3 md:gap-x-12 md:gap-y-4 lg:grid-cols-4 xl:grid-cols-5 border-steel bg-white;
   }
   .grid-box {
-    @apply grid p-6 mt-10 border rounded md:grid-cols-2 md:gap-x-12 md:gap-y-4 lg:grid-cols-3 xl:grid-cols-4 border-stone-300 bg-white;
+    @apply grid p-6 mt-10 border rounded md:grid-cols-2 md:gap-x-12 md:gap-y-4 lg:grid-cols-3 xl:grid-cols-4 border-steel bg-white;
   }
+}
+
+input::placeholder {
+  color: var(--marine);
 }
 
 .react-datepicker-wrapper {
@@ -48,17 +62,17 @@ html {
 
 .react-datepicker__input-container input:focus {
   outline: none;
-  border: 2px solid #f59e0b;
+  border: 2px solid var(--steel);
 }
 
 .react-datepicker__input-container input {
   padding-left: 30px !important;
   height: 34px;
-  background-color: #44403c;
+  background-color: var(--marine);
 }
 
 .react-datepicker__input-container input::placeholder {
-  color: white;
+  color: var(--silver);
   font-size: 12px;
   font-weight: 300;
   letter-spacing: 1px;

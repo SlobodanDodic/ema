@@ -49,7 +49,7 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
       <button
         type="button"
         onClick={toggleModal}
-        className="inline-flex items-center px-5 py-2 my-2 text-sm font-medium text-center text-white rounded bg-stone-700 hover:bg-stone-700/90 focus:ring-2 focus:outline-none focus:ring-amber-500"
+        className="inline-flex items-center px-5 py-2 my-2 text-sm font-medium text-center text-white rounded bg-marine hover:bg-marine/90 focus:ring-2 focus:outline-none focus:ring-marine/70"
       >
         {icon}
         {title}
@@ -60,16 +60,16 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
           id="defaultModal"
           tabIndex={-1}
           aria-hidden="true"
-          className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-stone-50"
+          className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-white border border-marine"
         >
           <div className="relative w-full h-full max-w-2xl p-4 md:h-auto">
-            <div className="relative p-6 bg-white rounded shadow-xl">
-              <div className="flex items-center justify-between px-4 pb-4 border-b">
-                <h3 className="text-lg font-semibold text-stone-700">Add {title} Member</h3>
+            <div className="relative p-6 bg-white rounded">
+              <div className="flex items-center justify-between py-4 border-b border-marine/20">
+                <h3 className="text-lg font-semibold text-marine">Add {title} Member</h3>
                 <button
                   type="button"
                   onClick={toggleModal}
-                  className="text-stone-700 bg-transparent hover:bg-stone-200 hover:text-stone-700 rounded text-sm py-1.5 px-2 ml-auto inline-flex items-center"
+                  className="inline-flex items-center px-2 py-1 ml-auto bg-transparent rounded text-marine hover:bg-marine/20 hover:text-marine"
                 >
                   X
                 </button>
@@ -78,25 +78,25 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
               <form className="pt-4" onSubmit={handleSubmit}>
                 <div className="grid gap-4 mb-4 sm:grid-cols-2">
                   <div>
-                    <label className="block mb-2 text-sm text-stone-700">Full Name</label>
+                    <label className="block mb-2 text-sm text-marine">Full Name</label>
                     <input
                       type="text"
                       name="name"
                       value={form.name}
                       onChange={handleChange}
-                      className="block w-full p-2 text-sm border rounded outline-none bg-stone-50 border-stone-300 text-stone-700 focus:border-2 focus:border-amber-600"
+                      className="block w-full p-2 text-sm border rounded outline-none bg-marine/20 border-marine/30 text-marine focus:border-2 focus:border-marine/focus:ring-marine/70"
                       placeholder="Full name of member"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm text-stone-700">Category</label>
+                    <label className="block mb-2 text-sm text-marine">Category</label>
                     <select
                       name="category"
                       value={form.category}
                       onChange={handleChange}
-                      className="block w-full p-2 text-sm border rounded outline-none bg-stone-50 border-stone-300 text-stone-700 focus:border-2 focus:border-amber-500"
+                      className="block w-full p-2 text-sm border rounded outline-none bg-marine/20 border-marine/30 text-marine focus:border-2 focus:border-marine/focus:ring-marine/70"
                       required
                     >
                       <option value="" disabled>
@@ -112,19 +112,17 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                 </div>
                 <button
                   type="submit"
-                  className="inline-flex items-center p-4 text-sm text-center rounded text-stone-700 hover:bg-amber-500 focus:ring-2 focus:outline-none focus:ring-stone-600"
+                  className="inline-flex items-center p-3 mb-2 text-sm text-center text-white rounded bg-marine hover:bg-marine/90 focus:ring-2 focus:outline-none focus:ring-marine/60"
                 >
                   ✛ Add new member
                 </button>
               </form>
 
-              <hr />
-
-              <div className="p-4 text-sm font-semibold text-amber-600">{title} Members:</div>
+              <div className="py-4 text-sm font-semibold border-t text-marine border-marine/20">{title} Members:</div>
 
               <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-700 rtl:text-right">
-                  <thead className="text-sm text-white bg-stone-700">
+                  <thead className="text-sm text-white bg-marine">
                     <tr>
                       <th scope="col" className="px-6 py-4">
                         Member name
@@ -142,13 +140,13 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                   </thead>
                   <tbody>
                     {members.map((member, index) => (
-                      <tr key={index} className="border-b odd:bg-white even:bg-gray-100">
-                        <th scope="row" className="px-6 py-4 text-gray-700 whitespace-nowrap">
+                      <tr key={index} className="border-b odd:bg-white even:bg-marine/10">
+                        <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
                           {member.name}
                         </th>
-                        <td className="px-6 py-4">{member.category}</td>
-                        <td className="px-6 py-4">{member.start ? member.start.toLocaleDateString() : "N/A"}</td>
-                        <td className="px-6 py-4">{member.end ? member.end.toLocaleDateString() : "N/A"}</td>
+                        <td className="px-6 py-4 text-marine">{member.category}</td>
+                        <td className="px-6 py-4 text-marine">{member.start ? member.start.toLocaleDateString() : "N/A"}</td>
+                        <td className="px-6 py-4 text-marine">{member.end ? member.end.toLocaleDateString() : "N/A"}</td>
                       </tr>
                     ))}
                   </tbody>

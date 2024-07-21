@@ -10,12 +10,12 @@ export default function SearchBox() {
 
         <input
           type="text"
-          className="block w-full p-2 text-sm bg-white border rounded border-stone-300 text-stone-700 ps-10 focus:outline-none focus:border-stone-500 focus:ring-1 focus:ring-stone-500"
+          className="block w-full p-2 text-sm bg-white border rounded border-sky-700 text-sky-700 ps-10 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-700"
           placeholder="Search employee"
         />
       </div>
 
-      <button type="submit" className="p-2 transition rounded text-stone-700 hover:text-amber-600">
+      <button type="submit" className="p-2 transition rounded text-sky-700 hover:text-amber-600">
         <SvgSearch />
       </button>
     </form>

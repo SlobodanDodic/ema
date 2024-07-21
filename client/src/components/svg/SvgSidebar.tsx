@@ -1,4 +1,4 @@
-const classes = "w-7 h-7 text-stone-50 duration-75 transition group-hover:text-amber-500";
+const classes = "w-7 h-7 text-silver duration-75 transition group-hover:text-oranje";
 
 export function SvgDashboard() {
   return (
