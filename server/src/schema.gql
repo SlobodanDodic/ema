@@ -33,9 +33,51 @@ type SignResponse {
   user: User!
 }
 
+type HealthCareMember {
+  id: Float!
+  name: String!
+  category: String!
+  start: DateTime
+  end: DateTime
+  employeeId: Float!
+  employee: Employee!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type FitpassMember {
+  id: Float!
+  name: String!
+  category: String!
+  start: DateTime
+  end: DateTime
+  employeeId: Float!
+  employee: Employee!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Employee {
+  id: Float!
+  fullName: String!
+  jobTitle: String!
+  phoneNumber: String!
+  birthday: DateTime
+  contract: DateTime
+  eyes: DateTime
+  safety: DateTime
+  fire: DateTime
+  firstAid: DateTime
+  healthCareMembers: [HealthCareMember!]!
+  fitpassMembers: [FitpassMember!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   users: [Auth!]!
   user(username: String!): Auth!
+  findAllEmployees: [Employee!]!
 }
 
 type Mutation {
@@ -43,6 +85,7 @@ type Mutation {
   signin(signInInput: SignInInput!): SignResponse!
   updateUser(updateAuthInput: UpdateAuthInput!): Auth!
   removeUser(id: String!): Auth!
+  createEmployee(data: EmployeeInput!): Employee!
 }
 
 input SignUpInput {
@@ -61,4 +104,32 @@ input UpdateAuthInput {
   email: String
   password: String
   id: String!
+}
+
+input EmployeeInput {
+  fullName: String!
+  jobTitle: String!
+  phoneNumber: String!
+  birthday: DateTime!
+  contract: DateTime!
+  eyes: DateTime!
+  safety: DateTime!
+  fire: DateTime!
+  firstAid: DateTime!
+  healthCareMembers: [HealthCareMemberInput!]
+  fitpassMembers: [FitpassMemberInput!]
+}
+
+input HealthCareMemberInput {
+  name: String!
+  category: String!
+  start: DateTime
+  end: DateTime
+}
+
+input FitpassMemberInput {
+  name: String!
+  category: String!
+  start: DateTime
+  end: DateTime
 }

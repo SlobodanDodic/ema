@@ -16,3 +16,4 @@
 > After submitting a sign-up form, the user waits for approval from the admin.
 > The administrator approves the user by activating the account and sending a notification to the user.
 > The user is then able to login.
+> The user can also reset their password if they forget it (not implemented yet).

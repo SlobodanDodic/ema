@@ -1,11 +1,11 @@
 import InputDate from "../components/form/InputDate";
 import InputText from "../components/form/InputText";
-import "react-datepicker/dist/react-datepicker.css";
 import { useState, ChangeEvent } from "react";
 import InputWellness from "../components/form/InputWellness";
 import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
 import PageHeading from "../components/common/PageHeading";
 import { FormData, Member } from "../types/formTypes";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Form() {
   const [formData, setFormData] = useState<FormData>({
