@@ -19,7 +19,7 @@ export default function Menu({ openMenu }: { openMenu: boolean }) {
         <MenuItem icon={<SvgPayment />} path="/payments" title="Payments" />
 
         <hr className="w-4/5 ms-[10%]" />
-        <MenuItem icon={<SvgForm />} path="/form" title="Form" />
+        <MenuItem icon={<SvgForm />} path="/form" title="Entry Form" />
       </ul>
 
       <UserInfo />

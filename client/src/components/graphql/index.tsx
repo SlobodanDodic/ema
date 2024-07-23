@@ -67,3 +67,34 @@ export const CREATE_EMPLOYEE = gql`
     }
   }
 `;
+
+export const GET_EMPLOYEES = gql`
+  query findAllEmployees {
+    findAllEmployees {
+      id
+      fullName
+      jobTitle
+      phoneNumber
+      birthday
+      contract
+      eyes
+      safety
+      fire
+      firstAid
+      healthCareMembers {
+        id
+        name
+        category
+        start
+        end
+      }
+      fitpassMembers {
+        id
+        name
+        category
+        start
+        end
+      }
+    }
+  }
+`;

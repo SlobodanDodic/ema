@@ -46,3 +46,21 @@ export interface InputMembersProps {
   setMembers: (members: Member[]) => void;
   icon: JSX.Element;
 }
+
+// client/src/pages/Employees.tsx
+export type Employee = {
+  id: number;
+  fullName: string;
+  jobTitle: string;
+  phoneNumber: string;
+  birthday?: Date;
+  contract?: Date;
+  eyes?: Date;
+  safety?: Date;
+  fire?: Date;
+  firstAid?: Date;
+  healthCareMembers: Member[];
+  fitpassMembers: Member[];
+  createdAt: Date;
+  updatedAt: Date;
+};
