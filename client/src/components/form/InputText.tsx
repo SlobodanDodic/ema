@@ -1,15 +1,15 @@
 import { InputTextProps } from "../../types/formTypes";
 
-export default function InputText({ name, label, onChange, type = "text" }: InputTextProps) {
+export default function InputText({ name, label, onChange, value, type = "text" }: InputTextProps) {
   return (
     <div className="relative z-0 w-full mb-5 group">
       <input
         type={type}
         name={name}
         id={name}
+        value={value}
         onChange={onChange}
         placeholder=" "
-        required
         className="block w-full px-0 pt-3 pb-1 text-sm bg-transparent border-0 border-b-2 appearance-none text-marine border-marine focus:border-steel focus:outline-none focus:ring-0 peer"
       />
       <label

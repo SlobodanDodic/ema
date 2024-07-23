@@ -15,14 +15,13 @@
   --steel: #2e3944;
   --marine: #124e66;
   --ash: #748d92;
-  --silver: #d3d9d4;
+  --silver: #f2f1e4;
   --oranje: #ffaf1c;
 }
 
 html {
   font-family: "Saira", sans-serif;
   background-color: var(--silver);
-  background-color: #d3d9d4;
 }
 
 @layer base {
@@ -65,6 +64,10 @@ input::placeholder {
   border: 2px solid var(--steel);
 }
 
+.react-datepicker__input-container input:hover {
+  cursor: pointer;
+}
+
 .react-datepicker__input-container input {
   padding-left: 30px !important;
   height: 34px;
@@ -74,8 +77,8 @@ input::placeholder {
 .react-datepicker__input-container input::placeholder {
   color: var(--silver);
   font-size: 12px;
-  font-weight: 300;
-  letter-spacing: 1px;
+  font-weight: 400;
+  /* letter-spacing: 1px; */
 }
 
 .react-datepicker__view-calendar-icon input {

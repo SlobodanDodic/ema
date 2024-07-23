@@ -8,7 +8,7 @@ export default function Menu({ openMenu }: { openMenu: boolean }) {
       <ul className="space-y-2">
         <div className="flex items-center pb-4 ps-1">
           <img src="/logo.png" className="mx-2 h-7" alt="Logo" />
-          <span className="self-center text-2xl text-stone-50 whitespace-nowrap">Employee App</span>
+          <span className="self-center text-[1.45rem] text-stone-50 whitespace-nowrap">Employee App</span>
         </div>
 
         <MenuItem icon={<SvgDashboard />} path="/" title="Dashboard" />

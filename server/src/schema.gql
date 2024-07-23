@@ -121,6 +121,7 @@ input EmployeeInput {
 }
 
 input HealthCareMemberInput {
+  id: Float!
   name: String!
   category: String!
   start: DateTime
@@ -128,6 +129,7 @@ input HealthCareMemberInput {
 }
 
 input FitpassMemberInput {
+  id: Float!
   name: String!
   category: String!
   start: DateTime

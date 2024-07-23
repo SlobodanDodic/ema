@@ -14,6 +14,7 @@ export type FormData = {
 };
 
 export interface Member {
+  id: number;
   name: string;
   category: string;
   start: Date | null;
@@ -24,13 +25,16 @@ export interface Member {
 export type InputDateProps = {
   selected: Date | null;
   setSelected: (date: Date | null) => void;
-  name: string;
+  name?: string;
+  minDate?: Date;
+  maxDate?: Date;
 };
 
 // client/src/components/form/InputText.tsx
 export type InputTextProps = {
   name: string;
   label: string;
+  value: string;
   type?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };

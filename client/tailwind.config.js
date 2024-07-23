@@ -9,7 +9,7 @@ export default {
         steel: "#2e3944",
         marine: "#124e66",
         ash: "#748d92",
-        silver: "#d3d9d4",
+        silver: "#f2f1e4",
         oranje: "#ffaf1c",
       },
     },

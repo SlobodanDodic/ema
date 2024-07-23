@@ -36,3 +36,34 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const CREATE_EMPLOYEE = gql`
+  mutation CreateEmployee($input: EmployeeInput!) {
+    createEmployee(data: $input) {
+      id
+      fullName
+      jobTitle
+      phoneNumber
+      birthday
+      contract
+      eyes
+      safety
+      fire
+      firstAid
+      healthCareMembers {
+        id
+        name
+        category
+        start
+        end
+      }
+      fitpassMembers {
+        id
+        name
+        category
+        start
+        end
+      }
+    }
+  }
+`;

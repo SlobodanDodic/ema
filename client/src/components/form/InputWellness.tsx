@@ -4,7 +4,9 @@ import { InputMembersProps, Member } from "../../types/formTypes";
 
 export default function InputMembers({ title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState<Member>({
+    id: Date.now(),
     name: "",
     category: "",
     start: null,
@@ -37,11 +39,24 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
     });
   };
 
+  const handleDeleteMember = (id: number) => {
+    setMembers(members.filter((member) => member.id !== id));
+  };
+
+  const handleEditMember = (member: Member) => {
+    setForm(member);
+    setIsEditing(true);
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMembers([...members, form]);
-    setForm({ name: "", category: "", start: null, end: null });
-    toggleModal();
+    if (isEditing) {
+      setMembers(members.map((member) => (member.id === form.id ? form : member)));
+    } else {
+      setMembers([...members, form]);
+    }
+    setForm({ id: Date.now(), name: "", category: "", start: null, end: null });
+    setIsEditing(false);
   };
 
   return (
@@ -60,12 +75,14 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
           id="defaultModal"
           tabIndex={-1}
           aria-hidden="true"
-          className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-white border border-marine"
+          className="fixed -top-[1px] -left-[1px] right-0 z-50 flex items-center justify-center w-[101%] h-[101%] overflow-x-hidden overflow-y-auto bg-silver"
         >
-          <div className="relative w-full h-full max-w-2xl p-4 md:h-auto">
+          <div className="relative w-full h-full max-w-3xl p-1">
             <div className="relative p-6 bg-white rounded">
               <div className="flex items-center justify-between py-4 border-b border-marine/20">
-                <h3 className="text-lg font-semibold text-marine">Add {title} Member</h3>
+                <h3 className="text-lg font-semibold text-marine">
+                  {isEditing ? `Edit ${title} Member` : `Add ${title} Member`}
+                </h3>
                 <button
                   type="button"
                   onClick={toggleModal}
@@ -114,7 +131,7 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                   type="submit"
                   className="inline-flex items-center p-3 mb-2 text-sm text-center text-white rounded bg-marine hover:bg-marine/90 focus:ring-2 focus:outline-none focus:ring-marine/60"
                 >
-                  ✛ Add new member
+                  {isEditing ? "Update a member ✐ " : "Add a member ✛ "}
                 </button>
               </form>
 
@@ -136,17 +153,36 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                       <th scope="col" className="px-6 py-4">
                         End Date
                       </th>
+                      <th scope="col" className="px-6 py-4">
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {members.map((member, index) => (
-                      <tr key={index} className="border-b odd:bg-white even:bg-marine/10">
+                    {members.map((member) => (
+                      <tr key={member.id} className="border-b odd:bg-white even:bg-marine/10">
                         <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
                           {member.name}
                         </th>
                         <td className="px-6 py-4 text-marine">{member.category}</td>
                         <td className="px-6 py-4 text-marine">{member.start ? member.start.toLocaleDateString() : "N/A"}</td>
                         <td className="px-6 py-4 text-marine">{member.end ? member.end.toLocaleDateString() : "N/A"}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            type="button"
+                            onClick={() => handleEditMember(member)}
+                            className="me-5 text-marine hover:text-sky-600"
+                          >
+                            ✎
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteMember(member.id)}
+                            className="text-marine hover:text-red-700"
+                          >
+                            X
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

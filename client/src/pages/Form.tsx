@@ -6,21 +6,28 @@ import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
 import PageHeading from "../components/common/PageHeading";
 import { FormData, Member } from "../types/formTypes";
 import "react-datepicker/dist/react-datepicker.css";
+import { useMutation } from "@apollo/client";
+import { CREATE_EMPLOYEE } from "../components/graphql";
+import { toast } from "react-toastify";
+
+const initialFormData: FormData = {
+  birthday: null,
+  contract: null,
+  phoneNumber: "",
+  eyes: null,
+  safety: null,
+  fire: null,
+  firstAid: null,
+  fullName: "",
+  jobTitle: "",
+  healthCareMembers: [],
+  fitpassMembers: [],
+};
 
 export default function Form() {
-  const [formData, setFormData] = useState<FormData>({
-    birthday: null,
-    contract: null,
-    phoneNumber: "",
-    eyes: null,
-    safety: null,
-    fire: null,
-    firstAid: null,
-    fullName: "",
-    jobTitle: "",
-    healthCareMembers: [],
-    fitpassMembers: [],
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+
+  const [createEmployee] = useMutation(CREATE_EMPLOYEE);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,14 +45,29 @@ export default function Form() {
     }));
   };
 
+  const handleSubmit = async () => {
+    try {
+      const { data } = await createEmployee({
+        variables: {
+          input: formData,
+        },
+      });
+      console.log("Employee created successfully:", data.createEmployee);
+      setFormData(initialFormData);
+      toast.success(`Employee ${data.createEmployee.fullName} created successfully!`);
+    } catch (error) {
+      console.error("Error creating employee:", error);
+    }
+  };
+
   return (
     <div>
       <PageHeading title="Employee Data Form" />
 
       <div className="pb-2 grid-box-text">
-        <InputText name="fullName" label="Full name" onChange={handleInputChange} />
-        <InputText name="jobTitle" label="Job title" onChange={handleInputChange} />
-        <InputText name="phoneNumber" label="Phone Number" type="tel" onChange={handleInputChange} />
+        <InputText name="fullName" label="Full name" value={formData.fullName} onChange={handleInputChange} />
+        <InputText name="jobTitle" label="Job title" value={formData.jobTitle} onChange={handleInputChange} />
+        <InputText name="phoneNumber" label="Phone Number" type="tel" value={formData.phoneNumber} onChange={handleInputChange} />
       </div>
 
       <div className="grid-box">
@@ -64,20 +86,53 @@ export default function Form() {
       </div>
 
       <div className="grid-box">
-        <InputDate name="Date of Birth" selected={formData.birthday} setSelected={(date) => handleDateChange("birthday", date)} />
+        <InputDate
+          name="Date of Birth"
+          selected={formData.birthday}
+          setSelected={(date) => handleDateChange("birthday", date)}
+          maxDate={new Date()}
+        />
         <InputDate
           name="Contract started"
           selected={formData.contract}
           setSelected={(date) => handleDateChange("contract", date)}
+          maxDate={new Date()}
         />
-        <InputDate name="Eye doctor" selected={formData.eyes} setSelected={(date) => handleDateChange("eyes", date)} />
-        <InputDate name="Office safety" selected={formData.safety} setSelected={(date) => handleDateChange("safety", date)} />
-        <InputDate name="Fire training" selected={formData.fire} setSelected={(date) => handleDateChange("fire", date)} />
+        <InputDate
+          name="Eye doctor"
+          selected={formData.eyes}
+          setSelected={(date) => handleDateChange("eyes", date)}
+          minDate={new Date()}
+        />
+        <InputDate
+          name="Office safety"
+          selected={formData.safety}
+          setSelected={(date) => handleDateChange("safety", date)}
+          minDate={new Date()}
+        />
+        <InputDate
+          name="Fire training"
+          selected={formData.fire}
+          setSelected={(date) => handleDateChange("fire", date)}
+          minDate={new Date()}
+        />
         <InputDate
           name="First aid training"
           selected={formData.firstAid}
           setSelected={(date) => handleDateChange("firstAid", date)}
         />
+      </div>
+
+      <div className="flex justify-center my-8">
+        <button
+          className={`px-4 py-2 rounded-sm text-silver ${
+            !formData.fullName.trim() ? "bg-marine/80 cursor-not-allowed" : "hover:bg-marine/90 bg-marine"
+          }`}
+          onClick={handleSubmit}
+          disabled={!formData.fullName.trim()}
+        >
+          Submit the form
+        </button>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { InputDateProps } from "../../types/formTypes";
+import "react-datepicker/dist/react-datepicker.css";
 
-export default function InputDate({ selected, setSelected, name }: InputDateProps) {
+export default function InputDate({ selected, setSelected, name, minDate, maxDate }: InputDateProps) {
   return (
     <div className="flex items-center mb-5">
       <label className="w-1/4 text-sm me-4 text-marine">{name}</label>
@@ -13,6 +13,8 @@ export default function InputDate({ selected, setSelected, name }: InputDateProp
         enableTabLoop={false}
         placeholderText={name}
         className="block w-full p-2 text-sm text-white border rounded border-silver"
+        minDate={minDate}
+        maxDate={maxDate}
         showIcon
         icon={
           <svg width="1em" height="1em" viewBox="0 0 48 48">
