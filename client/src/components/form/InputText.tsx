@@ -14,7 +14,7 @@ export default function InputText({ name, label, onChange, value, type = "text" 
       />
       <label
         htmlFor={name}
-        className="peer-focus:font-medium absolute text-sm text-marine duration-300 transform -translate-y-6 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-steel peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0  peer-focus:-translate-y-6"
+        className="peer-focus:font-medium absolute text-sm text-marine duration-300 transform -translate-y-6 top-2 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-steel peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0  peer-focus:-translate-y-6"
       >
         {label}
       </label>

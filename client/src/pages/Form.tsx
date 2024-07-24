@@ -1,14 +1,16 @@
-import InputDate from "../components/form/InputDate";
-import InputText from "../components/form/InputText";
-import { useState, ChangeEvent } from "react";
-import InputWellness from "../components/form/InputWellness";
-import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
-import PageHeading from "../components/common/PageHeading";
-import { FormData, Member } from "../types/formTypes";
-import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from "@apollo/client";
-import { CREATE_EMPLOYEE } from "../components/graphql";
+import { ChangeEvent, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
+import PageHeading from "../components/common/PageHeading";
+import { employeeJobTitles } from "../components/form/categories";
+import InputDate from "../components/form/InputDate";
+import InputSelect from "../components/form/InputSelect";
+import InputText from "../components/form/InputText";
+import InputWellness from "../components/form/InputWellness";
+import { CREATE_EMPLOYEE } from "../components/graphql";
+import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
+import { FormData, Member } from "../types/formTypes";
 
 const initialFormData: FormData = {
   birthday: null,
@@ -29,7 +31,7 @@ export default function Form() {
 
   const [createEmployee] = useMutation(CREATE_EMPLOYEE);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -64,9 +66,16 @@ export default function Form() {
     <div>
       <PageHeading title="Employee Data Form" />
 
-      <div className="pb-2 grid-box-text">
+      <div className="grid-box-text">
         <InputText name="fullName" label="Full name" value={formData.fullName} onChange={handleInputChange} />
-        <InputText name="jobTitle" label="Job title" value={formData.jobTitle} onChange={handleInputChange} />
+        <InputSelect
+          name="jobTitle"
+          value={formData.jobTitle}
+          onChange={handleInputChange}
+          options={employeeJobTitles}
+          placeholder="Select job title"
+          className="mb-5"
+        />
         <InputText name="phoneNumber" label="Phone Number" type="tel" value={formData.phoneNumber} onChange={handleInputChange} />
       </div>
 

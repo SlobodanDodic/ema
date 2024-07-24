@@ -64,3 +64,33 @@ export type Employee = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+// client/src/components/form/InputSelect.tsx
+export interface Option {
+  value: string;
+}
+
+export interface SelectProps {
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: Option[];
+  className?: string;
+  placeholder?: string;
+}
+
+// client/src/components/form/MembersTable.tsx
+export interface Member {
+  id: number;
+  name: string;
+  category: string;
+  start: Date | null;
+  end: Date | null;
+}
+
+export interface MembersTableProps {
+  title: string;
+  members: Member[];
+  handleEditMember: (member: Member) => void;
+  handleDeleteMember: (id: number) => void;
+}

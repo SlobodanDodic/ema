@@ -1,6 +1,10 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import InputDate from "./InputDate";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { InputMembersProps, Member } from "../../types/formTypes";
+import InputDate from "./InputDate";
+import InputSelect from "./InputSelect";
+import InputText from "./InputText";
+import MembersTable from "./MembersTable";
+import { memberConnection } from "./categories";
 
 export default function InputMembers({ title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,101 +97,37 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
               </div>
 
               <form className="pt-4" onSubmit={handleSubmit}>
-                <div className="grid gap-4 mb-4 sm:grid-cols-2">
-                  <div>
-                    <label className="block mb-2 text-sm text-marine">Full Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      className="block w-full p-2 text-sm border rounded outline-none bg-marine/20 border-marine/30 text-marine focus:border-2 focus:border-marine/focus:ring-marine/70"
-                      placeholder="Full name of member"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block mb-2 text-sm text-marine">Category</label>
-                    <select
+                <div className="flex w-full">
+                  <div className="flex flex-col w-1/2 pe-4">
+                    <InputText name="name" value={form.name} onChange={handleChange} label="Full Name" />
+                    <InputSelect
                       name="category"
                       value={form.category}
                       onChange={handleChange}
-                      className="block w-full p-2 text-sm border rounded outline-none bg-marine/20 border-marine/30 text-marine focus:border-2 focus:border-marine/focus:ring-marine/70"
-                      required
-                    >
-                      <option value="" disabled>
-                        Select category
-                      </option>
-                      <option value="Family">Family</option>
-                      <option value="Friend">Friend</option>
-                    </select>
+                      options={memberConnection}
+                      placeholder="Select category"
+                    />
                   </div>
 
-                  <InputDate name="Date Start" selected={form.start} setSelected={handleStartChange} />
-                  <InputDate name="Date End" selected={form.end} setSelected={handleEndChange} />
+                  <div className="flex flex-col w-1/2 mt-4 ps-4">
+                    <InputDate name="Date Start" selected={form.start} setSelected={handleStartChange} />
+                    <InputDate name="Date End" selected={form.end} setSelected={handleEndChange} />
+                  </div>
                 </div>
                 <button
                   type="submit"
-                  className="inline-flex items-center p-3 mb-2 text-sm text-center text-white rounded bg-marine hover:bg-marine/90 focus:ring-2 focus:outline-none focus:ring-marine/60"
+                  className="inline-flex items-center p-3 mb-6 text-sm text-center text-white rounded bg-marine hover:bg-marine/90 focus:ring-2 focus:outline-none focus:ring-marine/60"
                 >
                   {isEditing ? "Update a member ✐ " : "Add a member ✛ "}
                 </button>
               </form>
 
-              <div className="py-4 text-sm font-semibold border-t text-marine border-marine/20">{title} Members:</div>
-
-              <div className="relative overflow-x-auto">
-                <table className="w-full text-sm text-left text-gray-700 rtl:text-right">
-                  <thead className="text-sm text-white bg-marine">
-                    <tr>
-                      <th scope="col" className="px-6 py-4">
-                        Member name
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Category
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Start date
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        End Date
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {members.map((member) => (
-                      <tr key={member.id} className="border-b odd:bg-white even:bg-marine/10">
-                        <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
-                          {member.name}
-                        </th>
-                        <td className="px-6 py-4 text-marine">{member.category}</td>
-                        <td className="px-6 py-4 text-marine">{member.start ? member.start.toLocaleDateString() : "N/A"}</td>
-                        <td className="px-6 py-4 text-marine">{member.end ? member.end.toLocaleDateString() : "N/A"}</td>
-                        <td className="px-6 py-4">
-                          <button
-                            type="button"
-                            onClick={() => handleEditMember(member)}
-                            className="me-5 text-marine hover:text-sky-600"
-                          >
-                            ✎
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleDeleteMember(member.id)}
-                            className="text-marine hover:text-red-700"
-                          >
-                            X
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <MembersTable
+                title={title}
+                members={members}
+                handleEditMember={handleEditMember}
+                handleDeleteMember={handleDeleteMember}
+              />
             </div>
           </div>
         </div>
