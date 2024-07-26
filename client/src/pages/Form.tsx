@@ -9,7 +9,7 @@ import InputDate from "../components/form/InputDate";
 import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
 import InputWellness from "../components/form/InputWellness";
-import { CREATE_EMPLOYEE, UPDATE_EMPLOYEE } from "../components/graphql/employee";
+import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../components/graphql/employee";
 import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
 import { FormData, Member } from "../types/formTypes";
 
@@ -32,8 +32,15 @@ export default function Form() {
   const employeeData = location.state?.employee || null;
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
-  const [createEmployee] = useMutation(CREATE_EMPLOYEE);
-  const [updateEmployee] = useMutation(UPDATE_EMPLOYEE);
+  // const [createEmployee] = useMutation(CREATE_EMPLOYEE);
+  // const [updateEmployee] = useMutation(UPDATE_EMPLOYEE);
+
+  const [createEmployee] = useMutation(CREATE_EMPLOYEE, {
+    refetchQueries: [{ query: GET_EMPLOYEES }],
+  });
+  const [updateEmployee] = useMutation(UPDATE_EMPLOYEE, {
+    refetchQueries: [{ query: GET_EMPLOYEES }],
+  });
 
   const navigate = useNavigate();
   const DEFAULT_DATE = "1900-01-01T00:00:00Z";

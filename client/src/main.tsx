@@ -18,7 +18,29 @@ const link = from([removeTypenameLink, httpLink]);
 const client = new ApolloClient({
   link,
   uri: import.meta.env.VITE_DATABASE_URL,
-  cache: new InMemoryCache(),
+  // cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Employee: {
+        fields: {
+          healthCareMembers: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            merge(_existing = [], incoming) {
+              // Custom merge logic: replace existing members with incoming ones
+              return incoming;
+            },
+          },
+          fitpassMembers: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            merge(_existing = [], incoming) {
+              // Custom merge logic: replace existing members with incoming ones
+              return incoming;
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
