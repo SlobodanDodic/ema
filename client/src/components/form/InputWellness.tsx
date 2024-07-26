@@ -10,7 +10,7 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState<Member>({
-    id: Date.now(),
+    id: Date.now().toString(),
     name: "",
     category: "",
     start: null,
@@ -43,8 +43,8 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
     });
   };
 
-  const handleDeleteMember = (id: number) => {
-    setMembers(members.filter((member) => member.id !== id));
+  const handleDeleteMember = (id: string) => {
+    setMembers(members.filter((member) => member.id !== id.toString()));
   };
 
   const handleEditMember = (member: Member) => {
@@ -59,7 +59,7 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
     } else {
       setMembers([...members, form]);
     }
-    setForm({ id: Date.now(), name: "", category: "", start: null, end: null });
+    setForm({ id: "", name: "", category: "", start: null, end: null });
     setIsEditing(false);
   };
 

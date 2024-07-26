@@ -46,42 +46,32 @@ export class EmployeeService {
     return this.prisma.employee.update({
       where: { id },
       data: {
-        ...data,
+        fullName: data.fullName,
+        jobTitle: data.jobTitle,
+        phoneNumber: data.phoneNumber,
+        birthday: data.birthday,
+        contract: data.contract,
+        eyes: data.eyes,
+        safety: data.safety,
+        fire: data.fire,
+        firstAid: data.firstAid,
         healthCareMembers: {
-          upsert:
-            data.healthCareMembers?.map((member) => ({
-              where: { id: member.id ?? '' },
-              update: {
-                name: member.name,
-                category: member.category,
-                start: member.start,
-                end: member.end,
-              },
-              create: {
-                name: member.name,
-                category: member.category,
-                start: member.start,
-                end: member.end,
-              },
-            })) || [],
+          deleteMany: {},
+          create: data.healthCareMembers.map((member) => ({
+            name: member.name,
+            category: member.category,
+            start: member.start,
+            end: member.end,
+          })),
         },
         fitpassMembers: {
-          upsert:
-            data.fitpassMembers?.map((member) => ({
-              where: { id: member.id ?? '' },
-              update: {
-                name: member.name,
-                category: member.category,
-                start: member.start,
-                end: member.end,
-              },
-              create: {
-                name: member.name,
-                category: member.category,
-                start: member.start,
-                end: member.end,
-              },
-            })) || [],
+          deleteMany: {},
+          create: data.fitpassMembers.map((member) => ({
+            name: member.name,
+            category: member.category,
+            start: member.start,
+            end: member.end,
+          })),
         },
       },
       include: {
