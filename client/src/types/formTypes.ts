@@ -14,7 +14,7 @@ export type FormData = {
 };
 
 export interface Member {
-  id: number;
+  id: string;
   name: string;
   category: string;
   start: Date | null;
@@ -49,7 +49,7 @@ export interface InputMembersProps {
 
 // client/src/pages/Employees.tsx
 export type Employee = {
-  id: number;
+  id: string;
   fullName: string;
   jobTitle: string;
   phoneNumber: string;
@@ -81,7 +81,7 @@ export interface SelectProps {
 
 // client/src/components/form/MembersTable.tsx
 export interface Member {
-  id: number;
+  id: string;
   name: string;
   category: string;
   start: Date | null;
@@ -92,5 +92,5 @@ export interface MembersTableProps {
   title: string;
   members: Member[];
   handleEditMember: (member: Member) => void;
-  handleDeleteMember: (id: number) => void;
+  handleDeleteMember: (id: string) => void;
 }

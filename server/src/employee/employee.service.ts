@@ -9,15 +9,7 @@ export class EmployeeService {
   async createEmployee(data: EmployeeInput) {
     return this.prisma.employee.create({
       data: {
-        fullName: data.fullName,
-        jobTitle: data.jobTitle,
-        phoneNumber: data.phoneNumber,
-        birthday: data.birthday,
-        contract: data.contract,
-        eyes: data.eyes,
-        safety: data.safety,
-        fire: data.fire,
-        firstAid: data.firstAid,
+        ...data,
         healthCareMembers: {
           create: data.healthCareMembers.map((member) => ({
             name: member.name,
@@ -42,6 +34,55 @@ export class EmployeeService {
     });
   }
 
+  async updateEmployee(id: string, data: EmployeeInput) {
+    return this.prisma.employee.update({
+      where: { id },
+      data: {
+        ...data,
+        healthCareMembers: {
+          upsert:
+            data.healthCareMembers?.map((member) => ({
+              where: { id: member.id ?? '' },
+              update: {
+                name: member.name,
+                category: member.category,
+                start: member.start,
+                end: member.end,
+              },
+              create: {
+                name: member.name,
+                category: member.category,
+                start: member.start,
+                end: member.end,
+              },
+            })) || [],
+        },
+        fitpassMembers: {
+          upsert:
+            data.fitpassMembers?.map((member) => ({
+              where: { id: member.id ?? '' },
+              update: {
+                name: member.name,
+                category: member.category,
+                start: member.start,
+                end: member.end,
+              },
+              create: {
+                name: member.name,
+                category: member.category,
+                start: member.start,
+                end: member.end,
+              },
+            })) || [],
+        },
+      },
+      include: {
+        healthCareMembers: true,
+        fitpassMembers: true,
+      },
+    });
+  }
+
   async findAllEmployees() {
     return this.prisma.employee.findMany({
       include: {
@@ -51,7 +92,7 @@ export class EmployeeService {
     });
   }
 
-  async findOneEmployee(id: number) {
+  async findOneEmployee(id: string) {
     return this.prisma.employee.findUnique({
       where: { id },
       include: {

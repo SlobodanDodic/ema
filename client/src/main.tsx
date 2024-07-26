@@ -1,16 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 
 import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import router from "./Router.tsx";
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, ApolloProvider, from, HttpLink, InMemoryCache } from "@apollo/client";
+import { removeTypenameFromVariables } from "@apollo/client/link/remove-typename";
 import { ToastContainer } from "react-toastify";
 
+const removeTypenameLink = removeTypenameFromVariables();
+const httpLink = new HttpLink({ uri: import.meta.env.VITE_HTTP_LINK });
+const link = from([removeTypenameLink, httpLink]);
+
 const client = new ApolloClient({
+  link,
   uri: import.meta.env.VITE_DATABASE_URL,
   cache: new InMemoryCache(),
 });

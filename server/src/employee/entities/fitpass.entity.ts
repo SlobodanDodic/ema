@@ -1,10 +1,10 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Employee } from './employee.entity';
 
 @ObjectType()
 export class FitpassMember {
-  @Field()
-  id: number;
+  @Field({ nullable: true })
+  id?: string;
 
   @Field()
   name: string;

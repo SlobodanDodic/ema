@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import PageHeading from "../components/common/PageHeading";
 import { employeeJobTitles } from "../components/form/categories";
@@ -8,7 +9,7 @@ import InputDate from "../components/form/InputDate";
 import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
 import InputWellness from "../components/form/InputWellness";
-import { CREATE_EMPLOYEE } from "../components/graphql";
+import { CREATE_EMPLOYEE, UPDATE_EMPLOYEE } from "../components/graphql/employee";
 import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
 import { FormData, Member } from "../types/formTypes";
 
@@ -27,9 +28,32 @@ const initialFormData: FormData = {
 };
 
 export default function Form() {
+  const location = useLocation();
+  const employeeData = location.state?.employee || null;
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
   const [createEmployee] = useMutation(CREATE_EMPLOYEE);
+  const [updateEmployee] = useMutation(UPDATE_EMPLOYEE);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (employeeData) {
+      setFormData({
+        birthday: employeeData.birthday || null,
+        contract: employeeData.contract || null,
+        phoneNumber: employeeData.phoneNumber,
+        eyes: employeeData.eyes || null,
+        safety: employeeData.safety || null,
+        fire: employeeData.fire || null,
+        firstAid: employeeData.firstAid || null,
+        fullName: employeeData.fullName,
+        jobTitle: employeeData.jobTitle,
+        healthCareMembers: employeeData.healthCareMembers,
+        fitpassMembers: employeeData.fitpassMembers,
+      });
+    }
+  }, [employeeData]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -49,16 +73,53 @@ export default function Form() {
 
   const handleSubmit = async () => {
     try {
-      const { data } = await createEmployee({
-        variables: {
-          input: formData,
-        },
-      });
-      console.log("Employee created successfully:", data.createEmployee);
+      // Prepare the input data
+      const inputData = {
+        ...formData,
+        healthCareMembers: formData.healthCareMembers.map((member) => ({
+          id: member.id !== "" ? member.id.toString() : "",
+          name: member.name,
+          category: member.category,
+          start: member.start,
+          end: member.end,
+        })),
+        fitpassMembers: formData.fitpassMembers.map((member) => ({
+          id: member.id !== "" ? member.id.toString() : "",
+          name: member.name,
+          category: member.category,
+          start: member.start,
+          end: member.end,
+        })),
+      };
+
+      if (employeeData?.id) {
+        // Update existing employee
+        const variables = {
+          id: employeeData.id,
+          input: inputData,
+        };
+        const { data } = await updateEmployee({
+          variables,
+        });
+
+        toast.success(`Employee ${data.updateEmployee.fullName} updated successfully!`);
+      } else {
+        // Create new employee
+        const { data } = await createEmployee({
+          variables: {
+            input: inputData,
+          },
+        });
+
+        toast.success(`Employee ${data.createEmployee.fullName} created successfully!`);
+      }
+
+      // Navigate and reset form after successful operation
+      navigate("/employees", { replace: true });
       setFormData(initialFormData);
-      toast.success(`Employee ${data.createEmployee.fullName} created successfully!`);
     } catch (error) {
-      console.error("Error creating employee:", error);
+      console.error("Error submitting form:", error);
+      toast.error("An error occurred while saving the employee.");
     }
   };
 
@@ -140,7 +201,7 @@ export default function Form() {
           onClick={handleSubmit}
           disabled={!formData.fullName.trim()}
         >
-          Submit the form
+          {employeeData?.id ? "Update Employee" : "Create Employee"}
         </button>
       </div>
     </div>

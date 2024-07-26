@@ -1,11 +1,11 @@
-import { ObjectType, Field } from '@nestjs/graphql';
-import { HealthCareMember } from './healthcare.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { FitpassMember } from './fitpass.entity';
+import { HealthCareMember } from './healthcare.entity';
 
 @ObjectType()
 export class Employee {
   @Field()
-  id: number;
+  id: string;
 
   @Field()
   fullName: string;

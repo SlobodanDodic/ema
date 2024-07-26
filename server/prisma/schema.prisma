@@ -20,7 +20,7 @@ model User {
 }
 
 model Employee {
-  id                Int                @id @default(autoincrement())
+  id                String             @id @default(uuid())
   fullName          String
   jobTitle          String
   phoneNumber       String
@@ -38,12 +38,12 @@ model Employee {
 }
 
 model HealthCareMember {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(uuid())
   name       String
   category   String
   start      DateTime?
   end        DateTime?
-  employeeId Int
+  employeeId String
   employee   Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -51,12 +51,12 @@ model HealthCareMember {
 }
 
 model FitpassMember {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(uuid())
   name       String
   category   String
   start      DateTime?
   end        DateTime?
-  employeeId Int
+  employeeId String
   employee   Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

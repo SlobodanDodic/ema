@@ -1,19 +1,25 @@
 import { useQuery } from "@apollo/client";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageHeading from "../components/common/PageHeading";
-import { GET_EMPLOYEES } from "../components/graphql";
+import { GET_EMPLOYEES } from "../components/graphql/employee";
 import { Employee } from "../types/formTypes";
 
 export default function Employees() {
   const { data } = useQuery(GET_EMPLOYEES);
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data) {
       setEmployees(data?.findAllEmployees);
     }
   }, [data]);
+
+  const handleRowClick = (employee: Employee) => {
+    navigate("/form", { state: { employee } });
+  };
 
   return (
     <div>
@@ -60,7 +66,11 @@ export default function Employees() {
           </thead>
           <tbody>
             {employees?.map((employee: Employee) => (
-              <tr key={employee.id} className="border-b odd:bg-silver hover:bg-marine/40 hover:cursor-pointer even:bg-marine/10">
+              <tr
+                key={employee.id}
+                onClick={() => handleRowClick(employee)}
+                className="border-b odd:bg-silver hover:bg-marine/40 hover:cursor-pointer even:bg-marine/10"
+              >
                 <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
                   {employee.fullName}
                 </th>

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import AuthFormLayout from "../components/auth/AuthFormLayout";
-import InputField from "../components/auth/InputField";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../components/graphql";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import AuthFormLayout from "../components/auth/AuthFormLayout";
+import InputField from "../components/auth/InputField";
+import { REGISTER_USER } from "../components/graphql/auth";
 import Loading from "./Loading";
 
 type FormDataKey = "username" | "email" | "password" | "confirmPassword";

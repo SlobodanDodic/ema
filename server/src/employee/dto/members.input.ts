@@ -1,18 +1,12 @@
-import { InputType, Field } from '@nestjs/graphql';
-import {
-  IsDate,
-  IsNotEmpty,
-  IsString,
-  IsOptional,
-  IsNumber,
-} from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class HealthCareMemberInput {
-  @IsNotEmpty()
-  @IsNumber()
-  @Field()
-  id: number;
+  @IsString()
+  @IsOptional()
+  @Field({ nullable: true })
+  id?: string;
 
   @IsNotEmpty()
   @IsString()
@@ -37,10 +31,10 @@ export class HealthCareMemberInput {
 
 @InputType()
 export class FitpassMemberInput {
-  @IsNotEmpty()
-  @IsNumber()
-  @Field()
-  id: number;
+  @IsString()
+  @IsOptional()
+  @Field({ nullable: true })
+  id?: string;
 
   @IsNotEmpty()
   @IsString()

@@ -1,5 +1,4 @@
-import { FitpassMemberInput, HealthCareMemberInput } from './members.input';
-import { InputType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -8,6 +7,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
+import { FitpassMemberInput, HealthCareMemberInput } from './members.input';
 
 @InputType()
 export class EmployeeInput {
@@ -53,12 +53,12 @@ export class EmployeeInput {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => HealthCareMemberInput)
-  @Field(() => [HealthCareMemberInput], { nullable: true })
+  @Field(() => [HealthCareMemberInput])
   healthCareMembers: HealthCareMemberInput[];
 
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => FitpassMemberInput)
-  @Field(() => [FitpassMemberInput], { nullable: true })
+  @Field(() => [FitpassMemberInput])
   fitpassMembers: FitpassMemberInput[];
 }

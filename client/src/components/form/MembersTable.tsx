@@ -1,3 +1,4 @@
+import moment from "moment";
 import { MembersTableProps } from "../../types/formTypes";
 
 export default function MembersTable({ title, members, handleEditMember, handleDeleteMember }: MembersTableProps) {
@@ -33,8 +34,9 @@ export default function MembersTable({ title, members, handleEditMember, handleD
                   {member.name}
                 </th>
                 <td className="px-6 py-4 text-marine">{member.category}</td>
-                <td className="px-6 py-4 text-marine">{member.start ? member.start.toLocaleDateString() : "N/A"}</td>
-                <td className="px-6 py-4 text-marine">{member.end ? member.end.toLocaleDateString() : "N/A"}</td>
+                <td className="px-6 py-4 text-marine">{member.start ? moment(member.start).format("L") : "N/A"}</td>
+                <td className="px-6 py-4 text-marine">{member.end ? moment(member.end).format("L") : "N/A"}</td>
+
                 <td className="px-6 py-4">
                   <button type="button" onClick={() => handleEditMember(member)} className="me-5 text-marine hover:text-sky-600">
                     ✎
