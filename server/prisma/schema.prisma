@@ -23,7 +23,7 @@ model Employee {
   id                String             @id @default(uuid())
   fullName          String
   jobTitle          String
-  phoneNumber       String
+  phoneNumber       String?
   birthday          DateTime?
   contract          DateTime?
   eyes              DateTime?

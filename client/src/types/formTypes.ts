@@ -51,14 +51,14 @@ export interface InputMembersProps {
 export type Employee = {
   id: string;
   fullName: string;
-  jobTitle: string;
-  phoneNumber: string;
-  birthday?: Date;
-  contract?: Date;
-  eyes?: Date;
-  safety?: Date;
-  fire?: Date;
-  firstAid?: Date;
+  jobTitle?: string;
+  phoneNumber?: string;
+  birthday?: Date | null;
+  contract?: Date | null;
+  eyes?: Date | null;
+  safety?: Date | null;
+  fire?: Date | null;
+  firstAid?: Date | null;
   healthCareMembers: Member[];
   fitpassMembers: Member[];
   createdAt: Date;

@@ -36,19 +36,20 @@ export default function Form() {
   const [updateEmployee] = useMutation(UPDATE_EMPLOYEE);
 
   const navigate = useNavigate();
+  const DEFAULT_DATE = "1900-01-01T00:00:00Z";
 
   useEffect(() => {
     if (employeeData) {
       setFormData({
         birthday: employeeData.birthday || null,
         contract: employeeData.contract || null,
-        phoneNumber: employeeData.phoneNumber,
+        phoneNumber: employeeData.phoneNumber || "",
         eyes: employeeData.eyes || null,
         safety: employeeData.safety || null,
         fire: employeeData.fire || null,
         firstAid: employeeData.firstAid || null,
         fullName: employeeData.fullName,
-        jobTitle: employeeData.jobTitle,
+        jobTitle: employeeData.jobTitle || "",
         healthCareMembers: employeeData.healthCareMembers,
         fitpassMembers: employeeData.fitpassMembers,
       });
@@ -75,7 +76,15 @@ export default function Form() {
     try {
       // Prepare the input data
       const inputData = {
-        ...formData,
+        fullName: formData.fullName,
+        jobTitle: formData.jobTitle || "Not Specified",
+        phoneNumber: formData.phoneNumber || "Not Provided",
+        birthday: formData.birthday || DEFAULT_DATE,
+        contract: formData.contract || DEFAULT_DATE,
+        eyes: formData.eyes || DEFAULT_DATE,
+        safety: formData.safety || DEFAULT_DATE,
+        fire: formData.fire || DEFAULT_DATE,
+        firstAid: formData.firstAid || DEFAULT_DATE,
         healthCareMembers: formData.healthCareMembers.map((member) => ({
           id: member.id !== "" ? member.id.toString() : "",
           name: member.name,

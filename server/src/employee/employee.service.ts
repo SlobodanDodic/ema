@@ -9,7 +9,15 @@ export class EmployeeService {
   async createEmployee(data: EmployeeInput) {
     return this.prisma.employee.create({
       data: {
-        ...data,
+        fullName: data.fullName,
+        jobTitle: data.jobTitle,
+        phoneNumber: data.phoneNumber,
+        birthday: data.birthday,
+        contract: data.contract,
+        eyes: data.eyes,
+        safety: data.safety,
+        fire: data.fire,
+        firstAid: data.firstAid,
         healthCareMembers: {
           create: data.healthCareMembers.map((member) => ({
             name: member.name,

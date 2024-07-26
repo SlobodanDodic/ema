@@ -4,6 +4,7 @@ import {
   IsArray,
   IsDate,
   IsNotEmpty,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -16,37 +17,43 @@ export class EmployeeInput {
   @Field()
   fullName: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsOptional()
   @Field()
-  jobTitle: string;
+  jobTitle?: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsOptional()
   @Field()
-  phoneNumber: string;
+  phoneNumber?: string;
 
   @IsDate()
+  @IsOptional()
   @Field()
   birthday?: Date;
 
   @IsDate()
+  @IsOptional()
   @Field()
   contract?: Date;
 
   @IsDate()
+  @IsOptional()
   @Field()
   eyes?: Date;
 
   @IsDate()
+  @IsOptional()
   @Field()
   safety?: Date;
 
   @IsDate()
+  @IsOptional()
   @Field()
   fire?: Date;
 
   @IsDate()
+  @IsOptional()
   @Field()
   firstAid?: Date;
 

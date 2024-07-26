@@ -62,12 +62,12 @@ type Employee {
   fullName: String!
   jobTitle: String!
   phoneNumber: String!
-  birthday: DateTime
-  contract: DateTime
-  eyes: DateTime
-  safety: DateTime
-  fire: DateTime
-  firstAid: DateTime
+  birthday: DateTime!
+  contract: DateTime!
+  eyes: DateTime!
+  safety: DateTime!
+  fire: DateTime!
+  firstAid: DateTime!
   healthCareMembers: [HealthCareMember!]!
   fitpassMembers: [FitpassMember!]!
   createdAt: DateTime!

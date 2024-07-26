@@ -11,27 +11,27 @@ export class Employee {
   fullName: string;
 
   @Field()
-  jobTitle: string;
+  jobTitle?: string;
 
   @Field()
-  phoneNumber: string;
+  phoneNumber?: string;
 
-  @Field({ nullable: true })
+  @Field()
   birthday?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   contract?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   eyes?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   safety?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   fire?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   firstAid?: Date;
 
   @Field((_type) => [HealthCareMember])
