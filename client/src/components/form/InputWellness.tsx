@@ -9,6 +9,7 @@ import { insuranceCompany, memberConnection, memberEmployee } from "./categories
 export default function InputMembers({ beneficiary, title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [form, setForm] = useState<Member>({
     id: Date.now().toString(),
     name: "",
@@ -68,6 +69,7 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
       setMembers(members.map((member) => (member.id === form.id ? form : member)));
     } else {
       setMembers([...members, { ...form, id: Date.now().toString() }]);
+      setFormSubmitted(true);
     }
     setForm({ id: Date.now().toString(), name: "", category: "", insurance: "", start: null, end: null });
     setIsEditing(false);
@@ -102,7 +104,7 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
                   onClick={toggleModal}
                   className="inline-flex items-center px-2 py-1 ml-auto bg-transparent rounded text-marine hover:bg-marine/20 hover:text-marine"
                 >
-                  {members.length > 0 ? "Save" : "Leave"}
+                  {formSubmitted ? "Save" : "Leave"}
                 </button>
               </div>
 

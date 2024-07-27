@@ -9,7 +9,7 @@ export default function InputDate({ selected, setSelected, name, minDate, maxDat
       <DatePicker
         selected={selected}
         onChange={(date: Date | null) => setSelected(date)}
-        dateFormat="dd. MMM yyyy"
+        dateFormat="dd MMM yyyy"
         enableTabLoop={false}
         placeholderText={name}
         className="block w-full p-2 text-sm text-white border rounded border-silver"

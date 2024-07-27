@@ -156,14 +156,14 @@ export default function Form() {
 
       <div className="grid-box">
         <InputWellness
-          beneficiary={employeeData?.fullName}
+          beneficiary={formData?.fullName}
           title="Health Care Members"
           members={formData.healthCareMembers}
           setMembers={(members) => handleMembersChange("healthCare", members)}
           icon={<SvgHealth addClass="w-6 h-6 me-2 text-white" />}
         />
         <InputWellness
-          beneficiary={employeeData?.fullName}
+          beneficiary={formData?.fullName}
           title="Fitpass Members"
           members={formData.fitpassMembers}
           setMembers={(members) => handleMembersChange("fitpass", members)}

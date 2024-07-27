@@ -40,8 +40,8 @@ export default function MembersTable({ title, members, handleEditMember, handleD
                 </th>
                 <td className="px-6 py-4 text-marine">{member.category}</td>
                 {title === "Health Care Members" ? <td className="px-6 py-4 text-marine">{member.insurance}</td> : null}
-                <td className="px-6 py-4 text-marine">{member.start ? moment(member.start).format("L") : "N/A"}</td>
-                <td className="px-6 py-4 text-marine">{member.end ? moment(member.end).format("L") : "N/A"}</td>
+                <td className="px-6 py-4 text-marine">{member.start ? moment(member.start).format("DD MMM YYYY") : "N/A"}</td>
+                <td className="px-6 py-4 text-marine">{member.end ? moment(member.end).format("DD MMM YYYY") : "N/A"}</td>
 
                 <td className="px-6 py-4">
                   <button type="button" onClick={() => handleEditMember(member)} className="me-5 text-marine hover:text-sky-600">
