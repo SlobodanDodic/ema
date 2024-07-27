@@ -41,6 +41,7 @@ model HealthCareMember {
   id         String    @id @default(uuid())
   name       String
   category   String
+  insurance  String
   start      DateTime?
   end        DateTime?
   employeeId String

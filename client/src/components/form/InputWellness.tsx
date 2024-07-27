@@ -4,18 +4,20 @@ import InputDate from "./InputDate";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 import MembersTable from "./MembersTable";
-import { memberConnection } from "./categories";
+import { insuranceCompany, memberConnection, memberEmployee } from "./categories";
 
-export default function InputMembers({ title, members, setMembers, icon }: InputMembersProps) {
+export default function InputMembers({ beneficiary, title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState<Member>({
     id: Date.now().toString(),
     name: "",
     category: "",
+    insurance: "",
     start: null,
     end: null,
   });
+  const [showValidationMessage, setShowValidationMessage] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -44,7 +46,7 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
   };
 
   const handleDeleteMember = (id: string) => {
-    setMembers(members.filter((member) => member.id !== id.toString()));
+    setMembers(members.filter((member) => member.id !== id));
   };
 
   const handleEditMember = (member: Member) => {
@@ -54,12 +56,20 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (
+      (title === "Health Care Members" && (!form.name || !form.category || !form.insurance)) ||
+      (title === "Fitpass Members" && (!form.name || !form.category))
+    ) {
+      setShowValidationMessage(true);
+      return;
+    }
+    setShowValidationMessage(false);
     if (isEditing) {
       setMembers(members.map((member) => (member.id === form.id ? form : member)));
     } else {
-      setMembers([...members, form]);
+      setMembers([...members, { ...form, id: Date.now().toString() }]);
     }
-    setForm({ id: "", name: "", category: "", start: null, end: null });
+    setForm({ id: Date.now().toString(), name: "", category: "", insurance: "", start: null, end: null });
     setIsEditing(false);
   };
 
@@ -92,7 +102,7 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                   onClick={toggleModal}
                   className="inline-flex items-center px-2 py-1 ml-auto bg-transparent rounded text-marine hover:bg-marine/20 hover:text-marine"
                 >
-                  X
+                  {members.length > 0 ? "Save" : "Leave"}
                 </button>
               </div>
 
@@ -104,9 +114,20 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                       name="category"
                       value={form.category}
                       onChange={handleChange}
-                      options={memberConnection}
+                      options={beneficiary === form.name ? memberEmployee : memberConnection}
                       placeholder="Select category"
                     />
+                    <div className="my-6">
+                      {title === "Health Care Members" ? (
+                        <InputSelect
+                          name="insurance"
+                          value={form.insurance}
+                          onChange={handleChange}
+                          options={insuranceCompany}
+                          placeholder="Select insurance"
+                        />
+                      ) : null}
+                    </div>
                   </div>
 
                   <div className="flex flex-col w-1/2 mt-4 ps-4">
@@ -121,6 +142,8 @@ export default function InputMembers({ title, members, setMembers, icon }: Input
                   {isEditing ? "Update a member ✐ " : "Add a member ✛ "}
                 </button>
               </form>
+
+              {showValidationMessage && <div className="text-red-600">All fields are required!</div>}
 
               <MembersTable
                 title={title}

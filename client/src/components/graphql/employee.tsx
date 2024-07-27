@@ -16,6 +16,7 @@ export const CREATE_EMPLOYEE = gql`
       healthCareMembers {
         id
         name
+        insurance
         category
         start
         end
@@ -47,6 +48,7 @@ export const UPDATE_EMPLOYEE = gql`
       healthCareMembers {
         id
         name
+        insurance
         category
         start
         end
@@ -78,6 +80,7 @@ export const GET_EMPLOYEES = gql`
       healthCareMembers {
         id
         name
+        insurance
         category
         start
         end

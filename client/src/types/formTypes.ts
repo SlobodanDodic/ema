@@ -17,6 +17,7 @@ export interface Member {
   id: string;
   name: string;
   category: string;
+  insurance: string;
   start: Date | null;
   end: Date | null;
 }
@@ -41,6 +42,7 @@ export type InputTextProps = {
 
 // client/src/components/form/InputWellness.tsx
 export interface InputMembersProps {
+  beneficiary: string;
   title: string;
   members: Member[];
   setMembers: (members: Member[]) => void;
@@ -80,14 +82,6 @@ export interface SelectProps {
 }
 
 // client/src/components/form/MembersTable.tsx
-export interface Member {
-  id: string;
-  name: string;
-  category: string;
-  start: Date | null;
-  end: Date | null;
-}
-
 export interface MembersTableProps {
   title: string;
   members: Member[];

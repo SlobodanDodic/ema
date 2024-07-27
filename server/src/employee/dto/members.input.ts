@@ -18,6 +18,11 @@ export class HealthCareMemberInput {
   @Field()
   category: string;
 
+  @IsNotEmpty()
+  @IsString()
+  @Field()
+  insurance: string;
+
   @IsOptional()
   @IsDate()
   @Field({ nullable: true })

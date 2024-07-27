@@ -12,6 +12,9 @@ export class HealthCareMember {
   @Field()
   category: string;
 
+  @Field()
+  insurance: string;
+
   @Field({ nullable: true })
   start?: Date;
 

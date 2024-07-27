@@ -49,6 +49,7 @@ type HealthCareMember {
   id: String
   name: String!
   category: String!
+  insurance: String!
   start: DateTime
   end: DateTime
   employeeId: Float!
@@ -126,6 +127,7 @@ input HealthCareMemberInput {
   id: String
   name: String!
   category: String!
+  insurance: String!
   start: DateTime
   end: DateTime
 }

@@ -16,6 +16,11 @@ export default function MembersTable({ title, members, handleEditMember, handleD
               <th scope="col" className="px-6 py-4">
                 Category
               </th>
+              {title === "Health Care Members" ? (
+                <th scope="col" className="px-6 py-4">
+                  Insurance
+                </th>
+              ) : null}
               <th scope="col" className="px-6 py-4">
                 Start date
               </th>
@@ -34,6 +39,7 @@ export default function MembersTable({ title, members, handleEditMember, handleD
                   {member.name}
                 </th>
                 <td className="px-6 py-4 text-marine">{member.category}</td>
+                {title === "Health Care Members" ? <td className="px-6 py-4 text-marine">{member.insurance}</td> : null}
                 <td className="px-6 py-4 text-marine">{member.start ? moment(member.start).format("L") : "N/A"}</td>
                 <td className="px-6 py-4 text-marine">{member.end ? moment(member.end).format("L") : "N/A"}</td>
 

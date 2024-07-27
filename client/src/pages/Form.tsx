@@ -32,9 +32,6 @@ export default function Form() {
   const employeeData = location.state?.employee || null;
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
-  // const [createEmployee] = useMutation(CREATE_EMPLOYEE);
-  // const [updateEmployee] = useMutation(UPDATE_EMPLOYEE);
-
   const [createEmployee] = useMutation(CREATE_EMPLOYEE, {
     refetchQueries: [{ query: GET_EMPLOYEES }],
   });
@@ -48,6 +45,8 @@ export default function Form() {
   useEffect(() => {
     if (employeeData) {
       setFormData({
+        fullName: employeeData.fullName,
+        jobTitle: employeeData.jobTitle || "",
         birthday: employeeData.birthday || null,
         contract: employeeData.contract || null,
         phoneNumber: employeeData.phoneNumber || "",
@@ -55,8 +54,6 @@ export default function Form() {
         safety: employeeData.safety || null,
         fire: employeeData.fire || null,
         firstAid: employeeData.firstAid || null,
-        fullName: employeeData.fullName,
-        jobTitle: employeeData.jobTitle || "",
         healthCareMembers: employeeData.healthCareMembers,
         fitpassMembers: employeeData.fitpassMembers,
       });
@@ -96,6 +93,7 @@ export default function Form() {
           id: member.id !== "" ? member.id.toString() : "",
           name: member.name,
           category: member.category,
+          insurance: member.insurance,
           start: member.start,
           end: member.end,
         })),
@@ -158,12 +156,14 @@ export default function Form() {
 
       <div className="grid-box">
         <InputWellness
+          beneficiary={employeeData?.fullName}
           title="Health Care Members"
           members={formData.healthCareMembers}
           setMembers={(members) => handleMembersChange("healthCare", members)}
           icon={<SvgHealth addClass="w-6 h-6 me-2 text-white" />}
         />
         <InputWellness
+          beneficiary={employeeData?.fullName}
           title="Fitpass Members"
           members={formData.fitpassMembers}
           setMembers={(members) => handleMembersChange("fitpass", members)}

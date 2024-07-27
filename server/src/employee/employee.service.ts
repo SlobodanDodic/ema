@@ -22,6 +22,7 @@ export class EmployeeService {
           create: data.healthCareMembers.map((member) => ({
             name: member.name,
             category: member.category,
+            insurance: member.insurance,
             start: member.start,
             end: member.end,
           })),
@@ -60,6 +61,7 @@ export class EmployeeService {
           create: data.healthCareMembers.map((member) => ({
             name: member.name,
             category: member.category,
+            insurance: member.insurance,
             start: member.start,
             end: member.end,
           })),
