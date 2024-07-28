@@ -2,8 +2,8 @@ import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import PageHeading from "../components/common/PageHeading";
 import { GET_EMPLOYEES } from "../components/graphql/employee";
-import { Employee } from "../types/formTypes";
 import PaymentsDetails from "../components/payments/PaymentsDetails";
+import { Employee } from "../types/common";
 // import FeesModal from "../components/payments/FeesModal";
 // import useToggle from "../hooks/useToggle";
 

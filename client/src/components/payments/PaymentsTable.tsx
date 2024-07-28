@@ -1,15 +1,8 @@
-import { Employee } from "../../types/formTypes";
+import { Employee } from "../../types/common";
+import { PaymentsTableProps } from "../../types/paymentTypes";
 import { benefits } from "../data/categories";
 
-export default function PaymentsTable({
-  employees,
-  visibleColumns,
-  handleRowClick,
-}: {
-  employees: Employee[];
-  visibleColumns: Record<string, boolean>;
-  handleRowClick: () => void;
-}) {
+export default function PaymentsTable({ employees, visibleColumns, handleRowClick }: PaymentsTableProps) {
   const insuranceCompanies = benefits.insurances;
 
   return (

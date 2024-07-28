@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "../components/common/PageHeading";
 import { GET_EMPLOYEES } from "../components/graphql/employee";
-import { Employee } from "../types/formTypes";
+import { Employee } from "../types/common";
 
 export default function Employees() {
   const { data } = useQuery(GET_EMPLOYEES);

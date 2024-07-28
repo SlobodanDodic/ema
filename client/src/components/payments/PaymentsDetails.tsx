@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Employee } from "../../types/formTypes";
 import { benefits } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import PaymentsTable from "./PaymentsTable";
+import { PaymentDetailsProps } from "../../types/paymentTypes";
 
-export default function PaymentsDetails({ employees, handleRowClick }: { employees: Employee[]; handleRowClick: () => void }) {
+export default function PaymentsDetails({ employees, handleRowClick }: PaymentDetailsProps) {
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({});
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const insuranceCompanies = benefits.insurances;
