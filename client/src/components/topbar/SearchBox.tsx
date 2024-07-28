@@ -2,7 +2,7 @@ import { SvgPeople, SvgSearch } from "../svg/SvgTopbar";
 
 export default function SearchBox() {
   return (
-    <form className="flex items-center max-w-sm mx-auto">
+    <form id="searchBox" className="flex items-center max-w-sm mx-auto">
       <div className="relative w-full">
         <div className="absolute inset-y-0 flex items-center ps-2">
           <SvgPeople />

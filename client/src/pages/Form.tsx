@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import PageHeading from "../components/common/PageHeading";
-import { employeeJobTitles } from "../components/form/categories";
+import { employeeJobTitles } from "../components/data/categories";
 import InputDate from "../components/form/InputDate";
 import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
@@ -12,20 +12,7 @@ import InputWellness from "../components/form/InputWellness";
 import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../components/graphql/employee";
 import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
 import { FormData, Member } from "../types/formTypes";
-
-const initialFormData: FormData = {
-  birthday: null,
-  contract: null,
-  phoneNumber: "",
-  eyes: null,
-  safety: null,
-  fire: null,
-  firstAid: null,
-  fullName: "",
-  jobTitle: "",
-  healthCareMembers: [],
-  fitpassMembers: [],
-};
+import { initialFormData } from "../components/form/initialFormData";
 
 export default function Form() {
   const location = useLocation();

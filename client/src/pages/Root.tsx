@@ -1,14 +1,10 @@
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Menu from "../components/sidebar";
 import Topbar from "../components/topbar";
+import useToggle from "../hooks/useToggle";
 
 export default function Root() {
-  const [openMenu, setOpenMenu] = useState(false);
-
-  const toggleMenu = () => {
-    setOpenMenu(!openMenu);
-  };
+  const [openMenu, setOpenMenu] = useToggle(false);
 
   return (
     <>
@@ -19,7 +15,7 @@ export default function Root() {
             : "w-[calc(100%-4rem)] translate-x-0"
         }`}
       >
-        <Topbar toggleMenu={toggleMenu} openMenu={openMenu} />
+        <Topbar toggleMenu={() => setOpenMenu()} openMenu={openMenu} />
       </nav>
 
       <Menu openMenu={openMenu} />

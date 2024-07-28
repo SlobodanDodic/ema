@@ -4,12 +4,15 @@ import InputDate from "./InputDate";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 import MembersTable from "./MembersTable";
-import { insuranceCompany, memberConnection, memberEmployee } from "./categories";
+import { benefits, memberConnection, memberEmployee } from "../data/categories";
+import useToggle from "../../hooks/useToggle";
 
 export default function InputMembers({ beneficiary, title, members, setMembers, icon }: InputMembersProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showValidationMessage, setShowValidationMessage] = useState(false);
+
   const [form, setForm] = useState<Member>({
     id: Date.now().toString(),
     name: "",
@@ -18,11 +21,6 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
     start: null,
     end: null,
   });
-  const [showValidationMessage, setShowValidationMessage] = useState(false);
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -79,7 +77,7 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
     <>
       <button
         type="button"
-        onClick={toggleModal}
+        onClick={() => setIsModalOpen()}
         className="inline-flex items-center px-5 py-2 my-2 text-sm font-medium text-center text-white rounded bg-marine hover:bg-marine/90 focus:ring-2 focus:outline-none focus:ring-marine/70"
       >
         {icon}
@@ -101,14 +99,14 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
                 </h3>
                 <button
                   type="button"
-                  onClick={toggleModal}
+                  onClick={() => setIsModalOpen()}
                   className="inline-flex items-center px-2 py-1 ml-auto bg-transparent rounded text-marine hover:bg-marine/20 hover:text-marine"
                 >
                   {formSubmitted ? "Save" : "Leave"}
                 </button>
               </div>
 
-              <form className="pt-4" onSubmit={handleSubmit}>
+              <form id="inputWellness" className="pt-4" onSubmit={handleSubmit}>
                 <div className="flex w-full">
                   <div className="flex flex-col w-1/2 pe-4">
                     <InputText name="name" value={form.name} onChange={handleChange} label="Full Name" />
@@ -125,7 +123,7 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
                           name="insurance"
                           value={form.insurance}
                           onChange={handleChange}
-                          options={insuranceCompany}
+                          options={benefits.insurances}
                           placeholder="Select insurance"
                         />
                       ) : null}

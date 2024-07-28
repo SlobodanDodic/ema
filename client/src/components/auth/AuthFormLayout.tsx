@@ -20,7 +20,7 @@ export default function AuthFormLayout({ children, handleSubmit, title, linkHref
           <div className="max-w-md mx-auto">
             <h1 className="z-20">{title}</h1>
 
-            <form onSubmit={handleSubmit} className="py-8 space-y-4 leading-6 text-stone-700">
+            <form id="authForm" onSubmit={handleSubmit} className="py-8 space-y-4 leading-6 text-stone-700">
               {children}
               <div className="relative pt-2">
                 <button type="submit" className="w-full px-2 py-1 text-white rounded bg-amber-500">
