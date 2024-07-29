@@ -18,7 +18,7 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
     name: "",
     category: "",
     insurance: "",
-    start: null,
+    start: new Date(),
     end: null,
   });
 
