@@ -24,15 +24,22 @@ html {
   background-color: var(--silver);
 }
 
+/* Removing the arrows from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @layer base {
   h1 {
-    @apply text-xl text-steel font-semibold;
+    @apply text-xl text-silver font-semibold;
   }
   h2 {
-    @apply text-lg text-steel font-semibold;
+    @apply text-lg text-silver font-semibold;
   }
   h3 {
-    @apply text-steel;
+    @apply text-silver;
   }
   a {
     @apply text-steel font-medium hover:underline;

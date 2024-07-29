@@ -14,15 +14,13 @@ export const employeeJobTitles = [
 ];
 
 // Wellness categories
-export const fitpass = [{ value: "Fitpass", price: 2000 }];
-
 export const benefits = {
   insurances: [
-    { value: "MediGroup", price: 2000 },
-    { value: "DDOR", price: 2000 },
-    { value: "Sava", price: 2000 },
-    { value: "Uniqa", price: 2000 },
-    { value: "Dunav", price: 2000 },
+    { value: "MediGroup", price: 2350, employeeDiscount: 1500 },
+    { value: "DDOR", price: 3000, employeeDiscount: 1500 },
+    { value: "Sava", price: 0, employeeDiscount: 0 },
+    { value: "Uniqa", price: 0, employeeDiscount: 0 },
+    { value: "Dunav", price: 0, employeeDiscount: 0 },
   ],
-  fitpass: [{ value: "Fitpass", price: 2000 }],
+  fitpass: [{ value: "Fitpass", price: 2500, employeeDiscount: 0 }],
 };

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { benefits } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import PaymentsTable from "./PaymentsTable";
-import { PaymentDetailsProps } from "../../types/paymentTypes";
+import { Employee } from "../../types/common";
 
-export default function PaymentsDetails({ employees, handleRowClick }: PaymentDetailsProps) {
+export default function PaymentsDetails({ employees }: { employees: Employee[] }) {
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({});
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const insuranceCompanies = benefits.insurances;
@@ -63,7 +63,7 @@ export default function PaymentsDetails({ employees, handleRowClick }: PaymentDe
         )}
       </div>
 
-      <PaymentsTable employees={employees} visibleColumns={visibleColumns} handleRowClick={handleRowClick} />
+      <PaymentsTable employees={employees} visibleColumns={visibleColumns} />
     </div>
   );
 }
