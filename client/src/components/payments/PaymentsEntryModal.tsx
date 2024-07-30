@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Employee } from "../../types/common";
-import { SvgCash, SvgEnter, SvgSend } from "../svg/SvgPayments";
+import { SvgCash, SvgEnter, SvgGym, SvgHealth, SvgSend } from "../svg/SvgPayments";
 import moment from "moment";
 
 export default function PaymentsEntryModal({ employee, toggleModal }: { employee: Employee; toggleModal: () => void }) {
@@ -16,7 +16,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
 
   return (
     <div className="relative flex flex-col px-8 pt-4 pb-20">
-      <div className="flex justify-center my-6 text-center">
+      <div className="flex justify-center my-4 text-center">
         <h1 className="font-semibold uppercase text-oranje">{employee.fullName}</h1>
       </div>
 
@@ -30,12 +30,9 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
         </button>
       </div>
 
-      <div className="flex flex-col justify-center pb-4 border-b sm:flex-row border-silver/20">
-        <div className="grid grid-cols-1 my-2 border rounded sm:m-4 sm:grid-flow-col border-silver auto-cols-max">
-          <div className="flex flex-col items-center justify-center w-full p-4 rounded-t sm:rounded-none sm:rounded-s me-3 bg-silver">
-            <h2 className="text-midnight">Health Care</h2>
-            <h2 className="text-midnight">Members</h2>
-          </div>
+      <div className="grid items-center justify-center w-full grid-flow-row pb-6 border-b rounded lg:grid-flow-col auto-cols-max border-silver/20">
+        <div className="flex items-center">
+          <SvgHealth />
           <div className="p-4">
             {employee.healthCareMembers.map((member) => (
               <p key={member.id} className="italic font-normal me-3 text-silver">
@@ -46,11 +43,8 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
           </div>
         </div>
 
-        <div className="grid grid-cols-1 my-2 border rounded sm:m-4 sm:grid-flow-col border-silver auto-cols-max">
-          <div className="flex flex-col items-center justify-center w-full p-4 rounded-t sm:rounded-none sm:rounded-s me-3 bg-silver">
-            <h2 className="text-midnight">Fitpass</h2>
-            <h2 className="text-midnight">Members</h2>
-          </div>
+        <div className="flex items-center">
+          <SvgGym />
           <div className="p-4">
             {employee.fitpassMembers.map((member) => (
               <p key={member.id} className="italic font-normal me-3 text-silver">
@@ -61,7 +55,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
         </div>
       </div>
 
-      <div className="max-w-[18rem] mx-auto flex my-8">
+      <div className="max-w-[18rem] mx-auto flex my-6">
         <div className="relative w-full">
           <div className="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
             <SvgCash />
@@ -92,11 +86,10 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
 
       <div className="flex flex-wrap justify-center">
         {amounts.map((entry, index) => (
-          <div key={index} className="flex items-center justify-center w-full px-1 py-3 m-2 border rounded sm:w-[30%] lg:w-1/5">
-            <div className="flex mx-3 text-xs text-oranje">{index + 1})</div>
-            <div className="flex items-center text-xs font-semibold text-silver">{entry.amount} RSD</div>
-            <div className="flex mx-3 text-xs text-oranje">/</div>
-            <div className="flex items-center text-xs text-silver/90">{moment(entry.date).format("DD.MM.YYYY")}</div>
+          <div key={index} className="grid justify-center w-full grid-flow-col p-3 m-2 border rounded auto-cols-max sm:w-auto">
+            <div className="text-xs text-silver/90">{moment(entry.date).format("DD.MM.YYYY")}</div>
+            <div className="mx-3 text-xs text-oranje">/</div>
+            <div className="text-xs font-semibold text-silver">{entry.amount} RSD</div>
           </div>
         ))}
       </div>

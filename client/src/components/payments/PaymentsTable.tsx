@@ -71,7 +71,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
           id="defaultModal"
           tabIndex={-1}
           aria-hidden="true"
-          className="fixed -top-[1px] -left-[2px] right-0 z-50 w-[101%] overflow-x-hidden overflow-y-auto bg-midnight border-midnight max-w-7xl h-auto mx-auto rounded"
+          className="fixed -top-[1px] -left-[2px] right-0 z-30 w-[101%] overflow-x-hidden overflow-y-auto bg-midnight border-midnight max-w-5xl h-auto mx-auto rounded"
         >
           <PaymentsEntryModal employee={selectedEmployee} toggleModal={() => setIsModalOpen()} />
         </div>
