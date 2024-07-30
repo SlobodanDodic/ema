@@ -1,20 +1,31 @@
 import { useState, useEffect, useCallback } from "react";
 import { Employee } from "../../types/common";
-import { PaymentsTableProps } from "../../types/paymentTypes";
+import { Payment, PaymentsTableProps } from "../../types/paymentTypes";
 import { benefits } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import PaymentsEntryModal from "./PaymentsEntryModal";
+import { GET_ALL_PAYMENTS } from "../graphql/payments";
+import { useQuery } from "@apollo/client";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
   const insuranceCompanies = benefits.insurances;
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const { data: paymentData } = useQuery(GET_ALL_PAYMENTS);
+
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "RSD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  };
 
   const calculateTotalPrice = useCallback(
     (employee: Employee) => {
       let total = 0;
 
-      // Calculate insurance prices
       insuranceCompanies.forEach((company) => {
         const memberCount = employee.healthCareMembers.filter((member) => member.insurance === company.value).length;
 
@@ -29,7 +40,6 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
         }
       });
 
-      // Calculate Fitpass price
       const fitpassCount = employee.fitpassMembers.length;
       const fitpassDiscount = employee.fitpassMembers.some((member) => member.category === "Employee")
         ? benefits.fitpass[0].employeeDiscount
@@ -107,33 +117,54 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
           </tr>
         </thead>
         <tbody>
-          {employees?.map((employee: Employee) => (
-            <tr
-              key={employee.id}
-              onClick={() => handleRowClick(employee)}
-              className="border-b odd:bg-silver hover:bg-marine/40 hover:cursor-pointer even:bg-marine/10"
-            >
-              <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
-                {employee.fullName}
-              </th>
-              {insuranceCompanies.map((company) => (
-                <td
-                  key={company.value}
-                  className={`px-6 py-4 text-center font-semibold ${visibleColumns[company.value] ? "" : "hidden"} ${employee.healthCareMembers.filter((member) => member.category === "Employee" && member.insurance === company.value).length > 0 ? "text-red-700" : "text-marine"}`}
-                >
-                  {employee.healthCareMembers.filter((member) => member.insurance === company.value).length}
-                </td>
-              ))}
-              <td
-                className={`px-6 py-4 text-center font-semibold ${employee.fitpassMembers.filter((member) => member.category === "Employee").length > 0 ? "text-red-700" : "text-marine"}`}
+          {employees?.map((employee: Employee) => {
+            const totalLiabilities = calculateTotalPrice(employee);
+            const totalPayments =
+              paymentData?.getAllPayments
+                .filter((payment: Payment) => payment.employee.id === employee.id)
+                .reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
+            const balance = totalLiabilities - totalPayments;
+
+            return (
+              <tr
+                key={employee.id}
+                onClick={() => handleRowClick(employee)}
+                className="border-b odd:bg-silver hover:bg-marine/40 hover:cursor-pointer even:bg-marine/10"
               >
-                {employee.fitpassMembers.length}
-              </td>
-              <td className="px-6 py-4 text-xs font-semibold text-center">{calculateTotalPrice(employee)} RSD</td>
-              <td className="px-6 py-4 text-xs font-semibold text-center">0 RSD</td>
-              <td className="px-6 py-4 text-xs font-semibold text-center">0 RSD</td>
-            </tr>
-          ))}
+                <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
+                  {employee.fullName}
+                </th>
+                {insuranceCompanies.map((company) => (
+                  <td
+                    key={company.value}
+                    className={`px-6 py-4 text-center font-semibold ${visibleColumns[company.value] ? "" : "hidden"} ${
+                      employee.healthCareMembers.filter(
+                        (member) => member.category === "Employee" && member.insurance === company.value
+                      ).length > 0
+                        ? "text-red-700"
+                        : "text-marine"
+                    }`}
+                  >
+                    {employee.healthCareMembers.filter((member) => member.insurance === company.value).length}
+                  </td>
+                ))}
+                <td
+                  className={`px-6 py-4 text-center font-semibold ${
+                    employee.fitpassMembers.filter((member) => member.category === "Employee").length > 0
+                      ? "text-red-700"
+                      : "text-marine"
+                  }`}
+                >
+                  {employee.fitpassMembers.length}
+                </td>
+                <td className="px-6 py-4 text-xs font-semibold text-center">{formatCurrency(totalLiabilities)}</td>
+                <td className="px-6 py-4 text-xs font-semibold text-center">{formatCurrency(totalPayments)}</td>
+                <td className={`px-6 py-4 text-xs font-semibold text-center ${balance >= 0 ? "text-green-800" : "text-red-700"}`}>
+                  {formatCurrency(balance)}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>

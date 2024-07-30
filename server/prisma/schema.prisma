@@ -32,6 +32,7 @@ model Employee {
   firstAid          DateTime?
   healthCareMembers HealthCareMember[]
   fitpassMembers    FitpassMember[]
+  payments          Payment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,6 +60,17 @@ model FitpassMember {
   end        DateTime?
   employeeId String
   employee   Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Payment {
+  id         String   @id @default(uuid())
+  amount     Decimal
+  entryDate  DateTime @default(now())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

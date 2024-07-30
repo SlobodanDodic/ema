@@ -75,11 +75,22 @@ type Employee {
   updatedAt: DateTime!
 }
 
+type Payment {
+  id: String!
+  amount: Float
+  entryDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  employee: Employee
+}
+
 type Query {
   users: [Auth!]!
   user(username: String!): Auth!
   findAllEmployees: [Employee!]!
   findOneEmployee(id: String!): Employee!
+  paymentsByEmployee(employeeId: String!): [Payment!]!
+  getAllPayments: [Payment!]!
 }
 
 type Mutation {
@@ -89,6 +100,7 @@ type Mutation {
   removeUser(id: String!): Auth!
   createEmployee(data: EmployeeInput!): Employee!
   updateEmployee(id: String!, data: EmployeeInput!): Employee!
+  createPayment(data: PaymentInput!): Payment!
 }
 
 input SignUpInput {
@@ -138,4 +150,10 @@ input FitpassMemberInput {
   category: String!
   start: DateTime
   end: DateTime
+}
+
+input PaymentInput {
+  employeeId: String!
+  amount: Float!
+  entryDate: DateTime!
 }
