@@ -1,5 +1,6 @@
 import { IMenu } from "../../types/navbarsTypes";
-import { SvgBell, SvgMenuClose, SvgMenuOpen } from "../svg/SvgTopbar";
+import { Icon } from "../common/Icon";
+import { IconBell, IconMenuFold, IconMenuUnfold } from "../svg";
 import SearchBox from "./SearchBox";
 
 export default function Topbar({ toggleMenu, openMenu }: IMenu) {
@@ -10,10 +11,14 @@ export default function Topbar({ toggleMenu, openMenu }: IMenu) {
       </div>
 
       <div className="flex items-center">
-        <SvgBell />
+        <Icon icon={IconBell} color="#124e66" />
 
         <button onClick={toggleMenu} type="button" className="flex items-center text-sm ms-2">
-          {openMenu ? <SvgMenuOpen /> : <SvgMenuClose />}
+          {openMenu ? (
+            <Icon icon={IconMenuFold} size={32} color="#124e66" />
+          ) : (
+            <Icon icon={IconMenuUnfold} size={32} color="#124e66" />
+          )}
         </button>
       </div>
     </>

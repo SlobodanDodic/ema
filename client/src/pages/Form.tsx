@@ -10,9 +10,10 @@ import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
 import InputWellness from "../components/form/InputWellness";
 import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../components/graphql/employee";
-import { SvgFitpass, SvgHealth } from "../components/svg/SvgSidebar";
 import { FormData, Member } from "../types/formTypes";
 import { initialFormData } from "../components/form/initialFormData";
+import { Icon } from "../components/common/Icon";
+import { IconNotesMedical, IconWeightLifter } from "../components/svg";
 
 export default function Form() {
   const location = useLocation();
@@ -147,14 +148,14 @@ export default function Form() {
           title="Health Care Members"
           members={formData.healthCareMembers}
           setMembers={(members) => handleMembersChange("healthCare", members)}
-          icon={<SvgHealth addClass="w-6 h-6 me-2 text-white" />}
+          icon={<Icon icon={IconNotesMedical} className="w-6 h-6 text-white me-2" />}
         />
         <InputWellness
           beneficiary={formData?.fullName}
           title="Fitpass Members"
           members={formData.fitpassMembers}
           setMembers={(members) => handleMembersChange("fitpass", members)}
-          icon={<SvgFitpass addClass="w-6 h-6 me-2 text-white" />}
+          icon={<Icon icon={IconWeightLifter} className="w-6 h-6 text-white me-2" />}
         />
       </div>
 

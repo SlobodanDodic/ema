@@ -1,5 +1,6 @@
 import { useAuth } from "../../hooks/useAuth";
-import { SvgLogout } from "../svg/SvgSidebar";
+import { Icon } from "../common/Icon";
+import { IconLogoutCircleRLine } from "../svg";
 
 export default function UserInfo() {
   const authContext = useAuth();
@@ -30,7 +31,7 @@ export default function UserInfo() {
         className="flex items-center w-full p-2 mt-2 font-medium tracking-tight rounded-lg text-stone-50 hover:no-underline hover:bg-stone-600"
         onClick={handleLogout}
       >
-        <SvgLogout />
+        <Icon icon={IconLogoutCircleRLine} />
         <span className="ms-3">Logout</span>
       </button>
     </div>

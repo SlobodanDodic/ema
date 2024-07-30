@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Employee } from "../../types/common";
-import { SvgCash, SvgEnter, SvgGym, SvgHealth, SvgSend } from "../svg/SvgPayments";
+import { Icon } from "../common/Icon";
+import { IconEcommerce, IconEnter, IconNotesMedical, IconSend, IconWeightLifter } from "../svg";
 import moment from "moment";
 
 export default function PaymentsEntryModal({ employee, toggleModal }: { employee: Employee; toggleModal: () => void }) {
@@ -31,8 +32,8 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
       </div>
 
       <div className="grid items-center justify-center w-full grid-flow-row pb-6 border-b rounded lg:grid-flow-col auto-cols-max border-silver/20">
-        <div className="flex items-center">
-          <SvgHealth />
+        <div className="flex items-center m-1">
+          <Icon color="#f2f1e4" size={44} icon={IconNotesMedical} />
           <div className="p-4">
             {employee.healthCareMembers.map((member) => (
               <p key={member.id} className="italic font-normal me-3 text-silver">
@@ -43,8 +44,8 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
           </div>
         </div>
 
-        <div className="flex items-center">
-          <SvgGym />
+        <div className="flex items-center m-1">
+          <Icon color="#f2f1e4" size={44} icon={IconWeightLifter} />
           <div className="p-4">
             {employee.fitpassMembers.map((member) => (
               <p key={member.id} className="italic font-normal me-3 text-silver">
@@ -58,7 +59,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
       <div className="max-w-[18rem] mx-auto flex my-6">
         <div className="relative w-full">
           <div className="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-            <SvgCash />
+            <Icon color="#212a31" size={20} icon={IconEcommerce} />
           </div>
           <input
             type="number"
@@ -71,7 +72,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
             placeholder="Enter the amount"
           />
           <div className="absolute inset-y-0 end-3 top-0 flex items-center ps-3.5 pointer-events-none">
-            <SvgEnter />
+            <Icon color="#212a31" size={20} icon={IconEnter} />
           </div>
         </div>
         <button
@@ -80,7 +81,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: { employee
           onClick={handleAddAmount}
         >
           <span className="me-2">RSD</span>
-          <SvgSend />
+          <Icon color="#212a31" size={16} icon={IconSend} />
         </button>
       </div>
 
