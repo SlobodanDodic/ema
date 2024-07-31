@@ -5,15 +5,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import PageHeading from "../components/common/PageHeading";
 import { employeeJobTitles } from "../components/data/categories";
-import InputDate from "../components/form/InputDate";
 import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
 import InputWellness from "../components/form/InputWellness";
 import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../components/graphql/employee";
 import { FormData, Member } from "../types/formTypes";
-import { initialFormData } from "../components/form/initialFormData";
+import { initialDate, initialDateBirthday, initialDateContract, initialFormData } from "../components/form/initialFormData";
 import { Icon } from "../components/common/Icon";
 import { IconNotesMedical, IconWeightLifter } from "../components/svg";
+import InputDates from "../components/form/InputDates";
 
 export default function Form() {
   const location = useLocation();
@@ -28,7 +28,6 @@ export default function Form() {
   });
 
   const navigate = useNavigate();
-  const DEFAULT_DATE = "1900-01-01T00:00:00Z";
 
   useEffect(() => {
     if (employeeData) {
@@ -66,17 +65,16 @@ export default function Form() {
 
   const handleSubmit = async () => {
     try {
-      // Prepare the input data
       const inputData = {
         fullName: formData.fullName,
         jobTitle: formData.jobTitle || "Not Specified",
         phoneNumber: formData.phoneNumber || "Not Provided",
-        birthday: formData.birthday || DEFAULT_DATE,
-        contract: formData.contract || DEFAULT_DATE,
-        eyes: formData.eyes || DEFAULT_DATE,
-        safety: formData.safety || DEFAULT_DATE,
-        fire: formData.fire || DEFAULT_DATE,
-        firstAid: formData.firstAid || DEFAULT_DATE,
+        birthday: formData.birthday || initialDateBirthday,
+        contract: formData.contract || initialDateContract,
+        eyes: formData.eyes || initialDate,
+        safety: formData.safety || initialDate,
+        fire: formData.fire || initialDate,
+        firstAid: formData.firstAid || initialDate,
         healthCareMembers: formData.healthCareMembers.map((member) => ({
           id: member.id !== "" ? member.id.toString() : "",
           name: member.name,
@@ -95,7 +93,6 @@ export default function Form() {
       };
 
       if (employeeData?.id) {
-        // Update existing employee
         const variables = {
           id: employeeData.id,
           input: inputData,
@@ -106,7 +103,6 @@ export default function Form() {
 
         toast.success(`Employee ${data.updateEmployee.fullName} updated successfully!`);
       } else {
-        // Create new employee
         const { data } = await createEmployee({
           variables: {
             input: inputData,
@@ -116,7 +112,6 @@ export default function Form() {
         toast.success(`Employee ${data.createEmployee.fullName} created successfully!`);
       }
 
-      // Navigate and reset form after successful operation
       navigate("/employees", { replace: true });
       setFormData(initialFormData);
     } catch (error) {
@@ -159,43 +154,7 @@ export default function Form() {
         />
       </div>
 
-      <div className="grid-box">
-        <InputDate
-          name="Date of Birth"
-          selected={formData.birthday}
-          setSelected={(date) => handleDateChange("birthday", date)}
-          maxDate={new Date()}
-        />
-        <InputDate
-          name="Contract started"
-          selected={formData.contract}
-          setSelected={(date) => handleDateChange("contract", date)}
-          maxDate={new Date()}
-        />
-        <InputDate
-          name="Eye doctor"
-          selected={formData.eyes}
-          setSelected={(date) => handleDateChange("eyes", date)}
-          minDate={new Date()}
-        />
-        <InputDate
-          name="Office safety"
-          selected={formData.safety}
-          setSelected={(date) => handleDateChange("safety", date)}
-          minDate={new Date()}
-        />
-        <InputDate
-          name="Fire training"
-          selected={formData.fire}
-          setSelected={(date) => handleDateChange("fire", date)}
-          minDate={new Date()}
-        />
-        <InputDate
-          name="First aid training"
-          selected={formData.firstAid}
-          setSelected={(date) => handleDateChange("firstAid", date)}
-        />
-      </div>
+      <InputDates formData={formData} handleDateChange={handleDateChange} />
 
       <div className="flex justify-center my-8">
         <button

@@ -59,7 +59,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 input::placeholder {
-  color: var(--marine);
+  color: var(--silver);
 }
 
 .react-datepicker-wrapper {
