@@ -1,12 +1,12 @@
 import useToggle from "../../hooks/useToggle";
 import { IMenu } from "../../types/navbarsTypes";
 import { Icon } from "../common/Icon";
-import { IconBell, IconMenuFold, IconMenuUnfold, IconSettings } from "../svg";
+import { IconBell, IconMenuFold, IconMenuUnfold, IconBxsBookReader } from "../svg";
+import ReadModal from "./ReadModal";
 import SearchBox from "./SearchBox";
-import SettingsModal from "./SettingsModal";
 
 export default function Topbar({ toggleMenu, openMenu }: IMenu) {
-  const [openSettings, setOpenSettings] = useToggle(false);
+  const [openRead, setOpenRead] = useToggle(false);
 
   return (
     <>
@@ -15,13 +15,13 @@ export default function Topbar({ toggleMenu, openMenu }: IMenu) {
       </div>
 
       <div className="flex items-center">
-        <Icon icon={IconBell} color="#124e66" className="ms-4" />
-
-        <button onClick={() => setOpenSettings()} type="button" className="flex items-center">
-          <Icon icon={IconSettings} color="#124e66" className="mx-2" />
+        <button onClick={() => setOpenRead()} type="button" className="flex items-center">
+          <Icon icon={IconBxsBookReader} color="#124e66" className="ms-4" />
         </button>
 
-        {openSettings && <SettingsModal setOpenSettings={setOpenSettings} />}
+        {openRead && <ReadModal setOpenRead={setOpenRead} />}
+
+        <Icon icon={IconBell} color="#124e66" className="mx-2" />
 
         <button onClick={toggleMenu} type="button" className="flex items-center">
           {openMenu ? (

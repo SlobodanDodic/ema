@@ -1,5 +1,16 @@
 // Employee categories
-export const memberConnection = [{ value: "Family" }, { value: "Friend" }];
+export const memberConnection = [
+  { value: "Family" },
+  { value: "Friend" },
+  { value: "Spouse" },
+  { value: "Child" },
+  { value: "Parent" },
+  { value: "Sibling" },
+  { value: "Domestic Partner" },
+  { value: "Guardian" },
+  { value: "Dependent" },
+  { value: "Relative" },
+];
 
 export const memberEmployee = [{ value: "Employee" }];
 

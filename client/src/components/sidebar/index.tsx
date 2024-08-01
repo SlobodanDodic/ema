@@ -4,9 +4,9 @@ import {
   IconPencilBoxMultiple,
   IconUsersLine,
   IconPieChart,
-  IconBxCalendarStar,
   IconWeightLifter,
   IconEcommerce,
+  IconSetting,
 } from "../svg";
 import MenuItem from "./MenuItem";
 import UserInfo from "./UserInfo";
@@ -25,10 +25,10 @@ export default function Menu({ openMenu }: { openMenu: boolean }) {
         <MenuItem icon={<Icon icon={IconUsersLine} className={iconClassName} />} path="/employees" title="Employees" />
         <MenuItem icon={<Icon icon={IconNotesMedical} className={iconClassName} />} path="/health_care" title="Health Care" />
         <MenuItem icon={<Icon icon={IconWeightLifter} className={iconClassName} />} path="/fitpass" title="Fitpass" />
-        <MenuItem icon={<Icon icon={IconBxCalendarStar} className={iconClassName} />} path="/events" title="Events" />
         <MenuItem icon={<Icon icon={IconEcommerce} className={iconClassName} />} path="/payments" title="Payments" />
 
         <hr className="w-4/5 ms-[10%]" />
+        <MenuItem icon={<Icon icon={IconSetting} className={iconClassName} />} path="/form-setup" title="Form Setup" />
         <MenuItem icon={<Icon icon={IconPencilBoxMultiple} className={iconClassName} />} path="/form" title="Entry Form" />
       </ul>
 

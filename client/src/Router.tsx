@@ -11,9 +11,9 @@ import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import HealthCare from "./pages/HealthCare";
 import Fitpass from "./pages/Fitpass";
-import Events from "./pages/Events";
-import Form from "./pages/Form";
 import Payments from "./pages/Payments";
+import FormSetup from "./pages/FormSetup";
+import Form from "./pages/Form";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage />, errorElement: <NotFoundPage /> },
@@ -55,18 +55,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/events",
-        element: (
-          <ProtectedRoute>
-            <Events />
-          </ProtectedRoute>
-        ),
-      },
-      {
         path: "/payments",
         element: (
           <ProtectedRoute>
             <Payments />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/form-setup",
+        element: (
+          <ProtectedRoute>
+            <FormSetup />
           </ProtectedRoute>
         ),
       },
