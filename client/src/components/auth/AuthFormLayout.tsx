@@ -18,7 +18,7 @@ export default function AuthFormLayout({ children, handleSubmit, title, linkHref
         <div className="absolute inset-0 transform -skew-y-6 shadow-lg bg-gradient-to-r from-amber-300 to-amber-600 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-10">
           <div className="max-w-md mx-auto">
-            <h1 className="z-20">{title}</h1>
+            <h1 className="text-midnight">{title}</h1>
 
             <form id="authForm" onSubmit={handleSubmit} className="py-8 space-y-4 leading-6 text-stone-700">
               {children}

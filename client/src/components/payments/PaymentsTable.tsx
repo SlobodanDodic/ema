@@ -46,12 +46,15 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
   useEffect(() => {
     const calculateMonthlyObligation = () => {
       const today = new Date();
-      const isFirstOfMonth = today.getDate() === 1;
+      const isFirstOfMonth = today.getDate() === 2;
 
       if (isFirstOfMonth) {
+        console.log("The 1st of the month. Calculation performed.");
         employees.forEach((employee) => {
+          console.log(employee.fullName);
+
           const totalAmount = calculateTotalPrice(employee);
-          console.log(`Total Amount for ${employee.fullName} on ${today.toDateString()}: ${totalAmount}`);
+          console.log(`Total Amount for employee ${employee.fullName} on ${today.toDateString()}: ${totalAmount}`);
         });
       } else {
         console.log("Not the 1st of the month. Calculation not performed.");

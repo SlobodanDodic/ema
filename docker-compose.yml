@@ -1,0 +1,36 @@
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5173"
+    environment:
+      - VITE_HTTP_LINK=${VITE_HTTP_LINK}
+      - VITE_DATABASE_URL=${VITE_DATABASE_URL}
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+      - "5555:5555"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ema
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
