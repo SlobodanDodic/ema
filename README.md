@@ -17,22 +17,34 @@ This application is designed for managing employee data and their associated det
   - GraphQL
   - PostgreSQL 16 DB
 
-## Starting the Application
+# Starting the Application
+
+## branch pg_admin_4
 
 ### Client Side
 
 To start the client-side application:
 
 1. Navigate to the `client` directory.
-2. Run the Vite development server using command `npm run dev`.
+2. Run the Vite development server using command: `npm run dev`,
 
-### Server Side
+## Server Side
 
 To start the server-side application:
 
 1. Navigate to the `server` directory.
-2. Start the NestJS development server using command `npm run start:dev`.
-3. Open Prisma Studio using command `npx prisma studio`.
+2. Start the NestJS development server using command: `npm run start:dev`,
+3. Open Prisma Studio using command: `npx prisma studio`,
+
+## branch main
+
+### Root
+
+To start the the whole application:
+
+1. Navigate to the `root` directory.
+2. Start the Docker Compose development server using command: `docker compose up --build`,
+3. Open Prisma Studio using command: `npm run prisma-studio`,
 
 ## Login & Registration Page
 

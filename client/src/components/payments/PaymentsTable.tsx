@@ -29,6 +29,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
             : 0;
 
           total += company.price * memberCount - discount;
+          console.log(`Total Amount for ${company.value} on ${employee.fullName}: ${total}`);
         }
       });
 
@@ -46,7 +47,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
   useEffect(() => {
     const calculateMonthlyObligation = () => {
       const today = new Date();
-      const isFirstOfMonth = today.getDate() === 2;
+      const isFirstOfMonth = today.getDate() === 3;
 
       if (isFirstOfMonth) {
         console.log("The 1st of the month. Calculation performed.");
