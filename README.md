@@ -17,9 +17,7 @@ This application is designed for managing employee data and their associated det
   - GraphQL
   - PostgreSQL 16 DB
 
-# Starting the Application
-
-## branch pg_admin_4
+## Starting the Application on `branch pg_admin_4`
 
 ### Client Side
 
@@ -36,7 +34,7 @@ To start the server-side application:
 2. Start the NestJS development server using command: `npm run start:dev`,
 3. Open Prisma Studio using command: `npx prisma studio`,
 
-## branch main
+## Starting the Application on `branch main`
 
 ### Root
 
