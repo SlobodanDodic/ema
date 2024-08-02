@@ -33,7 +33,7 @@ This application is designed for managing employee data and their associated det
 
 ### On `branch pg_admin_4`
 
-**\*Note:** Not finished, because I've decided to use Docker\*
+_**Note:** Not finished, because I've decided to use Docker_
 
 #### Client Side
 
