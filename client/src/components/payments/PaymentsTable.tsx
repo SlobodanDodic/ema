@@ -7,14 +7,14 @@ import PaymentsEntryModal from "./PaymentsEntryModal";
 import { GET_ALL_PAYMENTS } from "../graphql/payments";
 import { useQuery } from "@apollo/client";
 import PaymentsTableRow from "./PaymentsTableRow";
-import { useEmployeeCalculations } from "../../hooks/useEmployeeCalculations";
+import { useBenefitCalculations } from "../../hooks/useBenefitCalculations";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const { data: paymentData } = useQuery(GET_ALL_PAYMENTS);
 
-  const { calculateTotalPrice, calculateMonthlyObligation } = useEmployeeCalculations(benefits);
+  const { calculateTotalPrice, calculateMonthlyObligation } = useBenefitCalculations(benefits);
 
   console.log(benefits?.insurances);
   console.log(employees);

@@ -20,8 +20,6 @@ export interface Member {
   insurance: string;
   start: Date | null;
   end: Date | null;
-  employeeDiscount?: number;
-  price?: number;
 }
 
 // client/src/components/form/InputDate.tsx

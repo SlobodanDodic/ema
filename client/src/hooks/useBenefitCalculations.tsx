@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { Employee } from "../types/common";
 import { Benefit, Benefits } from "../types/paymentTypes";
 
-export const useEmployeeCalculations = (benefits: Benefits) => {
+export const useBenefitCalculations = (benefits: Benefits) => {
   const insuranceArray: Benefit[] = benefits.insurances;
   const fitpassArray: Benefit[] = benefits.fitpass;
   const fitpassPrice = fitpassArray[0].price;

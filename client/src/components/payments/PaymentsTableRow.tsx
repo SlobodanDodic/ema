@@ -1,15 +1,5 @@
-import { Employee } from "../../types/common";
-import { Benefit, Payment } from "../../types/paymentTypes";
+import { Payment, PaymentsTableRowProps } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
-
-type PaymentsTableRowProps = {
-  employee: Employee;
-  visibleColumns: { [key: string]: boolean };
-  insuranceCompanies: Benefit[];
-  paymentData: { getAllPayments: Payment[] };
-  onClick: (employee: Employee) => void;
-  calculateTotalPrice: (employee: Employee, insuranceCompanies: Benefit[]) => number;
-};
 
 const PaymentsTableRow = ({
   employee,
@@ -25,6 +15,8 @@ const PaymentsTableRow = ({
       .filter((payment: Payment) => payment.employee.id === employee.id)
       .reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
   const balance = totalPayments - totalLiabilities;
+
+  console.log(paymentData);
 
   return (
     <tr

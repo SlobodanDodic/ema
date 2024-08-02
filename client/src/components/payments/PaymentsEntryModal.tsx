@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Employee } from "../../types/common";
 import { Icon } from "../common/Icon";
 import { IconEcommerce, IconEnter, IconNotesMedical, IconSend, IconWeightLifter } from "../svg";
 import moment from "moment";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_PAYMENT, GET_PAYMENTS } from "../graphql/payments";
-import { Payment } from "../../types/paymentTypes";
+import { Payment, PaymentsEntryModalProps } from "../../types/paymentTypes";
 
-export default function PaymentsEntryModal({ employee, toggleModal }: { employee: Employee; toggleModal: () => void }) {
+export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEntryModalProps) {
   const [currentAmount, setCurrentAmount] = useState<number | "">("");
 
   const [createPayment] = useMutation(CREATE_PAYMENT, {
