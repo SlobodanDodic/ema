@@ -12,3 +12,14 @@ export type Payment = {
   employeeId: string;
   employee: Employee;
 };
+
+export type Benefit = {
+  value: string;
+  price: number;
+  employeeDiscount: number;
+};
+
+export type Benefits = {
+  insurances: Benefit[];
+  fitpass: Benefit[];
+};

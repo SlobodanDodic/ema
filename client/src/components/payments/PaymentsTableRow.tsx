@@ -1,14 +1,14 @@
 import { Employee } from "../../types/common";
-import { Payment } from "../../types/paymentTypes";
+import { Benefit, Payment } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 type PaymentsTableRowProps = {
   employee: Employee;
   visibleColumns: { [key: string]: boolean };
-  insuranceCompanies: { value: string; employeeDiscount: number; price: number }[];
+  insuranceCompanies: Benefit[];
   paymentData: { getAllPayments: Payment[] };
   onClick: (employee: Employee) => void;
-  calculateTotalPrice: (employee: Employee) => number;
+  calculateTotalPrice: (employee: Employee, insuranceCompanies: Benefit[]) => number;
 };
 
 const PaymentsTableRow = ({
@@ -19,7 +19,7 @@ const PaymentsTableRow = ({
   onClick,
   calculateTotalPrice,
 }: PaymentsTableRowProps) => {
-  const totalLiabilities = calculateTotalPrice(employee);
+  const totalLiabilities = calculateTotalPrice(employee, insuranceCompanies);
   const totalPayments =
     paymentData?.getAllPayments
       .filter((payment: Payment) => payment.employee.id === employee.id)

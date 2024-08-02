@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Employee } from "../../types/common";
 import { PaymentsTableProps } from "../../types/paymentTypes";
 import { benefits } from "../data/categories";
@@ -7,63 +7,21 @@ import PaymentsEntryModal from "./PaymentsEntryModal";
 import { GET_ALL_PAYMENTS } from "../graphql/payments";
 import { useQuery } from "@apollo/client";
 import PaymentsTableRow from "./PaymentsTableRow";
+import { useEmployeeCalculations } from "../../hooks/useEmployeeCalculations";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
-  const insuranceCompanies = benefits.insurances;
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const { data: paymentData } = useQuery(GET_ALL_PAYMENTS);
 
-  const calculateTotalPrice = useCallback(
-    (employee: Employee) => {
-      let total = 0;
+  const { calculateTotalPrice, calculateMonthlyObligation } = useEmployeeCalculations(benefits);
 
-      insuranceCompanies.forEach((company) => {
-        const memberCount = employee.healthCareMembers.filter((member) => member.insurance === company.value).length;
-
-        if (memberCount > 0) {
-          const discount = employee.healthCareMembers.some(
-            (member) => member.category === "Employee" && member.insurance === company.value
-          )
-            ? company.employeeDiscount
-            : 0;
-
-          total += company.price * memberCount - discount;
-          console.log(`Total Amount for ${company.value} on ${employee.fullName}: ${total}`);
-        }
-      });
-
-      const fitpassCount = employee.fitpassMembers.length;
-      const fitpassDiscount = employee.fitpassMembers.some((member) => member.category === "Employee")
-        ? benefits.fitpass[0].employeeDiscount
-        : 0;
-      total += (benefits.fitpass[0].price - fitpassDiscount) * fitpassCount;
-
-      return total;
-    },
-    [insuranceCompanies]
-  );
+  console.log(benefits?.insurances);
+  console.log(employees);
 
   useEffect(() => {
-    const calculateMonthlyObligation = () => {
-      const today = new Date();
-      const isFirstOfMonth = today.getDate() === 3;
-
-      if (isFirstOfMonth) {
-        console.log("The 1st of the month. Calculation performed.");
-        employees.forEach((employee) => {
-          console.log("Employee:", employee.fullName);
-
-          const totalAmount = calculateTotalPrice(employee);
-          console.log(`Total Amount for employee ${employee.fullName} on ${today.toDateString()}: ${totalAmount}`);
-        });
-      } else {
-        console.log("Not the 1st of the month. Calculation not performed.");
-      }
-    };
-
-    calculateMonthlyObligation();
-  }, [employees, calculateTotalPrice]);
+    calculateMonthlyObligation(employees);
+  }, [employees, calculateMonthlyObligation]);
 
   const handleRowClick = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -89,7 +47,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
             <th scope="col" className="px-6 py-4">
               Full Name
             </th>
-            {insuranceCompanies.map((company) => (
+            {benefits.insurances.map((company) => (
               <th
                 key={company.value}
                 scope="col"
@@ -118,7 +76,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
               key={employee.id}
               employee={employee}
               visibleColumns={visibleColumns}
-              insuranceCompanies={insuranceCompanies}
+              insuranceCompanies={benefits?.insurances}
               paymentData={paymentData}
               onClick={handleRowClick}
               calculateTotalPrice={calculateTotalPrice}
