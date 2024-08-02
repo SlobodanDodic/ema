@@ -4,6 +4,10 @@ This application is designed for managing employee data and their associated det
 
 ## Technologies Used
 
+- **Infrastructure:**
+
+  - Docker
+
 - **Client Side:**
 
   - ReactJS with Vite JS bundler
@@ -17,68 +21,63 @@ This application is designed for managing employee data and their associated det
   - GraphQL
   - PostgreSQL 16 DB
 
-## Starting the Application on `branch pg_admin_4`
+## Deployment
 
-### Client Side
+- **Docker Containers:**
+  - **Client Container**: Hosts the React application, ensuring that all dependencies are aligned with the development environment.
+  - **Server Container**: Contains the NestJS application along with Prisma and GraphQL setup, interfacing with a PostgreSQL database container.
+- **Docker Compose**:
+  - Use Docker Compose to manage the multi-container setup (client, server, database) with a single command, enhancing configuration and operation simplicity.
 
-To start the client-side application:
+## Starting the Application
+
+### On `branch pg_admin_4`
+
+**\*Note:** Not finished, because I've decided to use Docker\*
+
+#### Client Side
 
 1. Navigate to the `client` directory.
-2. Run the Vite development server using command: `npm run dev`,
+2. Run the Vite development server using the command: `npm run dev`.
 
-## Server Side
-
-To start the server-side application:
+#### Server Side
 
 1. Navigate to the `server` directory.
-2. Start the NestJS development server using command: `npm run start:dev`,
-3. Open Prisma Studio using command: `npx prisma studio`,
+2. Start the NestJS development server using the command: `npm run start:dev`.
+3. Open Prisma Studio using the command: `npx prisma studio`.
 
-## Starting the Application on `branch main`
+### On `branch main`
 
-### Root
-
-To start the the whole application:
+#### Root
 
 1. Navigate to the `root` directory.
-2. Start the Docker Compose development server using command: `docker compose up --build`,
-3. Open Prisma Studio using command: `npm run prisma-studio`,
+2. Start the Docker Compose development environment using the command: `docker compose up --build`.
+3. Open Prisma Studio using the command: `npm run prisma-studio`.
 
-## Login & Registration Page
+## Features
 
-The application includes functionality for user registration and login:
+### Login & Registration
 
-### User Registration & Login Flow
+- **User Registration & Login Flow:**
+  - Users fill out and submit the sign-up form with their email and password.
+  - Users await approval from an administrator.
+  - Administrators review and activate the user's account.
+  - Approved users can log in.
+  - Users can reset their password if forgotten (feature pending implementation).
 
-1. Users fill out and submit the sign-up form with their email and password.
-2. After submission, the user awaits approval from an administrator.
-3. The administrator reviews and approves the user by activating their account and sending a notification.
-4. Once approved, the user can log in to the application.
-5. Users will also have the option to reset their password if forgotten (this feature is not yet implemented).
+### Employee Management
 
-## Employee Entry Form
+- **Employee Entry Form:**
 
-The application includes functionality for adding, editing, and deleting employees:
+  - Users submit the employee form with necessary details.
+  - Details are saved to the database.
 
-### Employee Entry Form Flow
+- **Employee Details Page:**
+  - Users can view, edit, and delete employee information.
+  - Updates are reflected in the database.
 
-1. Users fill out and submit the employee entry form with their details.
-2. The employee entry form will be submitted to the database.
+### Health Care And Fitpass Management
 
-## Employee Details Page
-
-The application includes functionality for viewing, editing, and deleting employee details:
-
-### Employee Details Page Flow
-
-1. Users can view and edit employee details.
-2. The employee details will be updated in the database.
-
-## Health Care And Fitpass Members
-
-The application includes functionality for adding, editing, and deleting health care members:
-
-### Health Care And Fitpass Members Flow
-
-1. Users fill out and submit the health care member form with their details.
-2. The health care member form will be submitted to the database.
+- **Health Care And Fitpass Members Flow:**
+  - Users submit forms for health care and fitpass members.
+  - Member details are saved to the database.
