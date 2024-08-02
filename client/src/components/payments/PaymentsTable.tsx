@@ -51,7 +51,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
       if (isFirstOfMonth) {
         console.log("The 1st of the month. Calculation performed.");
         employees.forEach((employee) => {
-          console.log(employee.fullName);
+          console.log("Employee:", employee.fullName);
 
           const totalAmount = calculateTotalPrice(employee);
           console.log(`Total Amount for employee ${employee.fullName} on ${today.toDateString()}: ${totalAmount}`);
