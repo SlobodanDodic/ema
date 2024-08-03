@@ -81,3 +81,19 @@ _**Note:** Not finished, because I've decided to use Docker_
 - **Health Care And Fitpass Members Flow:**
   - Users submit forms for health care and fitpass members.
   - Member details are saved to the database.
+
+### Important tech notes
+
+- **Run Migration** - The name of the migration should be unique:
+
+> **FIRST - From within the container - path: /:**
+> docker exec -it ema-server-1 sh
+> npx prisma migrate dev --name <migrate_name>
+> npx prisma generate
+
+> **SECOND - From local machine - path: /server:**
+> npx prisma generate
+
+> **THIRD - From local machine - path: /server:**
+> delete `/dist` folder
+> `npm run build`

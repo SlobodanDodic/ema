@@ -93,6 +93,13 @@ type Liability {
   employee: Employee
 }
 
+type Benefit {
+  id: String!
+  value: Float!
+  price: Float
+  employeeDiscount: Float
+}
+
 type Query {
   users: [Auth!]!
   user(username: String!): Auth!
@@ -102,6 +109,8 @@ type Query {
   getAllPayments: [Payment!]!
   liabilitiesByEmployee(employeeId: String!): [Liability!]!
   getAllLiabilities: [Liability!]!
+  getAllHealthcareData: [Benefit!]!
+  getAllFitpassData: [Benefit!]!
 }
 
 type Mutation {
