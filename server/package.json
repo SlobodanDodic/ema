@@ -19,8 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma-migrate-dev": "docker exec ema-server-1 npx prisma migrate dev",
-    "prisma-studio": "docker exec -it ema-server-1 npx prisma studio",
-    "seed": "node prisma/setupData.js"
+    "prisma-studio": "docker exec -it ema-server-1 npx prisma studio"
   },
   "dependencies": {
     "@apollo/server": "^4.10.4",
@@ -80,8 +79,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "prisma": {
-    "seed": "node prisma/setupData.js"
   }
 }
