@@ -1,3 +1,4 @@
+import { BenefitType } from "./benefitTypes";
 import { Employee } from "./common";
 
 export type Payment = {
@@ -16,23 +17,12 @@ export type PaymentsTableProps = {
 export type PaymentsTableRowProps = {
   employee: Employee;
   visibleColumns: { [key: string]: boolean };
-  insuranceCompanies: Benefit[];
+  insuranceCompanies: BenefitType[];
   onClick: (employee: Employee) => void;
-  calculateTotalPrice: (employee: Employee, insuranceCompanies: Benefit[]) => number;
+  calculateTotalPrice: (employee: Employee, insuranceCompanies: BenefitType[]) => number;
 };
 
 export type PaymentsEntryModalProps = {
   employee: Employee;
   toggleModal: () => void;
-};
-
-export type Benefit = {
-  value: string;
-  price: number;
-  employeeDiscount: number;
-};
-
-export type Benefits = {
-  insurances: Benefit[];
-  fitpass: Benefit[];
 };

@@ -4,7 +4,7 @@ import PaymentsTable from "./PaymentsTable";
 import { Employee } from "../../types/common";
 import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
 import { useQuery } from "@apollo/client";
-import { Benefit } from "../../types/paymentTypes";
+import { BenefitType } from "../../types/benefitTypes";
 
 export default function PaymentsDetails({ employees }: { employees: Employee[] }) {
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({});
@@ -14,7 +14,7 @@ export default function PaymentsDetails({ employees }: { employees: Employee[] }
 
   useEffect(() => {
     const initialVisibleColumns = healthcareBenefit?.getAllHealthcareData.reduce(
-      (acc: Record<string, boolean>, company: Benefit) => {
+      (acc: Record<string, boolean>, company: BenefitType) => {
         const hasData = employees.some((employee) =>
           employee.healthCareMembers.some((member) => member.insurance === company.value)
         );
@@ -52,7 +52,7 @@ export default function PaymentsDetails({ employees }: { employees: Employee[] }
 
         {isModalOpen && (
           <div className="absolute left-0 z-10 flex flex-col w-40 border-2 rounded top-10 bg-silver border-marine">
-            {healthcareBenefit?.getAllHealthcareData?.map((company: Benefit) => (
+            {healthcareBenefit?.getAllHealthcareData?.map((company: BenefitType) => (
               <label key={company.value} className="inline-flex items-center w-40 cursor-pointer ms-2">
                 <input
                   type="checkbox"
