@@ -1,22 +1,37 @@
+import { useQuery } from "@apollo/client";
 import { Payment, PaymentsTableRowProps } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { GET_LIABILITIES } from "../graphql/liabilities";
+
+import { useEffect } from "react";
+import { GET_PAYMENTS } from "../graphql/payments";
 
 const PaymentsTableRow = ({
   employee,
   visibleColumns,
   insuranceCompanies,
-  paymentData,
   onClick,
   calculateTotalPrice,
 }: PaymentsTableRowProps) => {
+  const { data: paymentData } = useQuery(GET_PAYMENTS, {
+    variables: { employeeId: employee?.id },
+  });
   const totalLiabilities = calculateTotalPrice(employee, insuranceCompanies);
+
   const totalPayments =
-    paymentData?.getAllPayments
-      .filter((payment: Payment) => payment.employee.id === employee.id)
-      .reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
+    paymentData?.paymentsByEmployee.reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
+
   const balance = totalPayments - totalLiabilities;
 
-  console.log(paymentData);
+  const { data: liabilitiesByEmployee, refetch } = useQuery(GET_LIABILITIES, {
+    variables: { employeeId: employee?.id },
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [liabilitiesByEmployee, refetch]);
+
+  console.log(employee.fullName, totalLiabilities);
 
   return (
     <tr

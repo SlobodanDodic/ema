@@ -9,17 +9,17 @@ export const useBenefitCalculations = (benefits: Benefits) => {
 
   const calculateTotalPrice = useCallback(
     (employee: Employee): number => {
-      console.log(employee);
-      console.log(
-        "healthCareMembers",
-        employee.fullName,
-        employee.healthCareMembers.map((member) => member.end)
-      );
-      console.log(
-        "fitpassMembers",
-        employee.fullName,
-        employee.fitpassMembers.map((member) => member.end)
-      );
+      // console.log(employee);
+      // console.log(
+      //   "healthCareMembers",
+      //   employee.fullName,
+      //   employee.healthCareMembers.map((member) => member.end)
+      // );
+      // console.log(
+      //   "fitpassMembers",
+      //   employee.fullName,
+      //   employee.fitpassMembers.map((member) => member.end)
+      // );
 
       let total = 0;
       insuranceArray.forEach((company: Benefit) => {

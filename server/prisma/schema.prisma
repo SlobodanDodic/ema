@@ -21,22 +21,27 @@ model User {
 }
 
 model Employee {
-  id                String             @id @default(uuid())
-  fullName          String
-  jobTitle          String
-  phoneNumber       String?
-  birthday          DateTime?
-  contract          DateTime?
-  eyes              DateTime?
-  safety            DateTime?
-  fire              DateTime?
-  firstAid          DateTime?
+  id          String    @id @default(uuid())
+  fullName    String
+  jobTitle    String
+  phoneNumber String?
+  birthday    DateTime?
+  contract    DateTime?
+  eyes        DateTime?
+  safety      DateTime?
+  fire        DateTime?
+  firstAid    DateTime?
+
   healthCareMembers HealthCareMember[]
   fitpassMembers    FitpassMember[]
   payments          Payment[]
+  Liabilities       Liability[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([fullName])
+  @@index([eyes, safety, fire, firstAid])
 }
 
 model HealthCareMember {
@@ -51,6 +56,10 @@ model HealthCareMember {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([end])
+  @@index([employeeId])
 }
 
 model FitpassMember {
@@ -64,6 +73,10 @@ model FitpassMember {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([end])
+  @@index([employeeId])
 }
 
 model Payment {
@@ -75,4 +88,38 @@ model Payment {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([amount])
+  @@index([amount, entryDate])
+  @@index([employeeId])
+  @@index([employeeId, amount])
+}
+
+model Liability {
+  id           String   @id @default(uuid())
+  amount       Decimal
+  recordedDate DateTime @default(now())
+  employeeId   String
+  employee     Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([amount])
+  @@index([employeeId])
+  @@index([employeeId, amount])
+}
+
+model HealthcareData {
+  id               String @id @default(uuid())
+  value            String
+  price            Int
+  employeeDiscount Int
+}
+
+model FitpassData {
+  id               String @id @default(uuid())
+  value            String
+  price            Int
+  employeeDiscount Int
 }

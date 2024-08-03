@@ -84,6 +84,15 @@ type Payment {
   employee: Employee
 }
 
+type Liability {
+  id: String!
+  amount: Float
+  recordedDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  employee: Employee
+}
+
 type Query {
   users: [Auth!]!
   user(username: String!): Auth!
@@ -91,6 +100,8 @@ type Query {
   findOneEmployee(id: String!): Employee!
   paymentsByEmployee(employeeId: String!): [Payment!]!
   getAllPayments: [Payment!]!
+  liabilitiesByEmployee(employeeId: String!): [Liability!]!
+  getAllLiabilities: [Liability!]!
 }
 
 type Mutation {
@@ -101,6 +112,7 @@ type Mutation {
   createEmployee(data: EmployeeInput!): Employee!
   updateEmployee(id: String!, data: EmployeeInput!): Employee!
   createPayment(data: PaymentInput!): Payment!
+  createLiability(data: LiabilityInput!): Liability!
 }
 
 input SignUpInput {
@@ -156,4 +168,10 @@ input PaymentInput {
   employeeId: String!
   amount: Float!
   entryDate: DateTime!
+}
+
+input LiabilityInput {
+  employeeId: String!
+  amount: Float!
+  recordedDate: DateTime!
 }

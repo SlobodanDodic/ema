@@ -30,20 +30,35 @@ export default function PaymentsDetails({ employees }: { employees: Employee[] }
     }));
   };
 
+  const calculate = () => {
+    console.log("calculate");
+  };
+
   return (
     <div className="relative mt-6 overflow-x-auto">
       <div className="mb-4">
-        <button
-          id="dropdownCheckboxButton"
-          className="relative inline-flex items-center w-40 px-5 py-2 mb-2 text-sm font-medium text-center text-white rounded bg-marine hover:bg-marine/80"
-          type="button"
-          onClick={() => setIsModalOpen()}
-        >
-          Show columns
-          <svg viewBox="0 0 512 512" fill="white" height="1em" width="1em" className="ms-3">
-            <path d="M472 168H40a24 24 0 010-48h432a24 24 0 010 48zM392 280H120a24 24 0 010-48h272a24 24 0 010 48zM296 392h-80a24 24 0 010-48h80a24 24 0 010 48z" />
-          </svg>
-        </button>
+        <div className="flex flex-col md:justify-between md:flex-row">
+          <button
+            id="dropdownCheckboxButton"
+            className="relative inline-flex items-center w-40 px-5 py-2 mb-2 text-sm font-medium text-center text-white rounded bg-marine hover:bg-marine/80"
+            type="button"
+            onClick={() => setIsModalOpen()}
+          >
+            Show columns
+            <svg viewBox="0 0 512 512" fill="white" height="1em" width="1em" className="ms-3">
+              <path d="M472 168H40a24 24 0 010-48h432a24 24 0 010 48zM392 280H120a24 24 0 010-48h272a24 24 0 010 48zM296 392h-80a24 24 0 010-48h80a24 24 0 010 48z" />
+            </svg>
+          </button>
+
+          <button
+            id="calculate"
+            className="relative inline-flex items-center w-40 px-5 py-2 mb-2 text-sm font-medium text-center text-white rounded bg-marine hover:bg-marine/80"
+            type="button"
+            onClick={() => calculate()}
+          >
+            Calculate
+          </button>
+        </div>
 
         {isModalOpen && (
           <div className="absolute left-0 z-10 flex flex-col w-40 border-2 rounded top-10 bg-silver border-marine">

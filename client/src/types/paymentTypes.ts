@@ -17,7 +17,6 @@ export type PaymentsTableRowProps = {
   employee: Employee;
   visibleColumns: { [key: string]: boolean };
   insuranceCompanies: Benefit[];
-  paymentData: { getAllPayments: Payment[] };
   onClick: (employee: Employee) => void;
   calculateTotalPrice: (employee: Employee, insuranceCompanies: Benefit[]) => number;
 };

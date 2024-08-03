@@ -4,29 +4,23 @@ import { PaymentsTableProps } from "../../types/paymentTypes";
 import { benefits } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import PaymentsEntryModal from "./PaymentsEntryModal";
-import { GET_ALL_PAYMENTS } from "../graphql/payments";
-import { useQuery } from "@apollo/client";
 import PaymentsTableRow from "./PaymentsTableRow";
 import { useBenefitCalculations } from "../../hooks/useBenefitCalculations";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-  const { data: paymentData } = useQuery(GET_ALL_PAYMENTS);
 
   const { calculateTotalPrice, calculateMonthlyObligation } = useBenefitCalculations(benefits);
-
-  console.log(benefits?.insurances);
-  console.log(employees);
-
-  useEffect(() => {
-    calculateMonthlyObligation(employees);
-  }, [employees, calculateMonthlyObligation]);
 
   const handleRowClick = (employee: Employee) => {
     setSelectedEmployee(employee);
     setIsModalOpen();
   };
+
+  useEffect(() => {
+    calculateMonthlyObligation(employees);
+  }, [employees, calculateMonthlyObligation]);
 
   return (
     <>
@@ -77,7 +71,6 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
               employee={employee}
               visibleColumns={visibleColumns}
               insuranceCompanies={benefits?.insurances}
-              paymentData={paymentData}
               onClick={handleRowClick}
               calculateTotalPrice={calculateTotalPrice}
             />
