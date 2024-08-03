@@ -4,14 +4,18 @@ import InputDate from "./InputDate";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 import MembersTable from "./MembersTable";
-import { benefits, memberConnection, memberEmployee } from "../data/categories";
+import { memberConnection, memberEmployee } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
+import { useQuery } from "@apollo/client";
+import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
 
 export default function InputMembers({ beneficiary, title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showValidationMessage, setShowValidationMessage] = useState(false);
+
+  const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
 
   const [form, setForm] = useState<Member>({
     id: Date.now().toString(),
@@ -123,7 +127,7 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
                           name="insurance"
                           value={form.insurance}
                           onChange={handleChange}
-                          options={benefits.insurances}
+                          options={healthcareBenefit?.getAllHealthcareData}
                           placeholder="Select insurance"
                         />
                       ) : null}

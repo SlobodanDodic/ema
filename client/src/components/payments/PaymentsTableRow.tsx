@@ -31,8 +31,6 @@ const PaymentsTableRow = ({
     refetch();
   }, [liabilitiesByEmployee, refetch]);
 
-  console.log(employee.fullName, totalLiabilities);
-
   return (
     <tr
       key={employee.id}

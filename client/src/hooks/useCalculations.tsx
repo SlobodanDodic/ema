@@ -1,28 +1,15 @@
 import { useCallback } from "react";
 import { Employee } from "../types/common";
-import { Benefit, Benefits } from "../types/paymentTypes";
+import { BenefitType } from "../types/benefitTypes";
 
-export const useBenefitCalculations = (benefits: Benefits) => {
-  const insuranceArray: Benefit[] = benefits.insurances;
-  const fitpassArray: Benefit[] = benefits.fitpass;
-  const fitpassPrice = fitpassArray[0].price;
+export const useCalculations = (healthcare: BenefitType[], fitpass: BenefitType[]) => {
+  const fitpassPrice = fitpass?.[0].price;
 
   const calculateTotalPrice = useCallback(
     (employee: Employee): number => {
-      // console.log(employee);
-      // console.log(
-      //   "healthCareMembers",
-      //   employee.fullName,
-      //   employee.healthCareMembers.map((member) => member.end)
-      // );
-      // console.log(
-      //   "fitpassMembers",
-      //   employee.fullName,
-      //   employee.fitpassMembers.map((member) => member.end)
-      // );
-
       let total = 0;
-      insuranceArray.forEach((company: Benefit) => {
+
+      healthcare.forEach((company: BenefitType) => {
         const memberCount = employee.healthCareMembers.filter((member) => member.insurance === company.value).length;
         const discount = employee.healthCareMembers.some(
           (member) => member.category === "Employee" && member.insurance === company.value
@@ -36,12 +23,12 @@ export const useBenefitCalculations = (benefits: Benefits) => {
 
       const fitpassTotalMembers = employee.fitpassMembers.length;
       const discount = employee.fitpassMembers.filter((member) => member.category === "Employee").length;
-      const fitpassTotal = fitpassTotalMembers * fitpassPrice - discount * fitpassArray[0].employeeDiscount;
+      const fitpassTotal = fitpassTotalMembers * fitpassPrice - discount * fitpass?.[0].employeeDiscount;
 
       total += fitpassTotal;
       return total;
     },
-    [fitpassArray, fitpassPrice, insuranceArray]
+    [fitpass, fitpassPrice, healthcare]
   );
 
   const calculateMonthlyObligation = useCallback(

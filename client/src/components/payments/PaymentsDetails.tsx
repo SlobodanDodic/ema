@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
-import { benefits } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import PaymentsTable from "./PaymentsTable";
 import { Employee } from "../../types/common";
+import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
+import { useQuery } from "@apollo/client";
+import { Benefit } from "../../types/paymentTypes";
 
 export default function PaymentsDetails({ employees }: { employees: Employee[] }) {
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({});
   const [isModalOpen, setIsModalOpen] = useToggle(false);
-  const insuranceCompanies = benefits.insurances;
+
+  const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
 
   useEffect(() => {
-    const initialVisibleColumns = insuranceCompanies.reduce(
-      (acc, company) => {
+    const initialVisibleColumns = healthcareBenefit?.getAllHealthcareData.reduce(
+      (acc: Record<string, boolean>, company: Benefit) => {
         const hasData = employees.some((employee) =>
           employee.healthCareMembers.some((member) => member.insurance === company.value)
         );
@@ -21,17 +24,13 @@ export default function PaymentsDetails({ employees }: { employees: Employee[] }
       {} as Record<string, boolean>
     );
     setVisibleColumns(initialVisibleColumns);
-  }, [employees, insuranceCompanies]);
+  }, [employees, healthcareBenefit?.getAllHealthcareData]);
 
   const toggleColumnVisibility = (companyValue: string) => {
     setVisibleColumns((prevState) => ({
       ...prevState,
       [companyValue]: !prevState[companyValue],
     }));
-  };
-
-  const calculate = () => {
-    console.log("calculate");
   };
 
   return (
@@ -49,26 +48,17 @@ export default function PaymentsDetails({ employees }: { employees: Employee[] }
               <path d="M472 168H40a24 24 0 010-48h432a24 24 0 010 48zM392 280H120a24 24 0 010-48h272a24 24 0 010 48zM296 392h-80a24 24 0 010-48h80a24 24 0 010 48z" />
             </svg>
           </button>
-
-          <button
-            id="calculate"
-            className="relative inline-flex items-center w-40 px-5 py-2 mb-2 text-sm font-medium text-center text-white rounded bg-marine hover:bg-marine/80"
-            type="button"
-            onClick={() => calculate()}
-          >
-            Calculate
-          </button>
         </div>
 
         {isModalOpen && (
           <div className="absolute left-0 z-10 flex flex-col w-40 border-2 rounded top-10 bg-silver border-marine">
-            {insuranceCompanies.map((company) => (
+            {healthcareBenefit?.getAllHealthcareData?.map((company: Benefit) => (
               <label key={company.value} className="inline-flex items-center w-40 cursor-pointer ms-2">
                 <input
                   type="checkbox"
                   className="sr-only peer"
                   checked={Boolean(visibleColumns[company.value])}
-                  onChange={() => toggleColumnVisibility(company.value)}
+                  onChange={() => toggleColumnVisibility(company?.value)}
                 />
                 <div className="relative w-11 h-6 bg-marine/30 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-marine/80"></div>
                 <span className="m-2 text-sm font-medium text-marine">{company.value}</span>

@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
 import { Employee } from "../../types/common";
-import { PaymentsTableProps } from "../../types/paymentTypes";
-import { benefits } from "../data/categories";
+import { Benefit, PaymentsTableProps } from "../../types/paymentTypes";
 import useToggle from "../../hooks/useToggle";
 import PaymentsEntryModal from "./PaymentsEntryModal";
 import PaymentsTableRow from "./PaymentsTableRow";
-import { useBenefitCalculations } from "../../hooks/useBenefitCalculations";
+import { GET_FITPASS_BENEFITS, GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
+import { useQuery } from "@apollo/client";
+import { useCalculations } from "../../hooks/useCalculations";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
-  const { calculateTotalPrice, calculateMonthlyObligation } = useBenefitCalculations(benefits);
+  const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
+  const { data: fitpassBenefit } = useQuery(GET_FITPASS_BENEFITS);
+
+  const { calculateTotalPrice, calculateMonthlyObligation } = useCalculations(
+    healthcareBenefit?.getAllHealthcareData,
+    fitpassBenefit?.getAllFitpassData
+  );
 
   const handleRowClick = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -41,11 +48,11 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
             <th scope="col" className="px-6 py-4">
               Full Name
             </th>
-            {benefits.insurances.map((company) => (
+            {healthcareBenefit?.getAllHealthcareData?.map((company: Benefit) => (
               <th
                 key={company.value}
                 scope="col"
-                className={`px-6 py-4 text-center ${visibleColumns[company.value] ? "" : "hidden"}`}
+                className={`px-6 py-4 text-center ${visibleColumns?.[company?.value] ? "" : "hidden"}`}
               >
                 {company.value}
               </th>
@@ -70,7 +77,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
               key={employee.id}
               employee={employee}
               visibleColumns={visibleColumns}
-              insuranceCompanies={benefits?.insurances}
+              insuranceCompanies={healthcareBenefit?.getAllHealthcareData}
               onClick={handleRowClick}
               calculateTotalPrice={calculateTotalPrice}
             />

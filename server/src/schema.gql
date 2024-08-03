@@ -95,7 +95,7 @@ type Liability {
 
 type Benefit {
   id: String!
-  value: Float!
+  value: String!
   price: Float
   employeeDiscount: Float
 }

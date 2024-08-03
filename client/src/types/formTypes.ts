@@ -1,3 +1,5 @@
+import { BenefitType } from "./benefitTypes";
+
 // client/src/pages/Form.tsx
 export type FormData = {
   birthday: Date | null;
@@ -58,7 +60,7 @@ export interface SelectProps {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: Option[];
+  options: (Option | BenefitType)[];
   className?: string;
   placeholder?: string;
 }

@@ -5,7 +5,7 @@ import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 export class BenefitInput {
   @IsDate()
   @Field()
-  value: Date;
+  value: string;
 
   @IsNotEmpty()
   @IsNumber()
