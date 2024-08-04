@@ -24,6 +24,8 @@ CREATE TABLE "Employee" (
     "safety" TIMESTAMP(3),
     "fire" TIMESTAMP(3),
     "firstAid" TIMESTAMP(3),
+    "cumulativeLiabilities" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "lastCalculation" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -103,6 +105,14 @@ CREATE TABLE "FitpassData" (
     CONSTRAINT "FitpassData_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "EmployeeJobTitle" (
+    "id" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
+
+    CONSTRAINT "EmployeeJobTitle_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
@@ -156,6 +166,9 @@ CREATE INDEX "Liability_employeeId_idx" ON "Liability"("employeeId");
 
 -- CreateIndex
 CREATE INDEX "Liability_employeeId_amount_idx" ON "Liability"("employeeId", "amount");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EmployeeJobTitle_value_key" ON "EmployeeJobTitle"("value");
 
 -- AddForeignKey
 ALTER TABLE "HealthCareMember" ADD CONSTRAINT "HealthCareMember_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "Employee"("id") ON DELETE CASCADE ON UPDATE CASCADE;

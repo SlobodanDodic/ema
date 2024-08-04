@@ -27,10 +27,14 @@ model Employee {
   phoneNumber String?
   birthday    DateTime?
   contract    DateTime?
-  eyes        DateTime?
-  safety      DateTime?
-  fire        DateTime?
-  firstAid    DateTime?
+
+  eyes     DateTime?
+  safety   DateTime?
+  fire     DateTime?
+  firstAid DateTime?
+
+  cumulativeLiabilities Decimal   @default(0)
+  lastCalculation       DateTime?
 
   healthCareMembers HealthCareMember[]
   fitpassMembers    FitpassMember[]
@@ -122,4 +126,9 @@ model FitpassData {
   value            String
   price            Int
   employeeDiscount Int
+}
+
+model EmployeeJobTitle {
+  id    String @id @default(uuid())
+  value String @unique
 }
