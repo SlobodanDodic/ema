@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Employee } from "../../types/common";
-import { Benefit, PaymentsTableProps } from "../../types/paymentTypes";
+import { PaymentsTableProps } from "../../types/paymentTypes";
 import useToggle from "../../hooks/useToggle";
 import PaymentsEntryModal from "./PaymentsEntryModal";
 import PaymentsTableRow from "./PaymentsTableRow";
 import { GET_FITPASS_BENEFITS, GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
 import { useQuery } from "@apollo/client";
 import { useCalculations } from "../../hooks/useCalculations";
+import { BenefitType } from "../../types/benefitTypes";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
@@ -48,7 +49,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
             <th scope="col" className="px-6 py-4">
               Full Name
             </th>
-            {healthcareBenefit?.getAllHealthcareData?.map((company: Benefit) => (
+            {healthcareBenefit?.getAllHealthcareData?.map((company: BenefitType) => (
               <th
                 key={company.value}
                 scope="col"

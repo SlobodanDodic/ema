@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { InputMembersProps, Member } from "../../types/formTypes";
 import InputDate from "./InputDate";
 import InputSelect from "./InputSelect";
@@ -8,6 +8,8 @@ import { memberConnection, memberEmployee } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import { useQuery } from "@apollo/client";
 import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
+import Loading from "../../pages/Loading";
+import { toast } from "react-toastify";
 
 export default function InputMembers({ beneficiary, title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
@@ -15,7 +17,18 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showValidationMessage, setShowValidationMessage] = useState(false);
 
-  const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
+  const {
+    data: healthcareBenefit,
+    loading,
+    error,
+    refetch,
+  } = useQuery(GET_HEALTHCARE_BENEFITS, {
+    skip: false, // no-auto-query
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const [form, setForm] = useState<Member>({
     id: Date.now().toString(),
@@ -76,6 +89,9 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
     setForm({ id: Date.now().toString(), name: "", category: "", insurance: "", start: null, end: null });
     setIsEditing(false);
   };
+
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {toast.error(`An error occurred while fetching the list: ${error.message}`)}</p>;
 
   return (
     <>

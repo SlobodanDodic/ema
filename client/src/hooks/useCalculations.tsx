@@ -3,7 +3,7 @@ import { Employee } from "../types/common";
 import { BenefitType } from "../types/benefitTypes";
 
 export const useCalculations = (healthcare: BenefitType[], fitpass: BenefitType[]) => {
-  const fitpassPrice = fitpass?.[0].price;
+  const fitpassPrice = fitpass?.[0]?.price;
 
   const calculateTotalPrice = useCallback(
     (employee: Employee): number => {
@@ -23,7 +23,7 @@ export const useCalculations = (healthcare: BenefitType[], fitpass: BenefitType[
 
       const fitpassTotalMembers = employee.fitpassMembers.length;
       const discount = employee.fitpassMembers.filter((member) => member.category === "Employee").length;
-      const fitpassTotal = fitpassTotalMembers * fitpassPrice - discount * fitpass?.[0].employeeDiscount;
+      const fitpassTotal = fitpassTotalMembers * fitpassPrice - discount * fitpass?.[0]?.employeeDiscount;
 
       total += fitpassTotal;
       return total;

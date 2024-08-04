@@ -1,9 +1,9 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 @InputType()
 export class BenefitInput {
-  @IsDate()
+  @IsNotEmpty()
   @Field()
   value: string;
 

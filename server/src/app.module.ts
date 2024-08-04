@@ -9,6 +9,7 @@ import { EmployeeModule } from './employee/employee.module';
 import { PaymentModule } from './payment/payment.module';
 import { LiabilityModule } from './liability/liability.module';
 import { BenefitModule } from './benefit/benefit.module';
+import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { BenefitModule } from './benefit/benefit.module';
     PaymentModule,
     LiabilityModule,
     BenefitModule,
+    JobsModule,
   ],
   providers: [],
 })

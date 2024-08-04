@@ -141,14 +141,14 @@ export default function Form() {
         <InputWellness
           beneficiary={formData?.fullName}
           title="Health Care Members"
-          members={formData.healthCareMembers}
+          members={formData?.healthCareMembers}
           setMembers={(members) => handleMembersChange("healthCare", members)}
           icon={<Icon icon={IconNotesMedical} className="w-6 h-6 text-white me-2" />}
         />
         <InputWellness
           beneficiary={formData?.fullName}
           title="Fitpass Members"
-          members={formData.fitpassMembers}
+          members={formData?.fitpassMembers}
           setMembers={(members) => handleMembersChange("fitpass", members)}
           icon={<Icon icon={IconWeightLifter} className="w-6 h-6 text-white me-2" />}
         />

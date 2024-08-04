@@ -8,7 +8,7 @@ export const memberConnection = [
   { value: "Child" },
   { value: "Parent" },
   { value: "Sibling" },
-  { value: "Domestic Partner" },
+  { value: "Partner" },
   { value: "Guardian" },
   { value: "Dependent" },
   { value: "Relative" },
