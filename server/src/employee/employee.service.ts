@@ -18,6 +18,8 @@ export class EmployeeService {
         safety: data.safety,
         fire: data.fire,
         firstAid: data.firstAid,
+        cumulativeLiabilities: 0,
+        lastCalculation: new Date(),
         healthCareMembers: {
           create: data.healthCareMembers.map((member) => ({
             name: member.name,
@@ -56,6 +58,8 @@ export class EmployeeService {
         safety: data.safety,
         fire: data.fire,
         firstAid: data.firstAid,
+        cumulativeLiabilities: 0,
+        lastCalculation: new Date(),
         healthCareMembers: {
           deleteMany: {},
           create: data.healthCareMembers.map((member) => ({

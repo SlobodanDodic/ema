@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { FitpassMember } from './fitpass.entity';
 import { HealthCareMember } from './healthcare.entity';
 
@@ -21,6 +21,12 @@ export class Employee {
 
   @Field()
   contract?: Date;
+
+  @Field((_type) => Float, { nullable: true })
+  cumulativeLiabilities?: number;
+
+  @Field()
+  lastCalculation?: Date;
 
   @Field()
   eyes?: Date;
