@@ -9,7 +9,7 @@ export const useCalculations = (healthcare: BenefitType[], fitpass: BenefitType[
     (employee: Employee): number => {
       let total = 0;
 
-      healthcare.forEach((company: BenefitType) => {
+      healthcare?.forEach((company: BenefitType) => {
         const memberCount = employee.healthCareMembers.filter((member) => member.insurance === company.value).length;
         const discount = employee.healthCareMembers.some(
           (member) => member.category === "Employee" && member.insurance === company.value

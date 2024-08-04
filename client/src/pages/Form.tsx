@@ -1,10 +1,9 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import PageHeading from "../components/common/PageHeading";
-import { employeeJobTitles } from "../components/data/categories";
 import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
 import InputWellness from "../components/form/InputWellness";
@@ -14,6 +13,7 @@ import { initialDate, initialDateBirthday, initialDateContract, initialFormData 
 import { Icon } from "../components/common/Icon";
 import { IconNotesMedical, IconWeightLifter } from "../components/svg";
 import InputDates from "../components/form/InputDates";
+import { GET_JOBS } from "../components/graphql/jobs";
 
 export default function Form() {
   const location = useLocation();
@@ -26,6 +26,8 @@ export default function Form() {
   const [updateEmployee] = useMutation(UPDATE_EMPLOYEE, {
     refetchQueries: [{ query: GET_EMPLOYEES }],
   });
+
+  const { data: jobTitles } = useQuery(GET_JOBS);
 
   const navigate = useNavigate();
 
@@ -130,7 +132,7 @@ export default function Form() {
           name="jobTitle"
           value={formData.jobTitle}
           onChange={handleInputChange}
-          options={employeeJobTitles}
+          options={jobTitles?.getJobs}
           placeholder="Select job title"
           className="mb-5"
         />

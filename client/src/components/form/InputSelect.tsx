@@ -19,7 +19,7 @@ export default function InputSelect({
       <option value="" disabled>
         {placeholder}
       </option>
-      {options.map((option) => (
+      {options?.map((option) => (
         <option key={option.value} value={option.value}>
           {option.value}
         </option>

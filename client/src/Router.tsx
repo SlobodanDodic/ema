@@ -12,7 +12,6 @@ import Employees from "./pages/Employees";
 import HealthCare from "./pages/HealthCare";
 import Fitpass from "./pages/Fitpass";
 import Payments from "./pages/Payments";
-import FormSetup from "./pages/FormSetup";
 import Form from "./pages/Form";
 
 const router = createBrowserRouter([
@@ -59,14 +58,6 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Payments />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/form-setup",
-        element: (
-          <ProtectedRoute>
-            <FormSetup />
           </ProtectedRoute>
         ),
       },

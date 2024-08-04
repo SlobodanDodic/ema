@@ -16,4 +16,4 @@ export const initialFormData: FormData = {
 
 export const initialDateBirthday = "1990-01-01T00:00:00Z";
 export const initialDateContract = "2024-01-01T00:00:00Z";
-export const initialDate = "1990-01-01T00:00:00Z";
+export const initialDate = "2024-01-01T00:00:00Z";

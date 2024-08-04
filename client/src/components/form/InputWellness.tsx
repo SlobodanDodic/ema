@@ -4,12 +4,26 @@ import InputDate from "./InputDate";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 import MembersTable from "./MembersTable";
-import { memberConnection, memberEmployee } from "../data/categories";
 import useToggle from "../../hooks/useToggle";
 import { useQuery } from "@apollo/client";
 import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
 import Loading from "../../pages/Loading";
 import { toast } from "react-toastify";
+
+const memberConnection = [
+  { value: "Family" },
+  { value: "Friend" },
+  { value: "Spouse" },
+  { value: "Child" },
+  { value: "Parent" },
+  { value: "Sibling" },
+  { value: "Partner" },
+  { value: "Guardian" },
+  { value: "Dependent" },
+  { value: "Relative" },
+];
+
+const memberEmployee = [{ value: "Employee" }];
 
 export default function InputMembers({ beneficiary, title, members, setMembers, icon }: InputMembersProps) {
   const [isModalOpen, setIsModalOpen] = useToggle(false);

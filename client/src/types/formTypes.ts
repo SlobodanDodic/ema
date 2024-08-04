@@ -55,12 +55,16 @@ export interface InputMembersProps {
 export interface Option {
   value: string;
 }
+export interface JobOption {
+  id: string;
+  value: string;
+}
 
 export interface SelectProps {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: (Option | BenefitType)[];
+  options: (Option | BenefitType | JobOption)[];
   className?: string;
   placeholder?: string;
 }
