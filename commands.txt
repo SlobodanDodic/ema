@@ -1,0 +1,39 @@
+Rm Unused Vol, Img & Networks:
+docker compose down
+docker volume prune
+docker image prune -a
+docker network prune
+
+-----------------------------------------------------
+
+Recreating a Postgresql DB:
+docker volume rm ema_postgres_data
+docker compose build --no-cache
+docker compose up -d
+
+from /server:
+rm -rf prisma/migrations
+
+docker exec -it ema-server-1 sh:
+ npx prisma migrate dev --name init
+ npx prisma generate
+ exit
+
+from /server:
+rm -rf dist 
+npm run build
+
+-----------------------------------------------------
+
+Run it Again:
+docker compose down
+docker compose build --no-cache
+docker compose up -d
+
+-----------------------------------------------------
+
+If the Error in Prisma Client Persists:
+rm -rf node_modules
+rm -rf dist
+npm install
+npm run build
