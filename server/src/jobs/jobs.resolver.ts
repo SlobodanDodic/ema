@@ -8,6 +8,8 @@ export class JobsResolver {
 
   @Query(() => [Jobs], { name: 'getJobs' })
   getJobs() {
-    return this.jobsService.getJobs();
+    const jobs = this.jobsService.getJobs();
+    console.log('Resolver getJobs:', jobs);
+    return jobs;
   }
 }

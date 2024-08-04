@@ -6,6 +6,8 @@ export class JobsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getJobs() {
-    return console.log('JobsResolver initialized');
+    const jobs = await this.prisma.employeeJobTitle.findMany();
+    console.log('Fetched Jobs:', jobs);
+    return jobs;
   }
 }
