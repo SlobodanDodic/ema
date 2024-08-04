@@ -84,16 +84,17 @@ _**Note:** Not finished, because I've decided to use Docker_
 
 ### Important tech notes
 
-- **Run Migration** - The name of the migration should be unique:
+> **1. Rm Unused Vol, Img & Networks:** > `docker compose down` > `docker volume prune` > `docker image prune -a` > `docker network prune`
 
-> **FIRST - From within the container - path: /:**
-> docker exec -it ema-server-1 sh
-> npx prisma migrate dev --name <migrate_name>
-> npx prisma generate
+> **2. Recreating a Postgresql DB:** > `docker volume rm ema_postgres_data` > `docker compose build --no-cache` > `docker compose up -d`
 
-> **SECOND - From local machine - path: /server:**
-> npx prisma generate
+> **3. from /server:**
+> `rm -rf prisma/migrations`
 
-> **THIRD - From local machine - path: /server:**
-> delete `/dist` folder
-> `npm run build`
+> `docker exec -it ema-server-1 sh` -`npx prisma migrate dev --name init` -`npx prisma generate` -`exit`
+
+> **from /server:** > `rm -rf dist` > `npm run build`
+
+> **4. Run it Again:** > `docker compose down` > `docker compose build --no-cache` > `docker compose up -d`
+
+> **5. And If the Error in Prisma Client Persists:** > `rm -rf node_modules` > `rm -rf dist` > `npm install` > `npm run build`
