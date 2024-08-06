@@ -18,8 +18,8 @@ export class EmployeeService {
         safety: data.safety,
         fire: data.fire,
         firstAid: data.firstAid,
-        cumulativeLiabilities: 0,
-        lastCalculation: new Date(),
+        cumulativeLiabilities: data.cumulativeLiabilities,
+        lastCalculation: data.lastCalculation,
         healthCareMembers: {
           create: data.healthCareMembers.map((member) => ({
             name: member.name,
@@ -58,8 +58,8 @@ export class EmployeeService {
         safety: data.safety,
         fire: data.fire,
         firstAid: data.firstAid,
-        cumulativeLiabilities: 0,
-        lastCalculation: new Date(),
+        cumulativeLiabilities: data.cumulativeLiabilities,
+        lastCalculation: data.lastCalculation,
         healthCareMembers: {
           deleteMany: {},
           create: data.healthCareMembers.map((member) => ({
@@ -87,7 +87,7 @@ export class EmployeeService {
     });
   }
 
-  async findAllEmployees() {
+  async getAllEmployees() {
     return this.prisma.employee.findMany({
       include: {
         healthCareMembers: true,
@@ -96,7 +96,7 @@ export class EmployeeService {
     });
   }
 
-  async findOneEmployee(id: string) {
+  async getOneEmployee(id: string) {
     return this.prisma.employee.findUnique({
       where: { id },
       include: {

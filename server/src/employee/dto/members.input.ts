@@ -5,7 +5,7 @@ import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class HealthCareMemberInput {
   @IsString()
   @IsOptional()
-  @Field({ nullable: true })
+  @Field()
   id?: string;
 
   @IsNotEmpty()
@@ -25,12 +25,12 @@ export class HealthCareMemberInput {
 
   @IsOptional()
   @IsDate()
-  @Field({ nullable: true })
+  @Field()
   start?: Date;
 
   @IsOptional()
   @IsDate()
-  @Field({ nullable: true })
+  @Field()
   end?: Date;
 }
 
@@ -38,7 +38,7 @@ export class HealthCareMemberInput {
 export class FitpassMemberInput {
   @IsString()
   @IsOptional()
-  @Field({ nullable: true })
+  @Field()
   id?: string;
 
   @IsNotEmpty()
@@ -53,11 +53,11 @@ export class FitpassMemberInput {
 
   @IsOptional()
   @IsDate()
-  @Field({ nullable: true })
+  @Field()
   start?: Date;
 
   @IsOptional()
   @IsDate()
-  @Field({ nullable: true })
+  @Field()
   end?: Date;
 }

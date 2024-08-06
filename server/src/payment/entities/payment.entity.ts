@@ -6,10 +6,10 @@ export class Payment {
   @Field()
   id: string;
 
-  @Field({ nullable: true })
+  @Field()
   amount: number;
 
-  @Field({ nullable: true })
+  @Field()
   entryDate: Date;
 
   @Field()

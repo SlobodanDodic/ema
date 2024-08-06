@@ -3,7 +3,7 @@ import { Employee } from './employee.entity';
 
 @ObjectType()
 export class HealthCareMember {
-  @Field({ nullable: true })
+  @Field()
   id?: string;
 
   @Field()
@@ -15,14 +15,14 @@ export class HealthCareMember {
   @Field()
   insurance: string;
 
-  @Field({ nullable: true })
+  @Field()
   start?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   end?: Date;
 
   @Field()
-  employeeId: number;
+  employeeId: string;
 
   @Field((_type) => Employee)
   employee: Employee;

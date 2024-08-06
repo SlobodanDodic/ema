@@ -27,11 +27,11 @@ export default function AuthFormLayout({ children, handleSubmit, title, linkHref
                   Submit
                 </button>
               </div>
-              {linkHref === "/register" ? (
+              {/* {linkHref === "/register" ? (
                 <div className="pt-2 text-sm text-center">
                   <a href="#">Forgot password?</a>
                 </div>
-              ) : null}
+              ) : null} */}
               <div className="pt-2 text-sm text-center">
                 <Link to={linkHref}>{linkDescription}</Link>
               </div>

@@ -6,10 +6,10 @@ export class Liability {
   @Field()
   id: string;
 
-  @Field({ nullable: true })
+  @Field()
   amount: number;
 
-  @Field({ nullable: true })
+  @Field()
   recordedDate: Date;
 
   @Field()

@@ -45,6 +45,8 @@ export default function Form() {
         firstAid: employeeData.firstAid || null,
         healthCareMembers: employeeData.healthCareMembers,
         fitpassMembers: employeeData.fitpassMembers,
+        cumulativeLiabilities: employeeData.cumulativeLiabilities || 0,
+        lastCalculation: employeeData.lastCalculation || Date.now(),
       });
     }
   }, [employeeData]);
@@ -77,20 +79,22 @@ export default function Form() {
         safety: formData.safety || initialDate,
         fire: formData.fire || initialDate,
         firstAid: formData.firstAid || initialDate,
+        cumulativeLiabilities: formData.cumulativeLiabilities || 0,
+        lastCalculation: formData.lastCalculation || new Date().toISOString(),
         healthCareMembers: formData.healthCareMembers.map((member) => ({
           id: member.id !== "" ? member.id.toString() : "",
           name: member.name,
           category: member.category,
           insurance: member.insurance,
-          start: member.start,
-          end: member.end,
+          start: member.start || new Date().toISOString(),
+          end: member.end || new Date().toISOString(),
         })),
         fitpassMembers: formData.fitpassMembers.map((member) => ({
           id: member.id !== "" ? member.id.toString() : "",
           name: member.name,
           category: member.category,
-          start: member.start,
-          end: member.end,
+          start: member.start || new Date().toISOString(),
+          end: member.end || new Date().toISOString(),
         })),
       };
 

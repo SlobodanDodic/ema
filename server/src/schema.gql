@@ -34,25 +34,25 @@ type SignResponse {
 }
 
 type FitpassMember {
-  id: String
+  id: String!
   name: String!
   category: String!
-  start: DateTime
-  end: DateTime
-  employeeId: Float!
+  start: DateTime!
+  end: DateTime!
+  employeeId: String!
   employee: Employee!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
 type HealthCareMember {
-  id: String
+  id: String!
   name: String!
   category: String!
   insurance: String!
-  start: DateTime
-  end: DateTime
-  employeeId: Float!
+  start: DateTime!
+  end: DateTime!
+  employeeId: String!
   employee: Employee!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -65,7 +65,7 @@ type Employee {
   phoneNumber: String!
   birthday: DateTime!
   contract: DateTime!
-  cumulativeLiabilities: Float
+  cumulativeLiabilities: Float!
   lastCalculation: DateTime!
   eyes: DateTime!
   safety: DateTime!
@@ -79,8 +79,8 @@ type Employee {
 
 type Payment {
   id: String!
-  amount: Float
-  entryDate: DateTime
+  amount: Float!
+  entryDate: DateTime!
   createdAt: DateTime!
   updatedAt: DateTime!
   employee: Employee
@@ -88,8 +88,8 @@ type Payment {
 
 type Liability {
   id: String!
-  amount: Float
-  recordedDate: DateTime
+  amount: Float!
+  recordedDate: DateTime!
   createdAt: DateTime!
   updatedAt: DateTime!
   employee: Employee
@@ -110,8 +110,8 @@ type Jobs {
 type Query {
   users: [Auth!]!
   user(username: String!): Auth!
-  findAllEmployees: [Employee!]!
-  findOneEmployee(id: String!): Employee!
+  getAllEmployees: [Employee!]!
+  getOneEmployee(id: String!): Employee!
   paymentsByEmployee(employeeId: String!): [Payment!]!
   getAllPayments: [Payment!]!
   liabilitiesByEmployee(employeeId: String!): [Liability!]!
@@ -156,6 +156,8 @@ input EmployeeInput {
   phoneNumber: String!
   birthday: DateTime!
   contract: DateTime!
+  cumulativeLiabilities: Float!
+  lastCalculation: DateTime!
   eyes: DateTime!
   safety: DateTime!
   fire: DateTime!
@@ -165,20 +167,20 @@ input EmployeeInput {
 }
 
 input HealthCareMemberInput {
-  id: String
+  id: String!
   name: String!
   category: String!
   insurance: String!
-  start: DateTime
-  end: DateTime
+  start: DateTime!
+  end: DateTime!
 }
 
 input FitpassMemberInput {
-  id: String
+  id: String!
   name: String!
   category: String!
-  start: DateTime
-  end: DateTime
+  start: DateTime!
+  end: DateTime!
 }
 
 input PaymentInput {

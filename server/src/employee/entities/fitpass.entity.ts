@@ -3,7 +3,7 @@ import { Employee } from './employee.entity';
 
 @ObjectType()
 export class FitpassMember {
-  @Field({ nullable: true })
+  @Field()
   id?: string;
 
   @Field()
@@ -12,14 +12,14 @@ export class FitpassMember {
   @Field()
   category: string;
 
-  @Field({ nullable: true })
+  @Field()
   start?: Date;
 
-  @Field({ nullable: true })
+  @Field()
   end?: Date;
 
   @Field()
-  employeeId: number;
+  employeeId: string;
 
   @Field((_type) => Employee)
   employee: Employee;
