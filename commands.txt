@@ -37,3 +37,11 @@ rm -rf node_modules
 rm -rf dist
 npm install
 npm run build
+
+-----------------------------------------------------
+
+Clean Everything:
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker volume rm $(docker volume ls -q)
+docker system prune -a --volumes -f

@@ -20,13 +20,13 @@ export class EmployeeResolver {
     return this.employeeService.updateEmployee(id, data);
   }
 
-  @Query(() => [Employee], { name: 'findAllEmployees' })
-  findAllEmployees() {
-    return this.employeeService.findAllEmployees();
+  @Query(() => [Employee], { name: 'getAllEmployees' })
+  getAllEmployees() {
+    return this.employeeService.getAllEmployees();
   }
 
-  @Query(() => Employee, { name: 'findOneEmployee' })
-  findOneEmployee(@Args('id') id: string) {
-    return this.employeeService.findOneEmployee(id);
+  @Query(() => Employee, { name: 'getOneEmployee' })
+  getOneEmployee(@Args('id') id: string) {
+    return this.employeeService.getOneEmployee(id);
   }
 }

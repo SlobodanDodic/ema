@@ -24,7 +24,7 @@ CREATE TABLE "Employee" (
     "safety" TIMESTAMP(3),
     "fire" TIMESTAMP(3),
     "firstAid" TIMESTAMP(3),
-    "cumulativeLiabilities" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "cumulativeLiabilities" INTEGER NOT NULL DEFAULT 0,
     "lastCalculation" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE "FitpassMember" (
 -- CreateTable
 CREATE TABLE "Payment" (
     "id" TEXT NOT NULL,
-    "amount" DECIMAL(65,30) NOT NULL,
+    "amount" INTEGER NOT NULL,
     "entryDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "employeeId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -76,7 +76,7 @@ CREATE TABLE "Payment" (
 -- CreateTable
 CREATE TABLE "Liability" (
     "id" TEXT NOT NULL,
-    "amount" DECIMAL(65,30) NOT NULL,
+    "amount" INTEGER NOT NULL,
     "recordedDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "employeeId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

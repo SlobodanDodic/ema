@@ -39,7 +39,7 @@ type FitpassMember {
   category: String!
   start: DateTime
   end: DateTime
-  employeeId: Float!
+  employeeId: String!
   employee: Employee!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -52,7 +52,7 @@ type HealthCareMember {
   insurance: String!
   start: DateTime
   end: DateTime
-  employeeId: Float!
+  employeeId: String!
   employee: Employee!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -65,7 +65,7 @@ type Employee {
   phoneNumber: String!
   birthday: DateTime!
   contract: DateTime!
-  cumulativeLiabilities: Float
+  cumulativeLiabilities: Float!
   lastCalculation: DateTime!
   eyes: DateTime!
   safety: DateTime!
@@ -77,13 +77,11 @@ type Employee {
   updatedAt: DateTime!
 }
 
-type Payment {
+type Benefit {
   id: String!
-  amount: Float
-  entryDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  employee: Employee
+  value: String!
+  price: Float
+  employeeDiscount: Float
 }
 
 type Liability {
@@ -95,11 +93,13 @@ type Liability {
   employee: Employee
 }
 
-type Benefit {
+type Payment {
   id: String!
-  value: String!
-  price: Float
-  employeeDiscount: Float
+  amount: Float
+  entryDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  employee: Employee
 }
 
 type Jobs {
@@ -110,14 +110,14 @@ type Jobs {
 type Query {
   users: [Auth!]!
   user(username: String!): Auth!
-  findAllEmployees: [Employee!]!
-  findOneEmployee(id: String!): Employee!
-  paymentsByEmployee(employeeId: String!): [Payment!]!
-  getAllPayments: [Payment!]!
-  liabilitiesByEmployee(employeeId: String!): [Liability!]!
-  getAllLiabilities: [Liability!]!
+  getAllEmployees: [Employee!]!
+  getOneEmployee(id: String!): Employee!
   getAllHealthcareData: [Benefit!]!
   getAllFitpassData: [Benefit!]!
+  liabilitiesByEmployee(employeeId: String!): [Liability!]!
+  getAllLiabilities: [Liability!]!
+  paymentsByEmployee(employeeId: String!): [Payment!]!
+  getAllPayments: [Payment!]!
   getJobs: [Jobs!]!
 }
 
@@ -128,8 +128,8 @@ type Mutation {
   removeUser(id: String!): Auth!
   createEmployee(data: EmployeeInput!): Employee!
   updateEmployee(id: String!, data: EmployeeInput!): Employee!
-  createPayment(data: PaymentInput!): Payment!
   createLiability(data: LiabilityInput!): Liability!
+  createPayment(data: PaymentInput!): Payment!
 }
 
 input SignUpInput {
@@ -181,14 +181,14 @@ input FitpassMemberInput {
   end: DateTime
 }
 
-input PaymentInput {
-  employeeId: String!
-  amount: Float!
-  entryDate: DateTime!
-}
-
 input LiabilityInput {
   employeeId: String!
   amount: Float!
   recordedDate: DateTime!
+}
+
+input PaymentInput {
+  employeeId: String!
+  amount: Float!
+  entryDate: DateTime!
 }

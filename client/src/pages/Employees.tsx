@@ -13,7 +13,7 @@ export default function Employees() {
 
   useEffect(() => {
     if (data) {
-      setEmployees(data?.findAllEmployees);
+      setEmployees(data?.getAllEmployees);
     }
   }, [data]);
 

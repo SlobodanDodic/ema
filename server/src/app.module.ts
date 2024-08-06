@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
@@ -10,6 +10,8 @@ import { PaymentModule } from './payment/payment.module';
 import { LiabilityModule } from './liability/liability.module';
 import { BenefitModule } from './benefit/benefit.module';
 import { JobsModule } from './jobs/jobs.module';
+import { CalculationModule } from './calculation/calculation.module';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
@@ -25,7 +27,14 @@ import { JobsModule } from './jobs/jobs.module';
     LiabilityModule,
     BenefitModule,
     JobsModule,
+    CalculationModule,
   ],
-  providers: [],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async onModuleInit() {
+    await this.prismaService.$connect();
+    console.log('Connected to DB');
+  }
+}

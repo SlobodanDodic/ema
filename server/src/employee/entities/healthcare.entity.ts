@@ -22,10 +22,10 @@ export class HealthCareMember {
   end?: Date;
 
   @Field()
-  employeeId: number;
+  employeeId: string;
 
-  @Field((_type) => Employee)
-  employee: Employee;
+  @Field(() => Employee)
+  employee?: Employee;
 
   @Field()
   createdAt: Date;

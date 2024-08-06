@@ -11,7 +11,7 @@ export default function Payments() {
 
   useEffect(() => {
     if (data) {
-      setEmployees(data?.findAllEmployees);
+      setEmployees(data?.getAllEmployees);
     }
   }, [data]);
 

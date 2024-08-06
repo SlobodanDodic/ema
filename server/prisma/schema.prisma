@@ -33,7 +33,7 @@ model Employee {
   fire     DateTime?
   firstAid DateTime?
 
-  cumulativeLiabilities Decimal   @default(0)
+  cumulativeLiabilities Int       @default(0)
   lastCalculation       DateTime?
 
   healthCareMembers HealthCareMember[]
@@ -85,7 +85,7 @@ model FitpassMember {
 
 model Payment {
   id         String   @id @default(uuid())
-  amount     Decimal
+  amount     Int
   entryDate  DateTime @default(now())
   employeeId String
   employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
@@ -101,7 +101,7 @@ model Payment {
 
 model Liability {
   id           String   @id @default(uuid())
-  amount       Decimal
+  amount       Int
   recordedDate DateTime @default(now())
   employeeId   String
   employee     Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)

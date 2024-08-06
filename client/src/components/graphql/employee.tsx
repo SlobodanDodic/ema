@@ -69,8 +69,8 @@ export const UPDATE_EMPLOYEE = gql`
 `;
 
 export const GET_EMPLOYEES = gql`
-  query findAllEmployees {
-    findAllEmployees {
+  query getAllEmployees {
+    getAllEmployees {
       id
       fullName
       jobTitle

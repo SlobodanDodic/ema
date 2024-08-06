@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { EmployeeInput } from './dto/employee.input';
+import { BenefitService } from 'src/benefit/benefit.service';
+import { LiabilityService } from 'src/liability/liability.service';
 
 @Injectable()
 export class EmployeeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly benefitService: BenefitService,
+    private readonly liabilityService: LiabilityService,
+  ) {}
 
   async createEmployee(data: EmployeeInput) {
     return this.prisma.employee.create({
@@ -87,22 +93,111 @@ export class EmployeeService {
     });
   }
 
-  async findAllEmployees() {
+  async getAllEmployees() {
     return this.prisma.employee.findMany({
       include: {
-        healthCareMembers: true,
-        fitpassMembers: true,
+        healthCareMembers: {
+          include: {
+            employee: true,
+          },
+        },
+        fitpassMembers: {
+          include: {
+            employee: true,
+          },
+        },
       },
     });
   }
 
-  async findOneEmployee(id: string) {
-    return this.prisma.employee.findUnique({
-      where: { id },
+  async getOneEmployee(employeeId: string) {
+    const employee = await this.prisma.employee.findUnique({
+      where: { id: employeeId },
       include: {
-        healthCareMembers: true,
-        fitpassMembers: true,
+        healthCareMembers: {
+          include: {
+            employee: true,
+          },
+        },
+        fitpassMembers: {
+          include: {
+            employee: true,
+          },
+        },
       },
     });
+
+    if (!employee) {
+      throw new Error(`Employee with id ${employeeId} not found`);
+    }
+
+    const healthCareMembersCount = employee.healthCareMembers.length;
+    const fitpassMembersCount = employee.fitpassMembers.length;
+    const hasEmployeeCategory =
+      employee.healthCareMembers.some(
+        (member) => member.category === 'Employee',
+      ) ||
+      employee.fitpassMembers.some((member) => member.category === 'Employee');
+
+    console.log(
+      'Healthcare Members Count:',
+      healthCareMembersCount,
+      'Fitpass Members Count:',
+      fitpassMembersCount,
+      'Has Employee Category:',
+      hasEmployeeCategory,
+    );
+
+    return {
+      ...employee,
+      healthCareMembersCount,
+      fitpassMembersCount,
+      hasEmployeeCategory,
+    };
+  }
+
+  async checkAndPerformCalculation() {
+    const today = new Date();
+    const firstOfMonth = new Date(today.getFullYear(), today.getMonth(), 7);
+
+    const employees = await this.getAllEmployees();
+
+    await Promise.all(
+      employees.map(async (employee) => {
+        try {
+          if (
+            !employee.lastCalculation ||
+            employee.lastCalculation < firstOfMonth
+          ) {
+            const healthCareMembers =
+              await this.benefitService.getHealthcareMembersByEmployee(
+                employee.id,
+              );
+            const fitpassMembers =
+              await this.benefitService.getFitpassMembersByEmployee(
+                employee.id,
+              );
+
+            const employeeLiabilities = {
+              ...employee,
+              healthCareMembers,
+              fitpassMembers,
+            };
+
+            const totalPrice =
+              await this.liabilityService.calculateEmployeeLiabilities(
+                employeeLiabilities,
+              );
+
+            await this.liabilityService.updateLiabilities(
+              employee.id,
+              totalPrice,
+            );
+          }
+        } catch (error) {
+          console.error(`Error processing employee ${employee.id}:`, error);
+        }
+      }),
+    );
   }
 }
