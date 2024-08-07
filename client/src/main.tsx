@@ -5,6 +5,7 @@ import "./index.css";
 
 import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
+import { ToggleProvider } from "./context/ToggleProvider";
 import router from "./Router.tsx";
 
 import { ApolloClient, ApolloProvider, from, HttpLink, InMemoryCache } from "@apollo/client";
@@ -47,8 +48,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <AuthProvider>
-        <ToastContainer position="top-left" closeOnClick autoClose={2000} pauseOnFocusLoss={false} theme="dark" />
-        <RouterProvider router={router} />
+        <ToggleProvider>
+          <ToastContainer position="top-left" closeOnClick autoClose={2000} pauseOnFocusLoss={false} theme="dark" />
+          <RouterProvider router={router} />
+        </ToggleProvider>
       </AuthProvider>
     </ApolloProvider>
   </React.StrictMode>
