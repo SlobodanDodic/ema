@@ -17,20 +17,19 @@ const PaymentsTableRow = ({
   });
   const totalLiabilitiesByEmployee = calculateTotalPrice(employee, insuranceCompanies);
 
-  const totalPayments =
-    paymentData?.paymentsByEmployee.reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
-
-  const { data: liabilitiesByEmployee, refetch } = useQuery(GET_LIABILITIES, {
+  const { data: liabilitiesByEmployee, refetch: refetchLiabilitiesByEmployee } = useQuery(GET_LIABILITIES, {
     variables: { employeeId: employee?.id },
   });
 
-  const { data: totalLiabilitiesByEmployeeDb, loading: loadingLiabilities } = useQuery(GET_TOTAL_LIABILITIES_BY_EMPLOYEE, {
+  const {
+    data: totalLiabilitiesByEmployeeDb,
+    loading: loadingLiabilities,
+    refetch: refetchLiabilities,
+  } = useQuery(GET_TOTAL_LIABILITIES_BY_EMPLOYEE, {
     variables: { employeeId: employee?.id },
   });
 
   const [createLiability] = useMutation(CREATE_LIABILITY);
-
-  const balance = totalPayments - totalLiabilitiesByEmployeeDb?.getTotalLiabilitiesByEmployee;
 
   const hasRunOnce = useRef(false);
 
@@ -64,12 +63,25 @@ const PaymentsTableRow = ({
             },
           },
         }).then(() => {
-          refetch();
+          refetchLiabilitiesByEmployee();
+          refetchLiabilities();
           hasRunOnce.current = true;
         });
       }
     }
-  }, [employee, totalLiabilitiesByEmployee, liabilitiesByEmployee, refetch, createLiability]);
+  }, [
+    employee,
+    totalLiabilitiesByEmployee,
+    liabilitiesByEmployee,
+    refetchLiabilitiesByEmployee,
+    refetchLiabilities,
+    createLiability,
+  ]);
+
+  const totalPayments =
+    paymentData?.paymentsByEmployee.reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
+  const totalLiabilities = totalLiabilitiesByEmployeeDb?.getTotalLiabilitiesByEmployee || 0;
+  const balance = totalPayments - totalLiabilities;
 
   return (
     <tr
