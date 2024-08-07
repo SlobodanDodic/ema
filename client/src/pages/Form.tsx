@@ -19,6 +19,7 @@ export default function Form() {
   const location = useLocation();
   const employeeData = location.state?.employee || null;
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [hasChanges, setHasChanges] = useState(false);
 
   const [createEmployee] = useMutation(CREATE_EMPLOYEE, {
     refetchQueries: [{ query: GET_EMPLOYEES }],
@@ -52,15 +53,18 @@ export default function Form() {
   }, [employeeData]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setHasChanges(true);
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleDateChange = (name: keyof FormData, date: Date | null) => {
+    setHasChanges(true);
     setFormData((prevData) => ({ ...prevData, [name]: date }));
   };
 
   const handleMembersChange = (type: "healthCare" | "fitpass", members: Member[]) => {
+    setHasChanges(true);
     setFormData((prevData) => ({
       ...prevData,
       [type === "healthCare" ? "healthCareMembers" : "fitpassMembers"]: members,
@@ -106,15 +110,13 @@ export default function Form() {
         const { data } = await updateEmployee({
           variables,
         });
-
-        toast.success(`Employee ${data.updateEmployee.fullName} updated successfully!`);
+        hasChanges && toast.success(`Employee ${data.updateEmployee.fullName} updated successfully!`);
       } else {
         const { data } = await createEmployee({
           variables: {
             input: inputData,
           },
         });
-
         toast.success(`Employee ${data.createEmployee.fullName} created successfully!`);
       }
 
@@ -170,7 +172,7 @@ export default function Form() {
           onClick={handleSubmit}
           disabled={!formData.fullName.trim()}
         >
-          {employeeData?.id ? "Update Employee" : "Create Employee"}
+          {employeeData?.id ? (hasChanges ? "Update Employee" : "Go Back") : "Create Employee"}
         </button>
       </div>
     </div>

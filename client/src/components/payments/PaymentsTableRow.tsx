@@ -35,7 +35,12 @@ const PaymentsTableRow = ({
   const hasRunOnce = useRef(false);
 
   useEffect(() => {
-    if (employee && totalLiabilitiesByEmployee !== undefined && !hasRunOnce.current) {
+    if (
+      employee &&
+      totalLiabilitiesByEmployee !== undefined &&
+      liabilitiesByEmployee?.liabilitiesByEmployee &&
+      !hasRunOnce.current
+    ) {
       const currentDate = new Date();
       const currentMonth = currentDate.getMonth();
       const currentYear = currentDate.getFullYear();
@@ -64,7 +69,7 @@ const PaymentsTableRow = ({
         });
       }
     }
-  }, [employee, totalLiabilitiesByEmployee, createLiability, liabilitiesByEmployee, refetch]);
+  }, [employee, totalLiabilitiesByEmployee, liabilitiesByEmployee, refetch, createLiability]);
 
   return (
     <tr
@@ -102,7 +107,7 @@ const PaymentsTableRow = ({
         {loadingPayments ? "Loading..." : formatCurrency(totalPayments)}
       </td>
       <td className={`px-6 py-4 text-xs font-semibold text-center ${balance >= 0 ? "text-green-800" : "text-red-700"}`}>
-        {formatCurrency(balance)}
+        {loadingLiabilities || loadingPayments ? "Loading..." : formatCurrency(balance)}
       </td>
     </tr>
   );

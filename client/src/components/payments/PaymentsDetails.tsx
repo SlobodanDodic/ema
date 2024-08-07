@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import useToggle from "../../hooks/useToggle";
 import PaymentsTable from "./PaymentsTable";
-import { Employee } from "../../types/common";
 import { GET_HEALTHCARE_BENEFITS } from "../../graphql/benefits";
 import { useQuery } from "@apollo/client";
 import { BenefitType } from "../../types/benefitTypes";
+import { GET_EMPLOYEES } from "../../graphql/employee";
+import { Employee } from "../../types/common";
 
-export default function PaymentsDetails({ employees }: { employees: Employee[] }) {
+export default function PaymentsDetails() {
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({});
   const [isModalOpen, setIsModalOpen] = useToggle(false);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
+  const { data: employeesData } = useQuery(GET_EMPLOYEES);
   const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
 
   useEffect(() => {
@@ -32,6 +35,12 @@ export default function PaymentsDetails({ employees }: { employees: Employee[] }
       [companyValue]: !prevState[companyValue],
     }));
   };
+
+  useEffect(() => {
+    if (employeesData) {
+      setEmployees(employeesData?.getAllEmployees);
+    }
+  }, [employeesData]);
 
   return (
     <div className="relative mt-6 overflow-x-auto">
