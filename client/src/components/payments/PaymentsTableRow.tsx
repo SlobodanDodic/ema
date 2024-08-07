@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { Payment, PaymentsTableRowProps } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
-import { CREATE_LIABILITY, GET_LIABILITIES } from "../graphql/liabilities";
-import { GET_PAYMENTS } from "../graphql/payments";
+import { CREATE_LIABILITY, GET_LIABILITIES, GET_TOTAL_LIABILITIES_BY_EMPLOYEE } from "../../graphql/liabilities";
+import { GET_PAYMENTS } from "../../graphql/payments";
 
 const PaymentsTableRow = ({
   employee,
@@ -12,25 +12,30 @@ const PaymentsTableRow = ({
   onClick,
   calculateTotalPrice,
 }: PaymentsTableRowProps) => {
-  const { data: paymentData } = useQuery(GET_PAYMENTS, {
+  const { data: paymentData, loading: loadingPayments } = useQuery(GET_PAYMENTS, {
     variables: { employeeId: employee?.id },
   });
-  const totalLiabilities = calculateTotalPrice(employee, insuranceCompanies);
+  const totalLiabilitiesByEmployee = calculateTotalPrice(employee, insuranceCompanies);
 
   const totalPayments =
     paymentData?.paymentsByEmployee.reduce((acc: number, payment: Payment) => acc + (payment.amount ?? 0), 0) || 0;
-
-  const balance = totalPayments - totalLiabilities;
 
   const { data: liabilitiesByEmployee, refetch } = useQuery(GET_LIABILITIES, {
     variables: { employeeId: employee?.id },
   });
 
+  const { data: totalLiabilitiesByEmployeeDb, loading: loadingLiabilities } = useQuery(GET_TOTAL_LIABILITIES_BY_EMPLOYEE, {
+    variables: { employeeId: employee?.id },
+  });
+
   const [createLiability] = useMutation(CREATE_LIABILITY);
+
+  const balance = totalPayments - totalLiabilitiesByEmployeeDb?.getTotalLiabilitiesByEmployee;
+
   const hasRunOnce = useRef(false);
 
   useEffect(() => {
-    if (employee && totalLiabilities !== undefined && !hasRunOnce.current) {
+    if (employee && totalLiabilitiesByEmployee !== undefined && !hasRunOnce.current) {
       const currentDate = new Date();
       const currentMonth = currentDate.getMonth();
       const currentYear = currentDate.getFullYear();
@@ -49,7 +54,7 @@ const PaymentsTableRow = ({
           variables: {
             input: {
               employeeId: employee.id,
-              amount: totalLiabilities as number,
+              amount: totalLiabilitiesByEmployee as number,
               recordedDate: currentDate.toISOString(),
             },
           },
@@ -59,7 +64,7 @@ const PaymentsTableRow = ({
         });
       }
     }
-  }, [employee, totalLiabilities, createLiability, liabilitiesByEmployee, refetch]);
+  }, [employee, totalLiabilitiesByEmployee, createLiability, liabilitiesByEmployee, refetch]);
 
   return (
     <tr
@@ -90,8 +95,12 @@ const PaymentsTableRow = ({
       >
         {employee.fitpassMembers.length}
       </td>
-      <td className="px-6 py-4 text-xs font-semibold text-center">{formatCurrency(totalLiabilities)}</td>
-      <td className="px-6 py-4 text-xs font-semibold text-center">{formatCurrency(totalPayments)}</td>
+      <td className="px-6 py-4 text-xs font-semibold text-center">
+        {loadingLiabilities ? "Loading..." : formatCurrency(totalLiabilitiesByEmployeeDb?.getTotalLiabilitiesByEmployee)}
+      </td>
+      <td className="px-6 py-4 text-xs font-semibold text-center">
+        {loadingPayments ? "Loading..." : formatCurrency(totalPayments)}
+      </td>
       <td className={`px-6 py-4 text-xs font-semibold text-center ${balance >= 0 ? "text-green-800" : "text-red-700"}`}>
         {formatCurrency(balance)}
       </td>

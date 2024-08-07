@@ -3,13 +3,21 @@ import { Icon } from "../common/Icon";
 import { IconEcommerce, IconEnter, IconNotesMedical, IconSend, IconWeightLifter } from "../svg";
 import moment from "moment";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_PAYMENT, GET_PAYMENTS } from "../graphql/payments";
+import { CREATE_PAYMENT, GET_PAYMENTS, UPDATE_PAYMENT } from "../../graphql/payments";
 import { Payment, PaymentsEntryModalProps } from "../../types/paymentTypes";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEntryModalProps) {
   const [currentAmount, setCurrentAmount] = useState<number | "">("");
+  const [editingPaymentId, setEditingPaymentId] = useState<string | null>(null);
+  const [editingAmount, setEditingAmount] = useState<number | "">("");
+  const [hasChanges, setHasChanges] = useState(false);
 
   const [createPayment] = useMutation(CREATE_PAYMENT, {
+    refetchQueries: [{ query: GET_PAYMENTS, variables: { employeeId: employee?.id } }],
+  });
+
+  const [updatePayment] = useMutation(UPDATE_PAYMENT, {
     refetchQueries: [{ query: GET_PAYMENTS, variables: { employeeId: employee?.id } }],
   });
 
@@ -19,17 +27,34 @@ export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEn
 
   const handleAddAmount = () => {
     if (currentAmount === "") return;
-    const date = new Date().toISOString();
     createPayment({
       variables: {
         input: {
           employeeId: employee.id,
           amount: currentAmount as number,
-          entryDate: date,
+          entryDate: new Date().toISOString(),
         },
       },
     }).then(() => {
       setCurrentAmount("");
+      setHasChanges(true);
+      refetch();
+    });
+  };
+
+  const handleUpdateAmount = (id: string) => {
+    if (editingAmount === "") return;
+    updatePayment({
+      variables: {
+        id,
+        data: {
+          amount: editingAmount as number,
+        },
+      },
+    }).then(() => {
+      setEditingPaymentId(null);
+      setEditingAmount("");
+      setHasChanges(true);
       refetch();
     });
   };
@@ -46,7 +71,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEn
           onClick={toggleModal}
           className="absolute px-6 py-1 font-medium tracking-wider -translate-x-1/2 bg-transparent rounded shadow shadow-oranje/50 bottom-6 left-1/2 text-oranje hover:bg-oranje hover:text-midnight"
         >
-          Exit
+          {hasChanges ? "Save & Exit" : "Exit"}
         </button>
       </div>
 
@@ -82,6 +107,7 @@ export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEn
           </div>
           <input
             type="number"
+            id="amount"
             value={currentAmount}
             onChange={(e) => setCurrentAmount(Number(e.target.value) || "")}
             onKeyDown={(e) => {
@@ -109,7 +135,33 @@ export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEn
           <div key={index} className="grid justify-center w-full grid-flow-col p-3 m-2 border rounded auto-cols-max sm:w-auto">
             <div className="text-xs text-silver/90">{moment(entry.entryDate).format("DD.MM.YYYY")}</div>
             <div className="mx-3 text-xs text-oranje">/</div>
-            <div className="text-xs font-semibold text-silver">{entry.amount} RSD</div>
+            {editingPaymentId === entry.id ? (
+              <input
+                type="number"
+                value={editingAmount}
+                onChange={(e) => setEditingAmount(e.target.value === "" ? "" : Number(e.target.value))}
+                onClick={(e) => {
+                  handleUpdateAmount(entry.id);
+                  e.stopPropagation();
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleUpdateAmount(entry.id);
+                }}
+                className="text-xs font-semibold text-silver bg-midnight max-w-16"
+                autoFocus
+                onBlur={() => handleUpdateAmount(entry.id)}
+              />
+            ) : (
+              <div
+                className="text-xs font-semibold transition-all duration-300 cursor-pointer text-silver hover:text-oranje"
+                onClick={() => {
+                  setEditingPaymentId(entry.id);
+                  setEditingAmount(entry.amount);
+                }}
+              >
+                {formatCurrency(entry.amount)}
+              </div>
+            )}
           </div>
         ))}
       </div>

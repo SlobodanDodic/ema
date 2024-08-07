@@ -28,4 +28,9 @@ export class LiabilityResolver {
   async getTotalLiabilities() {
     return this.liabilityService.getTotalLiabilities();
   }
+
+  @Query(() => Float)
+  async getTotalLiabilitiesByEmployee(@Args('employeeId') employeeId: string) {
+    return this.liabilityService.getTotalLiabilitiesByEmployee(employeeId);
+  }
 }

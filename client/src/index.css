@@ -58,6 +58,10 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+#amount::placeholder {
+  color: var(--midnight);
+}
+
 input::placeholder {
   color: var(--silver);
 }

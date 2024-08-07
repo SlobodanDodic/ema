@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import PageHeading from "../components/common/PageHeading";
-import { GET_EMPLOYEES } from "../components/graphql/employee";
+import { GET_EMPLOYEES } from "../graphql/employee";
 import PaymentsDetails from "../components/payments/PaymentsDetails";
 import { Employee } from "../types/common";
 

@@ -6,7 +6,7 @@ import InputText from "./InputText";
 import MembersTable from "./MembersTable";
 import useToggle from "../../hooks/useToggle";
 import { useQuery } from "@apollo/client";
-import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
+import { GET_HEALTHCARE_BENEFITS } from "../../graphql/benefits";
 import Loading from "../../pages/Loading";
 import { toast } from "react-toastify";
 

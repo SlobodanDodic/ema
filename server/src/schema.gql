@@ -114,8 +114,11 @@ type Query {
   getOneEmployee(id: String!): Employee!
   paymentsByEmployee(employeeId: String!): [Payment!]!
   getAllPayments: [Payment!]!
+  getTotalPaymentsByEmployee(employeeId: String!): Float!
   liabilitiesByEmployee(employeeId: String!): [Liability!]!
   getAllLiabilities: [Liability!]!
+  getTotalLiabilities: Float!
+  getTotalLiabilitiesByEmployee(employeeId: String!): Float!
   getAllHealthcareData: [Benefit!]!
   getAllFitpassData: [Benefit!]!
   getJobs: [Jobs!]!
@@ -129,6 +132,7 @@ type Mutation {
   createEmployee(data: EmployeeInput!): Employee!
   updateEmployee(id: String!, data: EmployeeInput!): Employee!
   createPayment(data: PaymentInput!): Payment!
+  updatePayment(id: String!, data: UpdatePaymentInput!): Payment!
   createLiability(data: LiabilityInput!): Liability!
 }
 
@@ -187,6 +191,10 @@ input PaymentInput {
   employeeId: String!
   amount: Float!
   entryDate: DateTime!
+}
+
+input UpdatePaymentInput {
+  amount: Float!
 }
 
 input LiabilityInput {

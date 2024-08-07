@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { GET_USER } from "../components/graphql/auth";
+import { GET_USER } from "../graphql/auth";
 import useLocalStorage from "../hooks/useLocalStorage";
 import AuthContext from "./AuthContext";
 

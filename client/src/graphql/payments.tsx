@@ -10,6 +10,15 @@ export const CREATE_PAYMENT = gql`
   }
 `;
 
+export const UPDATE_PAYMENT = gql`
+  mutation UpdatePayment($id: String!, $data: UpdatePaymentInput!) {
+    updatePayment(id: $id, data: $data) {
+      id
+      amount
+    }
+  }
+`;
+
 export const GET_PAYMENTS = gql`
   query GetPayments($employeeId: String!) {
     paymentsByEmployee(employeeId: $employeeId) {

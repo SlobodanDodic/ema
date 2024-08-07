@@ -7,13 +7,13 @@ import PageHeading from "../components/common/PageHeading";
 import InputSelect from "../components/form/InputSelect";
 import InputText from "../components/form/InputText";
 import InputWellness from "../components/form/InputWellness";
-import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../components/graphql/employee";
+import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../graphql/employee";
 import { FormData, Member } from "../types/formTypes";
 import { initialDate, initialDateBirthday, initialDateContract, initialFormData } from "../components/form/initialFormData";
 import { Icon } from "../components/common/Icon";
 import { IconNotesMedical, IconWeightLifter } from "../components/svg";
 import InputDates from "../components/form/InputDates";
-import { GET_JOBS } from "../components/graphql/jobs";
+import { GET_JOBS } from "../graphql/jobs";
 
 export default function Form() {
   const location = useLocation();

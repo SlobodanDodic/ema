@@ -32,3 +32,9 @@ export const GET_ALL_LIABILITIES = gql`
     }
   }
 `;
+
+export const GET_TOTAL_LIABILITIES_BY_EMPLOYEE = gql`
+  query GetTotalLiabilitiesByEmployee($employeeId: String!) {
+    getTotalLiabilitiesByEmployee(employeeId: $employeeId)
+  }
+`;

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuthFormLayout from "../components/auth/AuthFormLayout";
 import InputField from "../components/auth/InputField";
-import { LOGIN_USER } from "../components/graphql/auth";
+import { LOGIN_USER } from "../graphql/auth";
 import { useAuth } from "../hooks/useAuth";
 import Loading from "./Loading";
 

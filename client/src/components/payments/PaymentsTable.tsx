@@ -4,7 +4,7 @@ import { PaymentsTableProps } from "../../types/paymentTypes";
 import useToggle from "../../hooks/useToggle";
 import PaymentsEntryModal from "./PaymentsEntryModal";
 import PaymentsTableRow from "./PaymentsTableRow";
-import { GET_FITPASS_BENEFITS, GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
+import { GET_FITPASS_BENEFITS, GET_HEALTHCARE_BENEFITS } from "../../graphql/benefits";
 import { useQuery } from "@apollo/client";
 import { useCalculations } from "../../hooks/useCalculations";
 import { BenefitType } from "../../types/benefitTypes";

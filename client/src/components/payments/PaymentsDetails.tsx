@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useToggle from "../../hooks/useToggle";
 import PaymentsTable from "./PaymentsTable";
 import { Employee } from "../../types/common";
-import { GET_HEALTHCARE_BENEFITS } from "../graphql/benefits";
+import { GET_HEALTHCARE_BENEFITS } from "../../graphql/benefits";
 import { useQuery } from "@apollo/client";
 import { BenefitType } from "../../types/benefitTypes";
 

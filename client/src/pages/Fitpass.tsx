@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PageHeading from "../components/common/PageHeading";
-import { GET_EMPLOYEES } from "../components/graphql/employee";
+import { GET_EMPLOYEES } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import { Employee } from "../types/common";
 import { generateFitpassMemberConstants, getTotalFitpassMembers } from "../utils/getFitpassStats";

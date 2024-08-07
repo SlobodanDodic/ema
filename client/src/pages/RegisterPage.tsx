@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuthFormLayout from "../components/auth/AuthFormLayout";
 import InputField from "../components/auth/InputField";
-import { REGISTER_USER } from "../components/graphql/auth";
+import { REGISTER_USER } from "../graphql/auth";
 import Loading from "./Loading";
 
 type FormDataKey = "username" | "email" | "password" | "confirmPassword";

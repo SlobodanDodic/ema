@@ -39,4 +39,17 @@ export class LiabilityService {
 
     return result._sum.amount;
   }
+
+  async getTotalLiabilitiesByEmployee(employeeId: string) {
+    const result = await this.prisma.liability.aggregate({
+      _sum: {
+        amount: true,
+      },
+      where: {
+        employeeId,
+      },
+    });
+
+    return result._sum.amount;
+  }
 }
