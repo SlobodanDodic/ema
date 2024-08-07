@@ -129,7 +129,7 @@ export default function Form() {
   };
 
   return (
-    <div>
+    <>
       <PageHeading title="Employee Data Form" />
 
       <div className="grid-box-text">
@@ -175,6 +175,6 @@ export default function Form() {
           {employeeData?.id ? (hasChanges ? "Update Employee" : "Go Back") : "Create Employee"}
         </button>
       </div>
-    </div>
+    </>
   );
 }

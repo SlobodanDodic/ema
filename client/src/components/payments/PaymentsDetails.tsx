@@ -43,8 +43,8 @@ export default function PaymentsDetails() {
   }, [employeesData]);
 
   return (
-    <div className="relative mt-6 overflow-x-auto">
-      <div className="mb-4">
+    <>
+      <div className="relative mt-6 mb-4 ">
         <div className="flex flex-col md:justify-between md:flex-row">
           <button
             id="dropdownCheckboxButton"
@@ -78,6 +78,6 @@ export default function PaymentsDetails() {
       </div>
 
       <PaymentsTable employees={employees} visibleColumns={visibleColumns} />
-    </div>
+    </>
   );
 }

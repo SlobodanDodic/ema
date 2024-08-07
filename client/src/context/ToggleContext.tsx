@@ -1,10 +1,12 @@
 import { createContext } from "react";
 
 interface ToggleContextType {
-  isLogoutModalOpen: boolean;
-  toggleLogoutModal: () => void;
+  logoutModal: boolean;
+  setLogoutModal: () => void;
   openMenu: boolean;
   setOpenMenu: () => void;
+  paymentModal: boolean;
+  setPaymentModal: () => void;
 }
 
 const ToggleContext = createContext<ToggleContextType | undefined>(undefined);

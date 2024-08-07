@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Employee } from "../../types/common";
 import { PaymentsTableProps } from "../../types/paymentTypes";
-import useToggle from "../../hooks/useToggle";
 import PaymentsEntryModal from "./PaymentsEntryModal";
 import PaymentsTableRow from "./PaymentsTableRow";
 import { GET_FITPASS_BENEFITS, GET_HEALTHCARE_BENEFITS } from "../../graphql/benefits";
 import { useQuery } from "@apollo/client";
 import { useCalculations } from "../../hooks/useCalculations";
 import { BenefitType } from "../../types/benefitTypes";
+import { useToggleContext } from "../../hooks/useToggleContext";
 
 export default function PaymentsTable({ employees, visibleColumns }: PaymentsTableProps) {
-  const [isModalOpen, setIsModalOpen] = useToggle(false);
+  const { paymentModal, setPaymentModal } = useToggleContext();
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
   const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
@@ -20,20 +20,15 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
 
   const handleRowClick = (employee: Employee) => {
     setSelectedEmployee(employee);
-    setIsModalOpen();
+    setPaymentModal();
   };
 
   return (
     <>
-      {isModalOpen && selectedEmployee && (
-        <div
-          id="defaultModal"
-          tabIndex={-1}
-          aria-hidden="true"
-          className="fixed -top-[1px] -left-[2px] right-0 z-30 w-[101%] overflow-x-hidden overflow-y-auto bg-midnight border-midnight max-w-5xl h-auto mx-auto rounded"
-        >
-          <PaymentsEntryModal employee={selectedEmployee} toggleModal={() => setIsModalOpen()} />
-        </div>
+      {paymentModal && <div className="absolute top-0 left-0 z-40 w-full h-full bg-black/20" />}
+
+      {paymentModal && selectedEmployee && (
+        <PaymentsEntryModal employee={selectedEmployee} toggleModal={() => setPaymentModal()} />
       )}
 
       <table className="w-full text-sm text-left text-gray-700 rtl:text-right">

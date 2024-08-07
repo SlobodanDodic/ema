@@ -4,10 +4,11 @@ import useToggle from "../hooks/useToggle";
 
 export const ToggleProvider = ({ children }: { children: ReactNode }) => {
   const [openMenu, setOpenMenu] = useToggle(false);
-  const [isLogoutModalOpen, toggleLogoutModal] = useToggle(false);
+  const [logoutModal, setLogoutModal] = useToggle(false);
+  const [paymentModal, setPaymentModal] = useToggle(false);
 
   return (
-    <ToggleContext.Provider value={{ isLogoutModalOpen, toggleLogoutModal, openMenu, setOpenMenu }}>
+    <ToggleContext.Provider value={{ logoutModal, setLogoutModal, openMenu, setOpenMenu, paymentModal, setPaymentModal }}>
       {children}
     </ToggleContext.Provider>
   );

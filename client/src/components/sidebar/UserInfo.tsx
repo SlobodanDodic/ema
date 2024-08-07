@@ -5,7 +5,7 @@ import { IconLogoutCircleRLine } from "../svg";
 
 export default function UserInfo() {
   const authContext = useAuth();
-  const { toggleLogoutModal, setOpenMenu } = useToggleContext();
+  const { setLogoutModal, setOpenMenu } = useToggleContext();
 
   if (!authContext?.user) {
     return (
@@ -28,7 +28,7 @@ export default function UserInfo() {
         <button
           className="flex items-center w-full p-2 mt-2 font-medium tracking-tight rounded-lg text-stone-50 hover:no-underline hover:bg-stone-600"
           onClick={() => {
-            toggleLogoutModal();
+            setLogoutModal();
             setOpenMenu();
           }}
         >

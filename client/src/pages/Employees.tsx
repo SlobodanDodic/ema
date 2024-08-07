@@ -16,7 +16,8 @@ export default function Employees() {
 
   useEffect(() => {
     if (data) {
-      setEmployees(data?.getAllEmployees);
+      const sortedEmployees = [...data.getAllEmployees].sort((a: Employee, b: Employee) => a.fullName.localeCompare(b.fullName));
+      setEmployees(sortedEmployees);
     }
   }, [data]);
 

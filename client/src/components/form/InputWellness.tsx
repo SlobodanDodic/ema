@@ -122,7 +122,6 @@ export default function InputMembers({ beneficiary, title, members, setMembers, 
         <div
           id="defaultModal"
           tabIndex={-1}
-          aria-hidden="true"
           className="fixed -top-[1px] -left-[1px] right-0 z-50 flex items-center justify-center w-[101%] h-[101%] overflow-x-hidden overflow-y-auto bg-silver"
         >
           <div className="relative w-full h-full max-w-3xl p-1">
