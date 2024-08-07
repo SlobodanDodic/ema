@@ -87,6 +87,10 @@ export class EmployeeService {
     });
   }
 
+  async deleteEmployee(id: string) {
+    return this.prisma.employee.delete({ where: { id } });
+  }
+
   async getAllEmployees() {
     return this.prisma.employee.findMany({
       include: {

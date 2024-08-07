@@ -131,6 +131,7 @@ type Mutation {
   removeUser(id: String!): Auth!
   createEmployee(data: EmployeeInput!): Employee!
   updateEmployee(id: String!, data: EmployeeInput!): Employee!
+  deleteEmployee(id: String!): Employee!
   createPayment(data: PaymentInput!): Payment!
   updatePayment(id: String!, data: UpdatePaymentInput!): Payment!
   createLiability(data: LiabilityInput!): Liability!

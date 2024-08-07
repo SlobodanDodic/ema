@@ -20,6 +20,11 @@ export class EmployeeResolver {
     return this.employeeService.updateEmployee(id, data);
   }
 
+  @Mutation(() => Employee)
+  async deleteEmployee(@Args('id') id: string) {
+    return this.employeeService.deleteEmployee(id);
+  }
+
   @Query(() => [Employee], { name: 'getAllEmployees' })
   getAllEmployees() {
     return this.employeeService.getAllEmployees();
