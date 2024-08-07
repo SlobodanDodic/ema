@@ -1,9 +1,8 @@
-import { useQuery } from "@apollo/client";
+import { useEffect, useRef } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 import { Payment, PaymentsTableRowProps } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
-import { GET_LIABILITIES } from "../graphql/liabilities";
-
-import { useEffect } from "react";
+import { CREATE_LIABILITY, GET_LIABILITIES } from "../graphql/liabilities";
 import { GET_PAYMENTS } from "../graphql/payments";
 
 const PaymentsTableRow = ({
@@ -27,9 +26,40 @@ const PaymentsTableRow = ({
     variables: { employeeId: employee?.id },
   });
 
+  const [createLiability] = useMutation(CREATE_LIABILITY);
+  const hasRunOnce = useRef(false);
+
   useEffect(() => {
-    refetch();
-  }, [liabilitiesByEmployee, refetch]);
+    if (employee && totalLiabilities !== undefined && !hasRunOnce.current) {
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth();
+      const currentYear = currentDate.getFullYear();
+      const todayIsFirst = currentDate.getDate() === 1;
+
+      const lastRecordedString = liabilitiesByEmployee?.liabilitiesByEmployee?.[0]?.recordedDate;
+      const lastRecorded = lastRecordedString ? new Date(lastRecordedString) : null;
+      const lastRecordedMonth = lastRecorded?.getMonth();
+      const lastRecordedYear = lastRecorded?.getFullYear();
+
+      const shouldExecute =
+        todayIsFirst && (!lastRecorded || lastRecordedMonth !== currentMonth || lastRecordedYear !== currentYear);
+
+      if (shouldExecute || liabilitiesByEmployee?.liabilitiesByEmployee?.length === 0) {
+        createLiability({
+          variables: {
+            input: {
+              employeeId: employee.id,
+              amount: totalLiabilities as number,
+              recordedDate: currentDate.toISOString(),
+            },
+          },
+        }).then(() => {
+          refetch();
+          hasRunOnce.current = true;
+        });
+      }
+    }
+  }, [employee, totalLiabilities, createLiability, liabilitiesByEmployee, refetch]);
 
   return (
     <tr
@@ -40,10 +70,10 @@ const PaymentsTableRow = ({
       <th scope="row" className="px-6 py-4 text-marine whitespace-nowrap">
         {employee.fullName}
       </th>
-      {insuranceCompanies.map((company) => (
+      {insuranceCompanies?.map((company) => (
         <td
           key={company.value}
-          className={`px-6 py-4 text-center font-semibold ${visibleColumns[company.value] ? "" : "hidden"} ${
+          className={`px-6 py-4 text-center font-semibold ${visibleColumns?.[company.value] ? "" : "hidden"} ${
             employee.healthCareMembers.filter((member) => member.category === "Employee" && member.insurance === company.value)
               .length > 0
               ? "text-red-700"

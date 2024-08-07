@@ -29,4 +29,14 @@ export class LiabilityService {
       },
     });
   }
+
+  async getTotalLiabilities() {
+    const result = await this.prisma.liability.aggregate({
+      _sum: {
+        amount: true,
+      },
+    });
+
+    return result._sum.amount;
+  }
 }

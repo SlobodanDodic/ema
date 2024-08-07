@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Float, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Liability } from './entities/liability.entity';
 import { LiabilityInput } from './dto/liability.input';
 import { LiabilityService } from './liability.service';
@@ -22,5 +22,10 @@ export class LiabilityResolver {
   @Query(() => [Liability], { name: 'getAllLiabilities' })
   getAllLiabilities() {
     return this.liabilityService.getAllLiabilities();
+  }
+
+  @Query(() => Float)
+  async getTotalLiabilities() {
+    return this.liabilityService.getTotalLiabilities();
   }
 }

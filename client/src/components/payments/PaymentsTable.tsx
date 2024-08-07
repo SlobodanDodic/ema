@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Employee } from "../../types/common";
 import { PaymentsTableProps } from "../../types/paymentTypes";
 import useToggle from "../../hooks/useToggle";
@@ -16,19 +16,12 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
   const { data: healthcareBenefit } = useQuery(GET_HEALTHCARE_BENEFITS);
   const { data: fitpassBenefit } = useQuery(GET_FITPASS_BENEFITS);
 
-  const { calculateTotalPrice, calculateMonthlyObligation } = useCalculations(
-    healthcareBenefit?.getAllHealthcareData,
-    fitpassBenefit?.getAllFitpassData
-  );
+  const { calculateTotalPrice } = useCalculations(healthcareBenefit?.getAllHealthcareData, fitpassBenefit?.getAllFitpassData);
 
   const handleRowClick = (employee: Employee) => {
     setSelectedEmployee(employee);
     setIsModalOpen();
   };
-
-  useEffect(() => {
-    calculateMonthlyObligation(employees);
-  }, [employees, calculateMonthlyObligation]);
 
   return (
     <>

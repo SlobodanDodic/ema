@@ -31,24 +31,5 @@ export const useCalculations = (healthcare: BenefitType[], fitpass: BenefitType[
     [fitpass, fitpassPrice, healthcare]
   );
 
-  const calculateMonthlyObligation = useCallback(
-    (employees: Employee[]) => {
-      const today = new Date();
-      const isFirstOfMonth = today.getDate() === 1;
-
-      if (isFirstOfMonth) {
-        console.log("The 1st of the month. Calculation performed.");
-
-        employees.forEach((employee) => {
-          const totalAmount = calculateTotalPrice(employee);
-          console.log(`Total Amount for employee ${employee.fullName} on ${today.toDateString()}: ${totalAmount}`);
-        });
-      } else {
-        console.log("Not the 1st of the month. Calculation not performed.");
-      }
-    },
-    [calculateTotalPrice]
-  );
-
-  return { calculateTotalPrice, calculateMonthlyObligation };
+  return { calculateTotalPrice };
 };
