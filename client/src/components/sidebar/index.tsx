@@ -1,9 +1,12 @@
+import { useToggleContext } from "../../hooks/useToggleContext";
 import { Icon } from "../common/Icon";
 import { IconNotesMedical, IconPencilBoxMultiple, IconUsersLine, IconPieChart, IconWeightLifter, IconEcommerce } from "../svg";
 import MenuItem from "./MenuItem";
 import UserInfo from "./UserInfo";
 
-export default function Menu({ openMenu }: { openMenu: boolean }) {
+export default function Menu() {
+  const { openMenu } = useToggleContext();
+
   const iconClassName = "transition duration-75 w-7 h-7 text-silver group-hover:text-oranje";
   return (
     <aside className={openMenu ? `aside translate-x-0` : `aside -translate-x-72`}>

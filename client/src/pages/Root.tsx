@@ -1,13 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Menu from "../components/sidebar";
 import Topbar from "../components/topbar";
-import useToggle from "../hooks/useToggle";
 import { useToggleContext } from "../hooks/useToggleContext";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Root() {
-  const [openMenu, setOpenMenu] = useToggle(false);
-  const { isLogoutModalOpen, toggleLogoutModal } = useToggleContext();
+  const { isLogoutModalOpen, toggleLogoutModal, openMenu } = useToggleContext();
   const authContext = useAuth();
 
   const handleLogout = () => {
@@ -18,8 +16,9 @@ export default function Root() {
 
   return (
     <>
+      {isLogoutModalOpen && <div className="absolute top-0 left-0 z-50 w-full h-full bg-black/50" />}
       {isLogoutModalOpen && (
-        <div className="absolute z-40 flex flex-col items-center justify-center w-full max-w-sm px-10 py-6 -translate-x-1/2 border-2 rounded shadow-md -translate-y-1/3 border-oranje left-1/2 top-1/2 bg-marine shadow-midnight">
+        <div className="absolute z-50 flex flex-col items-center justify-center w-full max-w-sm px-10 py-6 -translate-x-1/2 border-2 rounded shadow-md -translate-y-1/3 border-oranje left-1/2 top-1/2 bg-marine shadow-midnight">
           <h2 className="mb-4 text-center text-silver">Are you sure you want to logout?</h2>
           <div className="flex mb-3 mt-7">
             <button
@@ -44,10 +43,10 @@ export default function Root() {
             : "w-[calc(100%-4rem)] translate-x-0"
         }`}
       >
-        <Topbar toggleMenu={() => setOpenMenu()} openMenu={openMenu} />
+        <Topbar />
       </nav>
 
-      <Menu openMenu={openMenu} />
+      <Menu />
 
       <main
         className={`mt-20 h-full mx-8 ${
