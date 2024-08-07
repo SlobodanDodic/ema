@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Employee } from "../../types/common";
 import { PaymentsTableProps } from "../../types/paymentTypes";
 import PaymentsEntryModal from "./PaymentsEntryModal";
@@ -22,6 +22,10 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
     setSelectedEmployee(employee);
     setPaymentModal();
   };
+
+  const sortedEmployees = useMemo(() => {
+    return employees?.slice().sort((a, b) => a.fullName.localeCompare(b.fullName));
+  }, [employees]);
 
   return (
     <>
@@ -61,7 +65,7 @@ export default function PaymentsTable({ employees, visibleColumns }: PaymentsTab
           </tr>
         </thead>
         <tbody>
-          {employees?.map((employee: Employee) => (
+          {sortedEmployees?.map((employee: Employee) => (
             <PaymentsTableRow
               key={employee.id}
               employee={employee}
