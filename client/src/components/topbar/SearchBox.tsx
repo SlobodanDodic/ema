@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Icon } from "../common/Icon";
 import { IconUserSecret } from "../svg";
 import { GET_EMPLOYEES } from "../../graphql/employee";
 import { useQuery } from "@apollo/client";
 import useDebounce from "../../hooks/useDebounce";
+import { Employee } from "../../types/common";
 
 export default function SearchBox() {
+  const navigate = useNavigate();
   const { data } = useQuery(GET_EMPLOYEES);
   const [queryEmployee, setQueryEmployee] = useState("");
-  const debouncedQuery = useDebounce(queryEmployee, 500); // 500ms debounce delay
-
+  const debouncedQuery = useDebounce(queryEmployee, 500);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
 
   useEffect(() => {
     if (debouncedQuery && data?.getAllEmployees) {
-      const results = data?.getAllEmployees?.filter((employee: { fullName: string }) =>
+      const results = data?.getAllEmployees?.filter((employee: Employee) =>
         employee?.fullName.toLowerCase().includes(debouncedQuery.toLowerCase())
       );
       setFilteredEmployees(results);
@@ -23,15 +25,9 @@ export default function SearchBox() {
     }
   }, [debouncedQuery, data]);
 
-  const handleSearchEmployee = () => {
-    console.log("search", queryEmployee);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearchEmployee();
-    }
+  const handleEmployeeDetails = (id: string) => {
+    navigate(`/employees/${id}`);
+    setQueryEmployee("");
   };
 
   return (
@@ -47,14 +43,17 @@ export default function SearchBox() {
             placeholder="Search employee"
             value={queryEmployee}
             onChange={(e) => setQueryEmployee(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
         </div>
       </form>
       {filteredEmployees.length > 0 && (
         <ul className="absolute left-0 top-14 w-[211px] bg-marine rounded shadow shadow-silver">
-          {filteredEmployees?.map((employee: { id: string; fullName: string }) => (
-            <li key={employee.id} className="p-2 m-1 text-sm shadow-sm bg-marine text-silver shadow-silver">
+          {filteredEmployees?.map((employee: Employee) => (
+            <li
+              key={employee.id}
+              className="p-2 m-1 text-sm shadow-sm bg-marine text-silver shadow-silver hover:cursor-pointer"
+              onClick={() => handleEmployeeDetails(employee.id)}
+            >
               {employee.fullName}
             </li>
           ))}

@@ -13,6 +13,7 @@ import HealthCare from "./pages/HealthCare";
 import Fitpass from "./pages/Fitpass";
 import Payments from "./pages/Payments";
 import Form from "./pages/Form";
+import EmployeeDetails from "./components/employees/EmployeeDetails";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage />, errorElement: <NotFoundPage /> },
@@ -34,6 +35,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Employees />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "employees/:id",
+        element: (
+          <ProtectedRoute>
+            <EmployeeDetails />
           </ProtectedRoute>
         ),
       },

@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Payment, PaymentsTableRowProps } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { CREATE_LIABILITY, GET_LIABILITIES, GET_TOTAL_LIABILITIES_BY_EMPLOYEE } from "../../graphql/liabilities";
-import { GET_PAYMENTS } from "../../graphql/payments";
+import { GET_EMPLOYEE_PAYMENTS } from "../../graphql/payments";
 
 const PaymentsTableRow = ({
   employee,
@@ -12,7 +12,7 @@ const PaymentsTableRow = ({
   onClick,
   calculateTotalPrice,
 }: PaymentsTableRowProps) => {
-  const { data: paymentData, loading: loadingPayments } = useQuery(GET_PAYMENTS, {
+  const { data: paymentData, loading: loadingPayments } = useQuery(GET_EMPLOYEE_PAYMENTS, {
     variables: { employeeId: employee?.id },
   });
   const totalLiabilitiesByEmployee = calculateTotalPrice(employee, insuranceCompanies);

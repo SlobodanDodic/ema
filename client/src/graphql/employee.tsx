@@ -110,3 +110,37 @@ export const GET_EMPLOYEES = gql`
     }
   }
 `;
+
+export const GET_EMPLOYEE = gql`
+  query getOneEmployee($id: String!) {
+    getOneEmployee(id: $id) {
+      id
+      fullName
+      jobTitle
+      phoneNumber
+      birthday
+      contract
+      eyes
+      safety
+      fire
+      firstAid
+      cumulativeLiabilities
+      lastCalculation
+      healthCareMembers {
+        id
+        name
+        insurance
+        category
+        start
+        end
+      }
+      fitpassMembers {
+        id
+        name
+        category
+        start
+        end
+      }
+    }
+  }
+`;

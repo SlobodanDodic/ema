@@ -3,7 +3,7 @@ import { Icon } from "../common/Icon";
 import { IconEcommerce, IconEnter, IconNotesMedical, IconSend, IconWeightLifter } from "../svg";
 import moment from "moment";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_PAYMENT, GET_PAYMENTS, UPDATE_PAYMENT } from "../../graphql/payments";
+import { CREATE_PAYMENT, GET_EMPLOYEE_PAYMENTS, UPDATE_PAYMENT } from "../../graphql/payments";
 import { Payment, PaymentsEntryModalProps } from "../../types/paymentTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
 
@@ -14,14 +14,14 @@ export default function PaymentsEntryModal({ employee, toggleModal }: PaymentsEn
   const [hasChanges, setHasChanges] = useState(false);
 
   const [createPayment] = useMutation(CREATE_PAYMENT, {
-    refetchQueries: [{ query: GET_PAYMENTS, variables: { employeeId: employee?.id } }],
+    refetchQueries: [{ query: GET_EMPLOYEE_PAYMENTS, variables: { employeeId: employee?.id } }],
   });
 
   const [updatePayment] = useMutation(UPDATE_PAYMENT, {
-    refetchQueries: [{ query: GET_PAYMENTS, variables: { employeeId: employee?.id } }],
+    refetchQueries: [{ query: GET_EMPLOYEE_PAYMENTS, variables: { employeeId: employee?.id } }],
   });
 
-  const { data: paymentData, refetch } = useQuery(GET_PAYMENTS, {
+  const { data: paymentData, refetch } = useQuery(GET_EMPLOYEE_PAYMENTS, {
     variables: { employeeId: employee?.id },
   });
 

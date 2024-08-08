@@ -19,7 +19,7 @@ export const UPDATE_PAYMENT = gql`
   }
 `;
 
-export const GET_PAYMENTS = gql`
+export const GET_EMPLOYEE_PAYMENTS = gql`
   query GetPayments($employeeId: String!) {
     paymentsByEmployee(employeeId: $employeeId) {
       id
