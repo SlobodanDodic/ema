@@ -8,6 +8,9 @@ import moment from "moment";
 import { Employee } from "../../types/common";
 import MembersInfo from "./MembersInfo";
 import PaymentsInfo from "./PaymentsInfo";
+import { formatCurrency } from "../../utils/formatCurrency";
+import { GET_TOTAL_PAYMENTS_BY_EMPLOYEE } from "../../graphql/payments";
+import { GET_TOTAL_LIABILITIES_BY_EMPLOYEE } from "../../graphql/liabilities";
 
 export default function EmployeeDetails() {
   const { id } = useParams();
@@ -17,6 +20,14 @@ export default function EmployeeDetails() {
     error,
   } = useQuery(GET_EMPLOYEE, {
     variables: { id },
+  });
+
+  const { data: totalPayments } = useQuery(GET_TOTAL_PAYMENTS_BY_EMPLOYEE, {
+    variables: { employeeId: id },
+  });
+
+  const { data: totalLiabilities } = useQuery(GET_TOTAL_LIABILITIES_BY_EMPLOYEE, {
+    variables: { employeeId: id },
   });
 
   if (loading) return <Loading />;
@@ -63,6 +74,32 @@ export default function EmployeeDetails() {
         </div>
 
         <PaymentsInfo employeeData={employeeData} formatDate={formatDate} />
+
+        <div className="flex flex-col items-center justify-center py-5 my-6 md:flex-row border-y border-marine/50">
+          <h3 className="flex flex-col p-4 m-1 font-medium text-center rounded min-w-64 md:flex-row text-silver w-fit bg-marine">
+            <p>Total Liability:</p>
+            <p className="ms-2 text-oranje">
+              {formatCurrency(
+                totalLiabilities?.getTotalLiabilitiesByEmployee ? totalLiabilities?.getTotalLiabilitiesByEmployee : 0
+              )}
+            </p>
+          </h3>
+          <h3 className="flex flex-col p-4 m-1 font-medium text-center rounded min-w-64 md:flex-row text-silver w-fit bg-marine">
+            <p>Total Payments:</p>
+            <p className="ms-2 text-oranje">
+              {formatCurrency(totalPayments?.getTotalPaymentsByEmployee ? totalPayments?.getTotalPaymentsByEmployee : 0)}
+            </p>
+          </h3>
+          <h3 className="flex flex-col p-4 m-1 font-medium text-center rounded min-w-64 md:flex-row text-silver w-fit bg-marine">
+            <p>Balance:</p>
+            <p className="ms-2 text-oranje">
+              {formatCurrency(
+                (totalLiabilities?.getTotalLiabilitiesByEmployee ? totalLiabilities?.getTotalLiabilitiesByEmployee : 0) -
+                  (totalPayments?.getTotalPaymentsByEmployee ? totalPayments?.getTotalPaymentsByEmployee : 0)
+              )}
+            </p>
+          </h3>
+        </div>
 
         <MembersInfo employeeData={employeeData} formatDate={formatDate} />
       </div>

@@ -38,3 +38,13 @@ export const GET_TOTAL_LIABILITIES_BY_EMPLOYEE = gql`
     getTotalLiabilitiesByEmployee(employeeId: $employeeId)
   }
 `;
+
+export const LIABILITIES_BY_EMPLOYEE = gql`
+  query LiabilitiesByEmployee($employeeId: String!) {
+    liabilitiesByEmployee(employeeId: $employeeId) {
+      id
+      amount
+      recordedDate
+    }
+  }
+`;

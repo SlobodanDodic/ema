@@ -41,3 +41,9 @@ export const GET_ALL_PAYMENTS = gql`
     }
   }
 `;
+
+export const GET_TOTAL_PAYMENTS_BY_EMPLOYEE = gql`
+  query GetTotalPaymentsByEmployee($employeeId: String!) {
+    getTotalPaymentsByEmployee(employeeId: $employeeId)
+  }
+`;
