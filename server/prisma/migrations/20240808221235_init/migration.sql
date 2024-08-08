@@ -24,8 +24,6 @@ CREATE TABLE "Employee" (
     "safety" TIMESTAMP(3),
     "fire" TIMESTAMP(3),
     "firstAid" TIMESTAMP(3),
-    "cumulativeLiabilities" INTEGER NOT NULL DEFAULT 0,
-    "lastCalculation" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

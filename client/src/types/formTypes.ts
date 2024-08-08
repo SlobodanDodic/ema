@@ -13,8 +13,6 @@ export type FormData = {
   jobTitle: string;
   healthCareMembers: Member[];
   fitpassMembers: Member[];
-  cumulativeLiabilities: number;
-  lastCalculation: Date | null;
 };
 
 export interface Member {

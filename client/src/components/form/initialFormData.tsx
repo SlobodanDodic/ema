@@ -12,8 +12,6 @@ export const initialFormData: FormData = {
   jobTitle: "",
   healthCareMembers: [],
   fitpassMembers: [],
-  cumulativeLiabilities: 0,
-  lastCalculation: null,
 };
 
 export const initialDateBirthday = "1990-01-01T00:00:00Z";

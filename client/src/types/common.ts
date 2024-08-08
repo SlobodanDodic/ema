@@ -12,8 +12,6 @@ export type Employee = {
   safety?: Date | null;
   fire?: Date | null;
   firstAid?: Date | null;
-  cumulativeLiabilities?: number;
-  lastCalculation?: Date | null;
   healthCareMembers: Member[];
   fitpassMembers: Member[];
   createdAt: Date;

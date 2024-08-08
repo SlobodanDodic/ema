@@ -13,8 +13,6 @@ export const CREATE_EMPLOYEE = gql`
       safety
       fire
       firstAid
-      cumulativeLiabilities
-      lastCalculation
       healthCareMembers {
         id
         name
@@ -47,8 +45,6 @@ export const UPDATE_EMPLOYEE = gql`
       safety
       fire
       firstAid
-      cumulativeLiabilities
-      lastCalculation
       healthCareMembers {
         id
         name
@@ -90,8 +86,6 @@ export const GET_EMPLOYEES = gql`
       safety
       fire
       firstAid
-      cumulativeLiabilities
-      lastCalculation
       healthCareMembers {
         id
         name
@@ -124,8 +118,6 @@ export const GET_EMPLOYEE = gql`
       safety
       fire
       firstAid
-      cumulativeLiabilities
-      lastCalculation
       healthCareMembers {
         id
         name

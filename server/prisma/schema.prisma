@@ -33,9 +33,6 @@ model Employee {
   fire     DateTime?
   firstAid DateTime?
 
-  cumulativeLiabilities Int       @default(0)
-  lastCalculation       DateTime?
-
   healthCareMembers HealthCareMember[]
   fitpassMembers    FitpassMember[]
   payments          Payment[]

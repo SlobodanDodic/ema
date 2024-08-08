@@ -65,8 +65,6 @@ type Employee {
   phoneNumber: String!
   birthday: DateTime!
   contract: DateTime!
-  cumulativeLiabilities: Float!
-  lastCalculation: DateTime!
   eyes: DateTime!
   safety: DateTime!
   fire: DateTime!
@@ -161,8 +159,6 @@ input EmployeeInput {
   phoneNumber: String!
   birthday: DateTime!
   contract: DateTime!
-  cumulativeLiabilities: Float!
-  lastCalculation: DateTime!
   eyes: DateTime!
   safety: DateTime!
   fire: DateTime!

@@ -4,7 +4,6 @@ import {
   IsArray,
   IsDate,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
@@ -37,16 +36,6 @@ export class EmployeeInput {
   @IsOptional()
   @Field()
   contract?: Date;
-
-  @IsNumber()
-  @IsOptional()
-  @Field()
-  cumulativeLiabilities?: number;
-
-  @IsDate()
-  @IsOptional()
-  @Field()
-  lastCalculation?: Date;
 
   @IsDate()
   @IsOptional()

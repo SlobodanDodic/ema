@@ -23,12 +23,6 @@ export class Employee {
   contract?: Date;
 
   @Field()
-  cumulativeLiabilities?: number;
-
-  @Field()
-  lastCalculation?: Date;
-
-  @Field()
   eyes?: Date;
 
   @Field()
