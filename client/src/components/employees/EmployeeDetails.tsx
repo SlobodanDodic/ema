@@ -71,7 +71,7 @@ export default function EmployeeDetails() {
 
         <PaymentsInfo employeeData={employeeData} formatDate={formatDate} />
 
-        <div className="flex flex-col items-center justify-center py-5 my-6 md:flex-row border-y border-marine/50">
+        <div className="flex flex-col items-center justify-center py-5 my-6 lg:flex-row border-y border-marine/50">
           <h3 className="flex flex-col p-4 m-1 font-medium text-center rounded min-w-64 md:flex-row text-silver w-fit bg-marine">
             <p>Total Liability:</p>
             <p className="ms-2 text-oranje">

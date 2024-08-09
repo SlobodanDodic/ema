@@ -46,6 +46,8 @@ export default function BenefitChartCategories({ categoryData, totalMembers, tit
                 return {
                   text: `${label}: ${value}`,
                   fillStyle: color,
+                  strokeStyle: color,
+                  fontColor: "#124e66",
                   hidden: !chart.isDatasetVisible(0),
                   index: i,
                 };
@@ -66,7 +68,7 @@ export default function BenefitChartCategories({ categoryData, totalMembers, tit
   };
 
   return (
-    <div className="w-full max-w-lg">
+    <div className="w-full max-w-lg lg:border-s-2 lg:ps-7 lg:border-marine/50">
       <h1 className="font-semibold text-marine">{title}</h1>
       <h3 className="mt-2 -mb-6 font-medium text-ash">{description}</h3>
       <Doughnut id="doughnut-chart" data={doughnutData} options={doughnutOptions} />
