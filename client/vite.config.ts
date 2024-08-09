@@ -8,4 +8,12 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
+  resolve: {
+    alias: {
+      "chartjs-plugin-datalabels": "chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.esm.js",
+    },
+  },
+  optimizeDeps: {
+    include: ["chart.js", "chartjs-plugin-datalabels"],
+  },
 });
