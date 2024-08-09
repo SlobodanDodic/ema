@@ -18,11 +18,6 @@ export const getFitpassMembersByCategory = (employees: Employee[]): { [key: stri
   return categoryCounts;
 };
 
-// Function to get the total number of employees that are not Fitpas members:
-export const getNonFitpassMembers = (employees: Employee[]): number => {
-  return employees.reduce((total, employee) => total + (employee.fitpassMembers.length === 0 ? 1 : 0), 0);
-};
-
 // Usage of dynamically created constants
 export const generateFitpassMemberConstants = (employees: Employee[]) => {
   const categoryCounts = getFitpassMembersByCategory(employees);

@@ -6,6 +6,7 @@ import PageHeading from "../components/common/PageHeading";
 import { GET_EMPLOYEES, DELETE_EMPLOYEE } from "../graphql/employee";
 import { Employee } from "../types/common";
 import useToggle from "../hooks/useToggle";
+import { formatPhoneNumber } from "../utils/formatPhoneNumber";
 
 export default function Employees() {
   const { data } = useQuery(GET_EMPLOYEES);
@@ -122,7 +123,7 @@ export default function Employees() {
                   {employee.fullName}
                 </th>
                 <td className="px-6 py-4 text-marine">{employee.jobTitle}</td>
-                <td className="px-6 py-4 text-marine">{employee.phoneNumber}</td>
+                <td className="px-6 py-4 text-marine">{formatPhoneNumber(employee.phoneNumber)}</td>
                 <td className="px-6 py-4 text-marine">{moment(employee.birthday).format("DD MMM YYYY")}</td>
                 <td className="px-6 py-4 text-marine">{moment(employee.contract).format("DD MMM YYYY")}</td>
                 <td className="px-6 py-4 text-marine">{employee.healthCareMembers.length}</td>

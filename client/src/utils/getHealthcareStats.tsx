@@ -18,9 +18,17 @@ export const getHealthcareMembersByCategory = (employees: Employee[]): { [key: s
   return categoryCounts;
 };
 
-// Function to get the total number of employees that are not Healthcare members
-export const getNonHealthCareMembers = (employees: Employee[]): number => {
-  return employees.reduce((total, employee) => total + (employee.healthCareMembers.length === 0 ? 1 : 0), 0);
+// Function to get the number of each Insurance of Healthcare members
+export const getHealthcareMembersByInsurance = (employees: Employee[]): { [key: string]: number } => {
+  const insuranceCounts: { [key: string]: number } = {};
+
+  employees.forEach((employee) => {
+    employee.healthCareMembers.forEach((member) => {
+      insuranceCounts[member.insurance] = (insuranceCounts[member.insurance] || 0) + 1;
+    });
+  });
+
+  return insuranceCounts;
 };
 
 // Usage of dynamically created constants
@@ -30,6 +38,16 @@ export const generateHealthcareMemberConstants = (employees: Employee[]) => {
 
   for (const category in categoryCounts) {
     constants[`${category}`] = categoryCounts[category];
+  }
+
+  return constants;
+};
+export const generateHealthcareInsuranceConstants = (employees: Employee[]) => {
+  const insuranceCounts = getHealthcareMembersByInsurance(employees);
+  const constants = {} as { [key: string]: number };
+
+  for (const insurance in insuranceCounts) {
+    constants[`${insurance}`] = insuranceCounts[insurance];
   }
 
   return constants;

@@ -54,7 +54,7 @@ export default function Root() {
       <Menu />
 
       <main
-        className={`mt-20 h-full mx-8 ${
+        className={`mt-28 h-full mx-8 ${
           openMenu
             ? "w-[calc(100%-4rem)] sm:w-[calc(100%-19rem)] mt-24 sm:mx-16 sm:translate-x-52 z-50"
             : "w-[calc(100%-4rem)] translate-x-0 mt-24"

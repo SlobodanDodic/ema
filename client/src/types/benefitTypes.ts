@@ -16,7 +16,8 @@ export interface BenefitChartCategoriesProps {
 // client/src/components/benefits/BenefitChartNumbers.tsx
 export interface BenefitChartNumbersProps {
   employeesTotal: number;
-  employeeWithoutBenefit: number;
+  employeeWithBenefit: number;
   title: string;
   description: string;
+  insurance?: string;
 }

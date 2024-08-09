@@ -19,15 +19,24 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
 export default function BenefitChartNumbers({
   employeesTotal,
-  employeeWithoutBenefit,
+  employeeWithBenefit,
   title,
   description,
+  insurance,
 }: BenefitChartNumbersProps) {
-  const employeeMembers = employeesTotal - employeeWithoutBenefit;
-  const categoryData = {
-    "Employee Benefit Members": employeeMembers,
-    "Employee Not Benefit Members": employeeWithoutBenefit,
+  const employeeMembersWithoutBenefit = employeesTotal - employeeWithBenefit;
+
+  const categoryDataBenefit = {
+    "Employee Benefit Members": employeeWithBenefit,
+    "Employee Not Benefit Members": employeeMembersWithoutBenefit,
   };
+
+  const categoryDataInsurance = {
+    DDOR: employeeWithBenefit,
+    MediGroup: employeeMembersWithoutBenefit,
+  };
+
+  const categoryData = insurance ? categoryDataInsurance : categoryDataBenefit;
 
   const categoryLabels = Object.keys(categoryData);
   const categoryValues = Object.values(categoryData);
@@ -72,7 +81,7 @@ export default function BenefitChartNumbers({
       },
       datalabels: {
         color: "#fff",
-        formatter: (value) => `${((value / (employeeMembers + employeeWithoutBenefit)) * 100).toFixed(2)}%`,
+        formatter: (value) => `${((value / employeesTotal) * 100).toFixed(2)}%`,
         font: {
           weight: "normal" as const,
         },
@@ -81,7 +90,7 @@ export default function BenefitChartNumbers({
   };
 
   return (
-    <div className="w-full max-w-lg mt-6">
+    <div className="w-full max-w-lg mt-4 mb-16">
       <h1 className="font-semibold text-marine">{title}</h1>
       <h3 className="mt-2 mb-6 font-medium text-ash">{description}</h3>
       <Bar id="bar-chart" data={barData} options={barOptions} />

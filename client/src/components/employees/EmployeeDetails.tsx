@@ -11,6 +11,7 @@ import PaymentsInfo from "./PaymentsInfo";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { GET_TOTAL_PAYMENTS_BY_EMPLOYEE } from "../../graphql/payments";
 import { GET_TOTAL_LIABILITIES_BY_EMPLOYEE } from "../../graphql/liabilities";
+import { formatPhoneNumber } from "../../utils/formatPhoneNumber";
 
 export default function EmployeeDetails() {
   const { id } = useParams();
@@ -48,11 +49,6 @@ export default function EmployeeDetails() {
     { title: "Fire Safety", text: formatDate(employeeData?.fire) },
     { title: "First Aid", text: formatDate(employeeData?.firstAid) },
   ];
-
-  const formatPhoneNumber = (phoneNumber: string | undefined) => {
-    if (!phoneNumber) return "N/A";
-    return phoneNumber.replace(/^(\+381)(\d{2})(\d+)/, "$1 $2 $3");
-  };
 
   return (
     <>

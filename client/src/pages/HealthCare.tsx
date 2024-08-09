@@ -3,7 +3,11 @@ import PageHeading from "../components/common/PageHeading";
 import { GET_EMPLOYEES } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import { Employee } from "../types/common";
-import { generateHealthcareMemberConstants, getTotalHealthcareMembers } from "../utils/getHealthcareStats";
+import {
+  generateHealthcareInsuranceConstants,
+  generateHealthcareMemberConstants,
+  getTotalHealthcareMembers,
+} from "../utils/getHealthcareStats";
 import BenefitChartCategories from "../components/benefits/BenefitChartCategories";
 import BenefitChartNumbers from "../components/benefits/BenefitChartNumbers";
 
@@ -19,7 +23,11 @@ export default function HealtCare() {
 
   const totalHealthcareMembers = getTotalHealthcareMembers(employees);
   const healthcareMemberConstants = generateHealthcareMemberConstants(employees);
-  const employeeWithoutBenefit = healthcareMemberConstants["Employee"] || 0;
+  const employeeWithHelathcare = healthcareMemberConstants["Employee"] || 0;
+
+  const employeeWithDDOR = generateHealthcareInsuranceConstants(employees)["DDOR"] || 0;
+  const employeeWithMediGroup = generateHealthcareInsuranceConstants(employees)["MediGroup"] || 0;
+  const totalEmployeesWithHealthcare = employeeWithDDOR + employeeWithMediGroup;
 
   return (
     <>
@@ -35,9 +43,16 @@ export default function HealtCare() {
           />
           <BenefitChartNumbers
             employeesTotal={employees.length}
-            employeeWithoutBenefit={employeeWithoutBenefit}
+            employeeWithBenefit={employeeWithHelathcare}
             title="Healthcare Employees Membership"
             description="Chart showing employees with healthcare and without healthcare membership"
+          />
+          <BenefitChartNumbers
+            employeesTotal={totalEmployeesWithHealthcare}
+            employeeWithBenefit={employeeWithDDOR}
+            insurance="DDOR"
+            title="Healthcare Insurance Companies"
+            description="Chart showing employees with different healthcare insurance companies"
           />
         </div>
       )}

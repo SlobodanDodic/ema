@@ -3,7 +3,7 @@ import PageHeading from "../components/common/PageHeading";
 import { GET_EMPLOYEES } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import { Employee } from "../types/common";
-import { generateFitpassMemberConstants, getNonFitpassMembers, getTotalFitpassMembers } from "../utils/getFitpassStats";
+import { generateFitpassMemberConstants, getTotalFitpassMembers } from "../utils/getFitpassStats";
 import BenefitChartCategories from "../components/benefits/BenefitChartCategories";
 import BenefitChartNumbers from "../components/benefits/BenefitChartNumbers";
 
@@ -19,7 +19,7 @@ export default function Fipass() {
 
   const totalFitpassMembers = getTotalFitpassMembers(employees);
   const fitpassMemberConstants = generateFitpassMemberConstants(employees);
-  const employeeWithoutFitpass = getNonFitpassMembers(employees);
+  const employeeWithFitpass = fitpassMemberConstants["Employee"] || 0;
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function Fipass() {
           />
           <BenefitChartNumbers
             employeesTotal={employees.length}
-            employeeWithoutBenefit={employeeWithoutFitpass}
+            employeeWithBenefit={employeeWithFitpass}
             title="Fitpass Employees Membership"
             description="Chart showing employees with fitpass and without fitpass membership"
           />
