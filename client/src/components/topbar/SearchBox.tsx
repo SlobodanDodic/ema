@@ -34,12 +34,12 @@ export default function SearchBox() {
     <div className="search-container">
       <form id="searchBox" className="relative flex items-center max-w-sm mx-auto">
         <div className="relative w-full">
-          <div className="absolute inset-y-0 flex items-center ps-2">
+          <div className="absolute inset-y-0 flex items-center mx-3">
             <Icon icon={IconUserSecret} size={18} color="#f2f1e4" />
           </div>
           <input
             type="text"
-            className="block w-full p-2 text-sm border border-none rounded bg-marine text-silver ps-10 focus:outline-none"
+            className="block w-full px-4 py-3 text-sm border border-none rounded bg-marine text-silver ps-10 focus:outline-none"
             placeholder="Search employee"
             value={queryEmployee}
             onChange={(e) => setQueryEmployee(e.target.value)}
