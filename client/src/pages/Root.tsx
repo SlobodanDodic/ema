@@ -40,7 +40,7 @@ export default function Root() {
       )}
 
       <nav
-        className={`fixed top-0 z-40 flex items-center mt-4 justify-between mx-8 py-4 bg-silver ${
+        className={`fixed top-0 z-40 flex items-center justify-between mx-8 py-8 bg-silver/90 ${
           openMenu
             ? "w-[calc(100%-4rem)] sm:w-[calc(100%-19rem)] sm:mx-16 sm:translate-x-52"
             : "w-[calc(100%-4rem)] translate-x-0"
