@@ -75,6 +75,25 @@ type Employee {
   updatedAt: DateTime!
 }
 
+type HealthcareStats {
+  MediGroup: Int!
+  DDOR: Int!
+  WithoutHC: Int!
+  totalEmployees: Int!
+}
+
+type JobTitles {
+  jobTitle: String!
+  count: Int!
+  totalEmployees: Int!
+}
+
+type FitpassStats {
+  Fitpass: Int!
+  Without: Int!
+  totalEmployees: Int!
+}
+
 type Payment {
   id: String!
   amount: Float!
@@ -110,6 +129,9 @@ type Query {
   user(username: String!): Auth!
   getAllEmployees: [Employee!]!
   getOneEmployee(id: String!): Employee!
+  getEmployeesHealthcareStats: HealthcareStats!
+  getEmployeesFitpassStats: FitpassStats!
+  getJobTitleCounts: [JobTitles!]!
   paymentsByEmployee(employeeId: String!): [Payment!]!
   getAllPayments: [Payment!]!
   getTotalPaymentsByEmployee(employeeId: String!): Float!

@@ -3,17 +3,11 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { barChartOptions } from "../../utils/chartUtils";
 import { bgColors } from "../benefits/chartColors";
+import { ChartProps } from "../../types/chartTypes";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, ChartDataLabels);
 
-interface BarChartProps {
-  categoryData: { [key: string]: number };
-  total: number;
-  title: string;
-  description: string;
-}
-
-export default function BarChart({ categoryData, total, title, description }: BarChartProps) {
+export default function BarChart({ categoryData, total, title, description, side }: ChartProps) {
   const categoryLabels = Object.keys(categoryData);
   const categoryValues = Object.values(categoryData);
 
@@ -27,11 +21,13 @@ export default function BarChart({ categoryData, total, title, description }: Ba
     ],
   };
 
+  const chartOptions = barChartOptions(total, side || "bottom");
+
   return (
     <div className="w-full max-w-lg lg:border-s-2 lg:ps-7 lg:border-marine/50">
       <h1 className="font-semibold text-marine">{title}</h1>
-      <h3 className="mt-2 -mb-6 font-medium text-ash">{description}</h3>
-      <Bar id="bar-chart" data={barData} options={barChartOptions(total)} />
+      <h3 className="mt-2 mb-6 font-medium text-ash">{description}</h3>
+      <Bar id="bar-chart" data={barData} options={chartOptions} />
     </div>
   );
 }

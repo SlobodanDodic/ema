@@ -44,7 +44,6 @@ export default function Fipass() {
             title="Fitpass Membership Categories"
             description="Chart showing fitpass members distribution across different categories"
           />
-
           <DoughnutChart
             categoryData={categorizedCounts}
             total={totalFitpassMembers}

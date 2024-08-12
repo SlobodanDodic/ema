@@ -1,9 +1,12 @@
 import { ChartOptions, LegendItem } from "chart.js";
 
-export const doughnutChartOptions: (total: number) => ChartOptions<"doughnut"> = (total) => ({
+export const doughnutChartOptions: (
+  total: number,
+  side: "left" | "center" | "right" | "bottom" | "top" | "chartArea"
+) => ChartOptions<"doughnut"> = (total, side) => ({
   plugins: {
     legend: {
-      position: "left" as const,
+      position: side,
       labels: {
         generateLabels: (chart): LegendItem[] => {
           const data = chart.data;
@@ -36,10 +39,13 @@ export const doughnutChartOptions: (total: number) => ChartOptions<"doughnut"> =
   },
 });
 
-export const polarAreaChartOptions: (total: number) => ChartOptions<"polarArea"> = (total) => ({
+export const polarAreaChartOptions: (
+  total: number,
+  side: "left" | "center" | "right" | "bottom" | "top" | "chartArea"
+) => ChartOptions<"polarArea"> = (total, side) => ({
   plugins: {
     legend: {
-      position: "left" as const,
+      position: side,
       labels: {
         generateLabels: (chart): LegendItem[] => {
           const data = chart.data;
@@ -72,10 +78,13 @@ export const polarAreaChartOptions: (total: number) => ChartOptions<"polarArea">
   },
 });
 
-export const barChartOptions: (total: number) => ChartOptions<"bar"> = (total) => ({
+export const barChartOptions: (
+  total: number,
+  side: "left" | "center" | "right" | "bottom" | "top" | "chartArea"
+) => ChartOptions<"bar"> = (total, side) => ({
   plugins: {
     legend: {
-      position: "left" as const,
+      position: side,
       labels: {
         generateLabels: (chart): LegendItem[] => {
           const data = chart.data;

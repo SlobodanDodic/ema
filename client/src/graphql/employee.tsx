@@ -142,11 +142,42 @@ export const GET_EMPLOYEE_JOB_AND_MEMBERS = gql`
     getAllEmployees {
       jobTitle
       healthCareMembers {
-        name
+        category
+        insurance
       }
       fitpassMembers {
-        name
+        category
       }
+    }
+  }
+`;
+
+export const GET_EMPLOYEES_HEALTHCARE_STATS = gql`
+  query GetEmployeesHealthcareStats {
+    getEmployeesHealthcareStats {
+      MediGroup
+      DDOR
+      WithoutHC
+      totalEmployees
+    }
+  }
+`;
+
+export const GET_EMPLOYEES_FITPASS_STATS = gql`
+  query GetEmployeesFitpassStats {
+    getEmployeesFitpassStats {
+      Fitpass
+      Without
+      totalEmployees
+    }
+  }
+`;
+
+export const GET_JOB_TITLES = gql`
+  query GetJobTitleCounts {
+    getJobTitleCounts {
+      jobTitle
+      count
     }
   }
 `;
