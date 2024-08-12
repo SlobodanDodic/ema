@@ -136,3 +136,17 @@ export const GET_EMPLOYEE = gql`
     }
   }
 `;
+
+export const GET_EMPLOYEE_JOB_AND_MEMBERS = gql`
+  query getAllEmployees {
+    getAllEmployees {
+      jobTitle
+      healthCareMembers {
+        name
+      }
+      fitpassMembers {
+        name
+      }
+    }
+  }
+`;

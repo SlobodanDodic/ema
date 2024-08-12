@@ -4,8 +4,7 @@ import { GET_EMPLOYEES } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import { Employee } from "../types/common";
 import { generateFitpassMemberConstants, getTotalFitpassMembers } from "../utils/getFitpassStats";
-import BenefitChartCategories from "../components/benefits/BenefitChartCategories";
-import BenefitChartNumbers from "../components/benefits/BenefitChartNumbers";
+import DoughnutChart from "../components/charts/DoughnutChart";
 
 export default function Fipass() {
   const { data } = useQuery(GET_EMPLOYEES);
@@ -17,9 +16,21 @@ export default function Fipass() {
     }
   }, [data]);
 
-  const totalFitpassMembers = getTotalFitpassMembers(employees);
   const fitpassMemberConstants = generateFitpassMemberConstants(employees);
-  const employeeWithFitpass = fitpassMemberConstants["Employee"] || 0;
+  const totalFitpassMembers = getTotalFitpassMembers(employees);
+
+  const categorizedCounts = {
+    employee: 0,
+    nonEmployee: 0,
+  };
+
+  for (const [key, value] of Object.entries(fitpassMemberConstants)) {
+    if (key === "Employee") {
+      categorizedCounts.employee += value;
+    } else {
+      categorizedCounts.nonEmployee += value;
+    }
+  }
 
   return (
     <>
@@ -27,17 +38,18 @@ export default function Fipass() {
 
       {employees.length > 0 && (
         <div className="flex flex-col items-center my-8 justify-evenly lg:flex-row ">
-          <BenefitChartCategories
+          <DoughnutChart
             categoryData={fitpassMemberConstants}
-            totalMembers={totalFitpassMembers}
+            total={totalFitpassMembers}
             title="Fitpass Membership Categories"
             description="Chart showing fitpass members distribution across different categories"
           />
-          <BenefitChartNumbers
-            employeesTotal={employees.length}
-            employeeWithBenefit={employeeWithFitpass}
-            title="Fitpass Employees Membership"
-            description="Chart showing employees with fitpass and without fitpass membership"
+
+          <DoughnutChart
+            categoryData={categorizedCounts}
+            total={totalFitpassMembers}
+            title="Fitpass Members by Category"
+            description="Chart showing employees and non-employees with fitpass membership"
           />
         </div>
       )}

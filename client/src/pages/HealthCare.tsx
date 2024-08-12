@@ -3,13 +3,12 @@ import PageHeading from "../components/common/PageHeading";
 import { GET_EMPLOYEES } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import { Employee } from "../types/common";
+import DoughnutChart from "../components/charts/DoughnutChart";
 import {
   generateHealthcareInsuranceConstants,
   generateHealthcareMemberConstants,
   getTotalHealthcareMembers,
 } from "../utils/getHealthcareStats";
-import BenefitChartCategories from "../components/benefits/BenefitChartCategories";
-import BenefitChartNumbers from "../components/benefits/BenefitChartNumbers";
 
 export default function HealtCare() {
   const { data } = useQuery(GET_EMPLOYEES);
@@ -21,38 +20,48 @@ export default function HealtCare() {
     }
   }, [data]);
 
-  const totalHealthcareMembers = getTotalHealthcareMembers(employees);
   const healthcareMemberConstants = generateHealthcareMemberConstants(employees);
-  const employeeWithHelathcare = healthcareMemberConstants["Employee"] || 0;
+  const totalHealthcareMembers = getTotalHealthcareMembers(employees);
 
-  const employeeWithDDOR = generateHealthcareInsuranceConstants(employees)["DDOR"] || 0;
-  const employeeWithMediGroup = generateHealthcareInsuranceConstants(employees)["MediGroup"] || 0;
-  const totalEmployeesWithHealthcare = employeeWithDDOR + employeeWithMediGroup;
+  const healthCareInsurances = generateHealthcareInsuranceConstants(employees);
+  const totalInsurances = Object.values(healthCareInsurances).reduce((sum, current) => sum + current, 0);
+
+  const categorizedCounts = {
+    employee: 0,
+    nonEmployee: 0,
+  };
+
+  for (const [key, value] of Object.entries(healthcareMemberConstants)) {
+    if (key === "Employee") {
+      categorizedCounts.employee += value;
+    } else {
+      categorizedCounts.nonEmployee += value;
+    }
+  }
 
   return (
     <>
       <PageHeading title="Health Care" />
 
       {employees.length > 0 && (
-        <div className="flex flex-col items-center my-8 justify-evenly lg:flex-row ">
-          <BenefitChartCategories
+        <div className="grid grid-cols-1 my-8 justify-items-center lg:grid-cols-2 2xl:grid-cols-3">
+          <DoughnutChart
             categoryData={healthcareMemberConstants}
-            totalMembers={totalHealthcareMembers}
+            total={totalHealthcareMembers}
             title="Healthcare Membership Categories"
             description="Chart showing healthcare members distribution across different categories"
           />
-          <BenefitChartNumbers
-            employeesTotal={employees.length}
-            employeeWithBenefit={employeeWithHelathcare}
-            title="Healthcare Employees Membership"
-            description="Chart showing employees with healthcare and without healthcare membership"
-          />
-          <BenefitChartNumbers
-            employeesTotal={totalEmployeesWithHealthcare}
-            employeeWithBenefit={employeeWithDDOR}
-            insurance="DDOR"
+          <DoughnutChart
+            categoryData={healthCareInsurances}
+            total={totalInsurances}
             title="Healthcare Insurance Companies"
-            description="Chart showing employees with different healthcare insurance companies"
+            description="Chart showing users of all different healthcare insurance companies"
+          />
+          <DoughnutChart
+            categoryData={categorizedCounts}
+            total={totalInsurances}
+            title="Healthcare Members by Category"
+            description="Chart showing employees and non-employees with healthcare membership"
           />
         </div>
       )}

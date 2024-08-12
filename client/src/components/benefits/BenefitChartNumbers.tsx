@@ -26,6 +26,8 @@ export default function BenefitChartNumbers({
 }: BenefitChartNumbersProps) {
   const employeeMembersWithoutBenefit = employeesTotal - employeeWithBenefit;
 
+  console.log(insurance);
+
   const categoryDataBenefit = {
     Members: employeeWithBenefit,
     "Not Members": employeeMembersWithoutBenefit,
@@ -95,7 +97,7 @@ export default function BenefitChartNumbers({
     <div className="w-full max-w-lg mt-4 mb-16 lg:border-s-2 lg:ps-7 lg:border-marine/50">
       <h1 className="font-semibold text-marine">{title}</h1>
       <h3 className="mt-2 mb-6 font-medium text-ash">{description}</h3>
-      <Bar id="bar-chart" data={barData} options={barOptions} />
+      <Bar id="bar" data={barData} options={barOptions} />
     </div>
   );
 }
