@@ -1,59 +1,54 @@
-import { useEffect, useState } from "react";
 import PageHeading from "../components/common/PageHeading";
-import { GET_EMPLOYEES } from "../graphql/employee";
+import { GET_ALL_HEALTHCARE_STATS } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
-import { Employee } from "../types/common";
 import DoughnutChart from "../components/charts/DoughnutChart";
-import {
-  generateHealthcareInsuranceConstants,
-  generateHealthcareMemberConstants,
-  getTotalHealthcareMembers,
-} from "../utils/getHealthcareStats";
+import Loading from "./Loading";
 
 export default function HealtCare() {
-  const { data } = useQuery(GET_EMPLOYEES);
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const { data: heathData, loading, error } = useQuery(GET_ALL_HEALTHCARE_STATS);
 
-  useEffect(() => {
-    if (data) {
-      setEmployees(data?.getAllEmployees);
-    }
-  }, [data]);
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
 
-  const healthcareMemberConstants = generateHealthcareMemberConstants(employees);
-  const totalHealthcareMembers = getTotalHealthcareMembers(employees);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { __typename, ...getHealthcareData } = heathData?.getHealthcareCategories || {};
 
-  const healthCareInsurances = generateHealthcareInsuranceConstants(employees);
-  const totalInsurances = Object.values(healthCareInsurances).reduce((sum, current) => sum + current, 0);
+  const { totalMembers, getHealthcareCounts, getHealthcareInsurances, getHealthcareAllCounts } = getHealthcareData;
 
-  const categorizedCounts = {
-    employee: 0,
-    nonEmployee: 0,
-  };
+  const categorizedCounts = getHealthcareCounts?.reduce(
+    (acc: { [x: string]: number }, curr: { category: string; count: number }) => {
+      acc[curr.category] = curr.count;
+      return acc;
+    },
+    {}
+  );
 
-  for (const [key, value] of Object.entries(healthcareMemberConstants)) {
-    if (key === "Employee") {
-      categorizedCounts.employee += value;
-    } else {
-      categorizedCounts.nonEmployee += value;
-    }
-  }
+  const healthcareMemberConstants = getHealthcareAllCounts?.reduce(
+    (acc: { [x: string]: number }, curr: { category: string; count: number }) => {
+      acc[curr.category] = curr.count;
+      return acc;
+    },
+    {}
+  );
 
-  console.log(healthcareMemberConstants);
-  console.log(totalHealthcareMembers);
-  console.log(healthCareInsurances);
-  console.log(totalInsurances);
-  console.log(categorizedCounts);
+  const healthCareInsurances = getHealthcareInsurances?.reduce(
+    (acc: { [x: string]: number }, curr: { category: string; count: number }) => {
+      acc[curr.category] = curr.count;
+      return acc;
+    },
+    {}
+  );
+
+  const totalInsurances = (Object.values(healthCareInsurances) as number[]).reduce((sum, count) => sum + count, 0);
 
   return (
     <>
       <PageHeading title="Health Care" />
-
-      {employees.length > 0 && (
+      {totalMembers && (
         <div className="grid grid-cols-1 my-8 justify-items-center lg:grid-cols-2 2xl:grid-cols-3">
           <DoughnutChart
             categoryData={healthcareMemberConstants}
-            total={totalHealthcareMembers}
+            total={totalMembers}
             title="Healthcare Membership Categories"
             description="Chart showing healthcare members distribution across different categories"
           />

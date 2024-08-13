@@ -200,3 +200,23 @@ export const GET_ALL_FITPASS_STATS = gql`
     }
   }
 `;
+
+export const GET_ALL_HEALTHCARE_STATS = gql`
+  query GetHealthcareCategories {
+    getHealthcareCategories {
+      totalMembers
+      getHealthcareCounts {
+        category
+        count
+      }
+      getHealthcareInsurances {
+        category
+        count
+      }
+      getHealthcareAllCounts {
+        category
+        count
+      }
+    }
+  }
+`;

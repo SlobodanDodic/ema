@@ -1,56 +1,51 @@
-import { useEffect, useState } from "react";
 import PageHeading from "../components/common/PageHeading";
-import { GET_EMPLOYEES } from "../graphql/employee";
+import { GET_ALL_FITPASS_STATS } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
-import { Employee } from "../types/common";
-import { generateFitpassMemberConstants, getTotalFitpassMembers } from "../utils/getFitpassStats";
 import DoughnutChart from "../components/charts/DoughnutChart";
+import Loading from "./Loading";
 
 export default function Fipass() {
-  const { data } = useQuery(GET_EMPLOYEES);
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const { data: fitpassData, loading, error } = useQuery(GET_ALL_FITPASS_STATS);
 
-  useEffect(() => {
-    if (data) {
-      setEmployees(data?.getAllEmployees);
-    }
-  }, [data]);
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
 
-  const fitpassMemberConstants = generateFitpassMemberConstants(employees);
-  const totalFitpassMembers = getTotalFitpassMembers(employees);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { __typename, ...getFitpassData } = fitpassData?.getFitpassCategories || {};
 
-  const categorizedCounts = {
-    employee: 0,
-    nonEmployee: 0,
-  };
+  const { totalMembers, getFitpassCounts, getFitpassAllCounts } = getFitpassData;
 
-  for (const [key, value] of Object.entries(fitpassMemberConstants)) {
-    if (key === "Employee") {
-      categorizedCounts.employee += value;
-    } else {
-      categorizedCounts.nonEmployee += value;
-    }
-  }
+  const fitpassMemberConstants = getFitpassCounts?.reduce(
+    (acc: { [x: string]: number }, curr: { category: string; count: number }) => {
+      acc[curr.category] = curr.count;
+      return acc;
+    },
+    {}
+  );
 
-  console.log(fitpassMemberConstants);
-  console.log(categorizedCounts);
-  console.log(totalFitpassMembers);
+  const categorizedCounts = getFitpassAllCounts?.reduce(
+    (acc: { [x: string]: number }, curr: { category: string; count: number }) => {
+      acc[curr.category] = curr.count;
+      return acc;
+    },
+    {}
+  );
 
   return (
     <>
       <PageHeading title="Fitpass" />
 
-      {employees.length > 0 && (
+      {totalMembers > 0 && (
         <div className="flex flex-col items-center my-8 justify-evenly lg:flex-row ">
           <DoughnutChart
             categoryData={fitpassMemberConstants}
-            total={totalFitpassMembers}
+            total={totalMembers}
             title="Fitpass Membership Categories"
             description="Chart showing fitpass members distribution across different categories"
           />
           <DoughnutChart
             categoryData={categorizedCounts}
-            total={totalFitpassMembers}
+            total={totalMembers}
             title="Fitpass Members by Category"
             description="Chart showing employees and non-employees with fitpass membership"
           />
