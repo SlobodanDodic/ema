@@ -2,9 +2,15 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { EmployeeInput } from './dto/employee.input';
 import { EmployeeService } from './employee.service';
 import { Employee } from './entities/employee.entity';
-import { HealthcareStats } from './entities/healthcarestats.entity';
-import { JobTitles } from './entities/jobTitles.entity';
-import { FitpassStats } from './entities/fitpassstats.entity';
+import {
+  HealthcareCategoryResponse,
+  HealthcareStats,
+} from './entities/healthcarestats.entity';
+import { JobTitleResponse } from './entities/jobTitles.entity';
+import {
+  FitpassCategoryResponse,
+  FitpassStats,
+} from './entities/fitpassstats.entity';
 
 @Resolver(() => Employee)
 export class EmployeeResolver {
@@ -48,8 +54,18 @@ export class EmployeeResolver {
     return this.employeeService.getEmployeesFitpassStats();
   }
 
-  @Query(() => [JobTitles], { name: 'getJobTitleCounts' })
+  @Query(() => JobTitleResponse, { name: 'getJobTitleCounts' })
   async getJobTitleCounts() {
     return this.employeeService.getJobTitleCounts();
+  }
+
+  @Query(() => FitpassCategoryResponse, { name: 'getFitpassCategories' })
+  async getFitpassCategories() {
+    return this.employeeService.getFitpassCategories();
+  }
+
+  @Query(() => HealthcareCategoryResponse, { name: 'getHealthcareCategories' })
+  async getHealthcareCategories() {
+    return this.employeeService.getHealthcareCategories();
   }
 }

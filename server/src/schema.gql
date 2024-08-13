@@ -82,16 +82,43 @@ type HealthcareStats {
   totalEmployees: Int!
 }
 
+type HealthcareCount {
+  category: String!
+  count: Int!
+}
+
+type HealthcareCategoryResponse {
+  totalMembers: Int!
+  getHealthcareCounts: [HealthcareCount!]!
+  getHealthcareInsurances: [HealthcareCount!]!
+  getHealthcareAllCounts: [HealthcareCount!]!
+}
+
 type JobTitles {
   jobTitle: String!
   count: Int!
+}
+
+type JobTitleResponse {
   totalEmployees: Int!
+  getJobTitleCounts: [JobTitles!]!
 }
 
 type FitpassStats {
   Fitpass: Int!
   Without: Int!
   totalEmployees: Int!
+}
+
+type FitpassCount {
+  category: String!
+  count: Int!
+}
+
+type FitpassCategoryResponse {
+  totalMembers: Int!
+  getFitpassCounts: [FitpassCount!]!
+  getFitpassAllCounts: [FitpassCount!]!
 }
 
 type Payment {
@@ -131,7 +158,9 @@ type Query {
   getOneEmployee(id: String!): Employee!
   getEmployeesHealthcareStats: HealthcareStats!
   getEmployeesFitpassStats: FitpassStats!
-  getJobTitleCounts: [JobTitles!]!
+  getJobTitleCounts: JobTitleResponse!
+  getFitpassCategories: FitpassCategoryResponse!
+  getHealthcareCategories: HealthcareCategoryResponse!
   paymentsByEmployee(employeeId: String!): [Payment!]!
   getAllPayments: [Payment!]!
   getTotalPaymentsByEmployee(employeeId: String!): Float!

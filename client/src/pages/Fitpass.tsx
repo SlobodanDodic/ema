@@ -32,6 +32,10 @@ export default function Fipass() {
     }
   }
 
+  console.log(fitpassMemberConstants);
+  console.log(categorizedCounts);
+  console.log(totalFitpassMembers);
+
   return (
     <>
       <PageHeading title="Fitpass" />

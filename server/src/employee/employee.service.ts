@@ -181,13 +181,136 @@ export class EmployeeService {
       }
     });
 
-    // Transform the jobTitleCounts object into an array of JobTitles objects
-    const result = Object.entries(jobTitleCounts).map(([jobTitle, count]) => ({
-      jobTitle,
+    const getJobTitleCounts = Object.entries(jobTitleCounts).map(
+      ([jobTitle, count]) => ({
+        jobTitle,
+        count,
+      }),
+    );
+
+    return { totalEmployees, getJobTitleCounts };
+  }
+
+  async getFitpassCategories() {
+    const employees = await this.prisma.employee.findMany({
+      include: {
+        fitpassMembers: true,
+      },
+    });
+
+    const fitpassCategoryCounts: { [key: string]: number } = {};
+    let totalMembers = 0;
+
+    employees.forEach((employee) => {
+      employee.fitpassMembers.forEach((member) => {
+        if (fitpassCategoryCounts[member.category]) {
+          fitpassCategoryCounts[member.category] += 1;
+        } else {
+          fitpassCategoryCounts[member.category] = 1;
+        }
+        totalMembers += 1;
+      });
+    });
+
+    let employeeCount = 0;
+    let nonEmployeeCount = 0;
+
+    Object.entries(fitpassCategoryCounts).forEach(([category, count]) => {
+      if (category === 'Employee') {
+        employeeCount += count;
+      } else {
+        nonEmployeeCount += count;
+      }
+    });
+
+    const aggregatedFitpassCounts = [
+      { category: 'Employee', count: employeeCount },
+      { category: 'Non-Employee', count: nonEmployeeCount },
+    ];
+
+    const getFitpassAllCounts = Object.entries(fitpassCategoryCounts).map(
+      ([category, count]) => ({
+        category,
+        count,
+      }),
+    );
+
+    return {
+      totalMembers,
+      getFitpassCounts: aggregatedFitpassCounts,
+      getFitpassAllCounts,
+    };
+  }
+
+  async getHealthcareCategories() {
+    const employees = await this.prisma.employee.findMany({
+      include: {
+        healthCareMembers: true,
+      },
+    });
+
+    const healthcareCategoryCounts: { [key: string]: number } = {};
+    const healthcareInsuranceCounts: { [key: string]: number } = {};
+    let totalMembers = 0;
+
+    employees.forEach((employee) => {
+      employee.healthCareMembers.forEach((member) => {
+        // Count by category
+        if (healthcareCategoryCounts[member.category]) {
+          healthcareCategoryCounts[member.category] += 1;
+        } else {
+          healthcareCategoryCounts[member.category] = 1;
+        }
+
+        // Count by insurance
+        if (member.insurance) {
+          if (healthcareInsuranceCounts[member.insurance]) {
+            healthcareInsuranceCounts[member.insurance] += 1;
+          } else {
+            healthcareInsuranceCounts[member.insurance] = 1;
+          }
+        }
+
+        totalMembers += 1;
+      });
+    });
+
+    // Aggregate Employee and Non-Employee counts
+    let employeeCount = 0;
+    let nonEmployeeCount = 0;
+
+    Object.entries(healthcareCategoryCounts).forEach(([category, count]) => {
+      if (category === 'Employee') {
+        employeeCount += count;
+      } else {
+        nonEmployeeCount += count;
+      }
+    });
+
+    const aggregatedHealthcareCounts = [
+      { category: 'Employee', count: employeeCount },
+      { category: 'Non-Employee', count: nonEmployeeCount },
+    ];
+
+    const healthcareInsuranceCountsArray = Object.entries(
+      healthcareInsuranceCounts,
+    ).map(([insurance, count]) => ({
+      category: insurance,
       count,
-      totalEmployees,
     }));
 
-    return result; // Return an array
+    const getHealthcareAllCounts = Object.entries(healthcareCategoryCounts).map(
+      ([category, count]) => ({
+        category,
+        count,
+      }),
+    );
+
+    return {
+      totalMembers,
+      getHealthcareCounts: aggregatedHealthcareCounts,
+      getHealthcareInsurances: healthcareInsuranceCountsArray,
+      getHealthcareAllCounts,
+    };
   }
 }

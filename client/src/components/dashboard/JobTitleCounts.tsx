@@ -12,9 +12,17 @@ export default function JobTitleCounts() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { __typename, totalEmployees, ...jobTitleCounts } = jobData?.getJobTitleCounts || {};
 
+  const getJobTitleCountsObject = jobTitleCounts?.getJobTitleCounts.reduce(
+    (acc: { [x: string]: number }, curr: { jobTitle: string; count: number }) => {
+      acc[curr.jobTitle] = curr.count;
+      return acc;
+    },
+    {}
+  );
+
   return (
     <DoughnutChart
-      categoryData={jobTitleCounts}
+      categoryData={getJobTitleCountsObject}
       total={totalEmployees}
       title="Employees by Job Title"
       description="Percentage of employees by job title"

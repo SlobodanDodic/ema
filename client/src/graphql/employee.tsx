@@ -176,8 +176,27 @@ export const GET_EMPLOYEES_FITPASS_STATS = gql`
 export const GET_JOB_TITLES = gql`
   query GetJobTitleCounts {
     getJobTitleCounts {
-      jobTitle
-      count
+      totalEmployees
+      getJobTitleCounts {
+        jobTitle
+        count
+      }
+    }
+  }
+`;
+
+export const GET_ALL_FITPASS_STATS = gql`
+  query GetFitpassCategories {
+    getFitpassCategories {
+      totalMembers
+      getFitpassCounts {
+        category
+        count
+      }
+      getFitpassAllCounts {
+        category
+        count
+      }
     }
   }
 `;

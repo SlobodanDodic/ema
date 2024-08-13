@@ -39,6 +39,12 @@ export default function HealtCare() {
     }
   }
 
+  console.log(healthcareMemberConstants);
+  console.log(totalHealthcareMembers);
+  console.log(healthCareInsurances);
+  console.log(totalInsurances);
+  console.log(categorizedCounts);
+
   return (
     <>
       <PageHeading title="Health Care" />
