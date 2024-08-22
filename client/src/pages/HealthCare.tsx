@@ -3,6 +3,7 @@ import { GET_ALL_HEALTHCARE_STATS } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import DoughnutChart from "../components/charts/DoughnutChart";
 import Loading from "./Loading";
+import { NoData } from "../components/common/NoData";
 
 export default function HealtCare() {
   const { data: heathData, loading, error } = useQuery(GET_ALL_HEALTHCARE_STATS);
@@ -44,7 +45,7 @@ export default function HealtCare() {
   return (
     <>
       <PageHeading title="Health Care" />
-      {totalMembers && (
+      {totalMembers ? (
         <div className="grid grid-cols-1 my-8 justify-items-center lg:grid-cols-2 2xl:grid-cols-3">
           <DoughnutChart
             categoryData={healthcareMemberConstants}
@@ -65,6 +66,12 @@ export default function HealtCare() {
             description="Chart showing employees and non-employees with healthcare membership"
           />
         </div>
+      ) : (
+        <NoData
+          title="No Members Found"
+          message="There are currently no member records in the database."
+          additionalMessage="Please visit the employee form page to add new employee or employees page to edit existing employee."
+        />
       )}
     </>
   );

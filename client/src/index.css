@@ -48,7 +48,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 @layer components {
   .aside {
-    @apply fixed flex flex-col justify-between font-semibold h-[calc(100%-2rem)] top-0 left-0 z-40 w-56 pt-8 rounded m-4 transition-transform shadow shadow-midnight bg-midnight;
+    @apply fixed flex flex-col justify-between font-semibold h-[calc(100%-2rem)] top-0 left-0 z-40 w-64 pt-8 rounded m-4 transition-transform shadow shadow-midnight bg-midnight;
   }
   .grid-box-text {
     @apply grid px-6 pt-8 pb-4 mt-10 border rounded md:grid-cols-3 md:gap-x-12 md:gap-y-4 lg:grid-cols-4 xl:grid-cols-5 border-steel bg-white;

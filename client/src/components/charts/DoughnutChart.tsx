@@ -38,7 +38,7 @@ export default function DoughnutChart({ categoryData, title, description, total 
   const chartOptions = doughnutChartOptions(total, legendPosition);
 
   return (
-    <div className="w-full max-w-lg p-4 mb-10 mr-8 border-b-2 lg:mb-4 lg:border-b-0 lg:border-s-2 lg:ps-7 lg:border-marine/50">
+    <div className="w-full max-w-lg p-4 mb-10 mr-8 border-b-2 lg:mb-4 lg:ps-7 border-marine/10">
       <h1 className="font-semibold text-marine">{title}</h1>
       <h3 className="mt-2 mb-6 font-medium text-ash">{description}</h3>
       <Doughnut id="doughnut-chart" data={doughnutData} options={chartOptions} />

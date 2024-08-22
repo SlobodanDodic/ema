@@ -3,6 +3,7 @@ import { GET_ALL_FITPASS_STATS } from "../graphql/employee";
 import { useQuery } from "@apollo/client";
 import DoughnutChart from "../components/charts/DoughnutChart";
 import Loading from "./Loading";
+import { NoData } from "../components/common/NoData";
 
 export default function Fipass() {
   const { data: fitpassData, loading, error } = useQuery(GET_ALL_FITPASS_STATS);
@@ -35,8 +36,8 @@ export default function Fipass() {
     <>
       <PageHeading title="Fitpass" />
 
-      {totalMembers > 0 && (
-        <div className="flex flex-col items-center my-8 justify-evenly lg:flex-row ">
+      {totalMembers > 0 ? (
+        <div className="flex flex-col items-center my-8 justify-evenly lg:flex-row lg:flex-wrap">
           <DoughnutChart
             categoryData={fitpassMemberConstants}
             total={totalMembers}
@@ -50,6 +51,12 @@ export default function Fipass() {
             description="Chart showing employees and non-employees with fitpass membership"
           />
         </div>
+      ) : (
+        <NoData
+          title="No Members Found"
+          message="There are currently no member records in the database."
+          additionalMessage="Please visit the employee form page to add new employee or employees page to edit existing employee."
+        />
       )}
     </>
   );

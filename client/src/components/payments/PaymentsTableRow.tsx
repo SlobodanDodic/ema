@@ -15,7 +15,6 @@ const PaymentsTableRow = ({
   const { data: paymentData, loading: loadingPayments } = useQuery(GET_EMPLOYEE_PAYMENTS, {
     variables: { employeeId: employee?.id },
   });
-  const totalLiabilitiesByEmployee = calculateTotalPrice(employee, insuranceCompanies);
 
   const { data: liabilitiesByEmployee, refetch: refetchLiabilitiesByEmployee } = useQuery(GET_LIABILITIES, {
     variables: { employeeId: employee?.id },
@@ -30,6 +29,8 @@ const PaymentsTableRow = ({
   });
 
   const [createLiability] = useMutation(CREATE_LIABILITY);
+
+  const totalLiabilitiesByEmployee = calculateTotalPrice(employee, insuranceCompanies);
 
   const hasRunOnce = useRef(false);
 
@@ -113,7 +114,11 @@ const PaymentsTableRow = ({
         {employee.fitpassMembers.length}
       </td>
       <td className="px-6 py-4 text-xs font-semibold text-center">
-        {loadingLiabilities ? "Loading..." : formatCurrency(totalLiabilitiesByEmployeeDb?.getTotalLiabilitiesByEmployee)}
+        {totalLiabilitiesByEmployeeDb?.getTotalLiabilitiesByEmployee
+          ? loadingLiabilities
+            ? "Loading..."
+            : formatCurrency(totalLiabilitiesByEmployeeDb.getTotalLiabilitiesByEmployee)
+          : "0.00 RSD"}
       </td>
       <td className="px-6 py-4 text-xs font-semibold text-center">
         {loadingPayments ? "Loading..." : formatCurrency(totalPayments)}

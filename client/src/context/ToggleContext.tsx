@@ -7,6 +7,8 @@ interface ToggleContextType {
   setOpenMenu: () => void;
   paymentModal: boolean;
   setPaymentModal: () => void;
+  lockMenu: boolean;
+  setLockMenu: () => void;
 }
 
 const ToggleContext = createContext<ToggleContextType | undefined>(undefined);

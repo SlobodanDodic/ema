@@ -29,8 +29,10 @@ export class LiabilityResolver {
     return this.liabilityService.getTotalLiabilities();
   }
 
-  @Query(() => Float)
+  @Query(() => Float!)
   async getTotalLiabilitiesByEmployee(@Args('employeeId') employeeId: string) {
-    return this.liabilityService.getTotalLiabilitiesByEmployee(employeeId);
+    const totalLiabilities =
+      await this.liabilityService.getTotalLiabilitiesByEmployee(employeeId);
+    return totalLiabilities !== null ? totalLiabilities : 0;
   }
 }

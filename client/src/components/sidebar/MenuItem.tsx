@@ -8,12 +8,14 @@ type IMenuItem = {
 };
 
 export default function MenuItem({ icon, path, title }: IMenuItem) {
-  const { setOpenMenu } = useToggleContext();
+  const { openMenu, setOpenMenu, lockMenu } = useToggleContext();
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setOpenMenu();
+    if (openMenu && lockMenu) {
+      setOpenMenu();
+    }
     navigate(path);
   };
 

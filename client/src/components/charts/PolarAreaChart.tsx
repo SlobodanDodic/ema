@@ -48,7 +48,7 @@ export default function PolarAreaChart({ categoryData, total, title, description
   const chartOptions = polarAreaChartOptions(total, legendPosition);
 
   return (
-    <div className="w-full max-w-lg p-4 mb-10 border-b-2 lg:border-b-0 lg:border-s-2 lg:ps-7 lg:border-marine/50">
+    <div className="w-full max-w-lg p-4 mb-10 border-b-2 lg:ps-7 border-marine/10">
       <h1 className="font-semibold text-marine">{title}</h1>
       <h3 className="mt-2 mb-6 font-medium text-ash">{description}</h3>
       <PolarArea id="polarArea-chart" data={polarAreaData} options={chartOptions} />

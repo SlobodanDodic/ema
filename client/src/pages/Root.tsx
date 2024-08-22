@@ -42,7 +42,7 @@ export default function Root() {
       <nav
         className={`fixed top-0 z-40 flex items-center justify-between mx-8 py-8 bg-silver/90 ${
           openMenu
-            ? "w-[calc(100%-4rem)] sm:w-[calc(100%-19rem)] sm:mx-16 sm:translate-x-52"
+            ? "w-[calc(100%-4rem)] sm:w-[calc(100%-20rem)] sm:mx-14 sm:translate-x-60"
             : "w-[calc(100%-4rem)] translate-x-0"
         }`}
       >
@@ -56,7 +56,7 @@ export default function Root() {
       <main
         className={`mt-28 h-full mx-8 ${
           openMenu
-            ? "w-[calc(100%-4rem)] sm:w-[calc(100%-19rem)] mt-24 sm:mx-16 sm:translate-x-52 z-50"
+            ? "w-[calc(100%-4rem)] sm:w-[calc(100%-20rem)] mt-24 sm:mx-14 sm:translate-x-60 z-50"
             : "w-[calc(100%-4rem)] translate-x-0 mt-24"
         }`}
       >
